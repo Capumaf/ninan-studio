@@ -99,12 +99,12 @@
 
   /* 👇 TEXTO SIN VERDE */
   .accent {
-    color: hsl(var(--ink));
+    color: hsl(var(--accent-strong));
   }
 
   .rule {
     height: 1px;
-    background: hsla(var(--shadow), 0.10);
+    background: rgba(0,0,0,0.12);
   }
 
   /* UI */

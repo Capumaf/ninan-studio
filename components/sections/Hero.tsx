@@ -10,7 +10,7 @@ export default function Hero() {
             <div className="flex gap-8">
               <div
                 aria-hidden
-                className="mt-3 h-[150px] w-px shrink-0 rounded-full bg-[hsla(var(--shadow),0.25)]"
+                className="mt-3 h-[150px] w-px shrink-0 rounded-full bg-black/25"
               />
 
               <div className="min-w-0">

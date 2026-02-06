@@ -23,6 +23,7 @@ export default function Work() {
           "A quiet, content-led website designed around pacing and typography. The interface stays restrained—navigation is intentionally minimal, and the layout gives space to image-led sequences, text blocks, and archival sections without visual noise.",
         status: "in-progress",
         note: "In progress.",
+        href: "https://ingridpumayalla.vercel.app/",
       },
       {
         id: "guillermo",

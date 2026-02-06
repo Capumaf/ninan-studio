@@ -6,11 +6,8 @@ export default function Hero() {
       <div className="container">
         <div className="relative">
           <div className="relative z-10 grid items-start gap-10 lg:grid-cols-[minmax(0,70ch)_1fr]">
-            {/* =========================
-               LEFT — CONTENT
-               ========================= */}
+            {/* LEFT */}
             <div className="flex gap-8">
-              {/* Editorial vertical line */}
               <div
                 aria-hidden
                 className="mt-3 h-[150px] w-px shrink-0 rounded-full bg-[hsla(var(--shadow),0.25)]"
@@ -29,7 +26,6 @@ export default function Hero() {
                   production-ready delivery.
                 </p>
 
-                {/* Micro editorial rule */}
                 <div className="mt-8 h-px w-24 bg-[hsla(var(--shadow),0.14)]" />
 
                 <div className="mt-10 flex flex-wrap gap-3">
@@ -48,19 +44,15 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* =========================
-               RIGHT — VISUAL FIELD
-               ========================= */}
+            {/* RIGHT */}
             <div className="flex justify-end">
               <div className="relative w-full">
-                {/* Small label */}
                 <div className="relative z-10 flex justify-end pb-3">
                   <div className="pill">
                     Ninan Studio · Web / Automation / AI
                   </div>
                 </div>
 
-                {/* Visual canvas */}
                 <div className="relative overflow-hidden rounded-[28px]">
                   <div
                     aria-hidden
@@ -71,10 +63,9 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Subtle bottom fade (integration) */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-16 bg-gradient-to-t from-white to-white/0"
+            className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-16 bg-gradient-to-t from-[hsl(var(--bg))] to-transparent"
           />
         </div>
       </div>

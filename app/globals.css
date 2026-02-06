@@ -36,13 +36,13 @@
     text-rendering: geometricPrecision;
 
     background-image:
-      radial-gradient(900px 500px at 15% 5%, hsla(var(--accent), 0.10), transparent 60%),
-      radial-gradient(700px 450px at 85% 15%, hsla(var(--accent), 0.08), transparent 60%);
+      radial-gradient(900px 500px at 15% 5%, hsla(var(--accent), 0.06), transparent 60%),
+      radial-gradient(700px 450px at 85% 15%, hsla(var(--accent), 0.05), transparent 60%);
     background-repeat: no-repeat;
   }
 
   ::selection {
-    background: hsla(var(--accent), 0.25);
+    background: hsla(var(--accent), 0.15);
   }
 
   a {
@@ -99,7 +99,7 @@
   @media (min-width: 768px) { .p-muted { @apply text-base; } }
 
   .accent {
-    color: hsl(var(--accent-strong));
+    color: hsl(var(--ink));
   }
 
   .rule {

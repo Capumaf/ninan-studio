@@ -1,16 +1,19 @@
+"use client";
+
 export default function Hero() {
   return (
     <section id="hero" className="section">
       <div className="container">
         <div className="relative">
           <div className="relative z-10 grid items-start gap-10 lg:grid-cols-[minmax(0,70ch)_1fr]">
-
-            {/* LEFT — CONTENT */}
-            <div className="flex gap-6">
+            {/* =========================
+               LEFT — CONTENT
+               ========================= */}
+            <div className="flex gap-8">
               {/* Editorial vertical line */}
               <div
                 aria-hidden
-                className="my-2 w-[2px] shrink-0 rounded-full bg-black/15"
+                className="mt-3 h-[150px] w-px shrink-0 rounded-full bg-[hsla(var(--shadow),0.25)]"
               />
 
               <div className="min-w-0">
@@ -25,6 +28,9 @@ export default function Hero() {
                   Web, automation and practical AI—strategic design and
                   production-ready delivery.
                 </p>
+
+                {/* Micro editorial rule */}
+                <div className="mt-8 h-px w-24 bg-[hsla(var(--shadow),0.14)]" />
 
                 <div className="mt-10 flex flex-wrap gap-3">
                   <a className="btn" href="#contact">
@@ -42,7 +48,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* RIGHT — VISUAL FIELD */}
+            {/* =========================
+               RIGHT — VISUAL FIELD
+               ========================= */}
             <div className="flex justify-end">
               <div className="relative w-full">
                 {/* Small label */}
@@ -52,15 +60,8 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Visual canvas wrapper (controls spacing + subtle frame) */}
+                {/* Visual canvas */}
                 <div className="relative overflow-hidden rounded-[28px]">
-                  {/* Subtle edge fade so it blends into the page */}
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-l from-white/0 via-white/0 to-white/70"
-                  />
-
-                  {/* Visual canvas */}
                   <div
                     aria-hidden
                     className="hero-field h-[360px] sm:h-[420px] lg:h-[440px]"
@@ -68,8 +69,13 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-
           </div>
+
+          {/* Subtle bottom fade (integration) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-16 bg-gradient-to-t from-white to-white/0"
+          />
         </div>
       </div>
     </section>

@@ -1,0 +1,133 @@
+@layer components {
+  /* ===== Typography ===== */
+  .kicker {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.55);
+    line-height: 1.6;
+  }
+
+  .h1 {
+    font-size: clamp(2.6rem, 5.0vw, 4.6rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    font-weight: 650;
+  }
+
+  .h2 {
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .h3 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.78);
+  }
+
+  @media (min-width: 768px) {
+    .p { font-size: 1.125rem; }
+  }
+
+  .p-muted {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.55);
+    line-height: 1.6;
+  }
+
+  .accent {
+    color: hsl(var(--accent));
+    font-weight: 650;
+  }
+
+  /* ===== Rules ===== */
+  .rule {
+    height: 1px;
+    background: rgba(0, 0, 0, 1);
+    opacity: 0.18;
+  }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 28px;
+    border-radius: 0px;
+    border: 1px solid rgba(0, 0, 0, 1);
+    background: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+
+    transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+  }
+
+  .btn:hover {
+    background: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+  }
+
+  .btn:active { transform: translateY(1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(0, 0, 0, 1);
+    border: 1px solid rgba(0, 0, 0, 1);
+  }
+
+  /* ===== Label ===== */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 0px;
+    border: 1px solid rgba(0, 0, 0, 1);
+    background: rgba(255, 255, 255, 1);
+
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(0, 0, 0, 1);
+  }
+
+  /* ===== Reveal animation ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease, transform 600ms ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+}

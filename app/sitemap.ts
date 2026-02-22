@@ -1,10 +1,11 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next"
+import { languages } from "@/content/i18n"
+
+const baseUrl = "https://ninan-studio.vercel.app"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://ninan-studio.vercel.app",
-      lastModified: new Date(),
-    },
-  ];
+  return languages.map((lang) => ({
+    url: `${baseUrl}/${lang}`,
+    lastModified: new Date(),
+  }))
 }

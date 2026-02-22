@@ -95,6 +95,22 @@ export type Dictionary = {
     }[]
   }
 
+  footer: {
+    brand: string
+    claim: string
+    links: {
+      items: readonly {
+        label: string
+        href: string
+      }[]
+    }
+    contact: {
+      email: string
+      location: string
+    }
+    bottom: string
+  }
+
   contact: {
     kicker: string
     title: string
@@ -287,6 +303,24 @@ export const i18n = {
           bullets: ["Vercel deployment", "Final QA", "Documentation if required"],
         },
       ],
+    },
+
+    footer: {
+      brand: "NINAN STUDIO",
+      claim: "Calm, structured websites — designed to perform and age well.",
+      links: {
+        items: [
+          { label: "WORK", href: "/en#work" },
+          { label: "SERVICES", href: "/en#services" },
+          { label: "PROCESS", href: "/en#process" },
+          { label: "CONTACT", href: "/en#contact" },
+        ],
+      },
+      contact: {
+        email: "hello@ninan.studio",
+        location: "Berlin — Europe",
+      },
+      bottom: "© 2026 NINAN STUDIO — ALL RIGHTS RESERVED.",
     },
 
     contact: {
@@ -482,6 +516,24 @@ export const i18n = {
       ],
     },
 
+    footer: {
+      brand: "NINAN STUDIO",
+      claim: "Ruhige, strukturierte Websites — gebaut für Performance und Beständigkeit.",
+      links: {
+        items: [
+          { label: "ARBEITEN", href: "/de#work" },
+          { label: "LEISTUNGEN", href: "/de#services" },
+          { label: "PROZESS", href: "/de#process" },
+          { label: "KONTAKT", href: "/de#contact" },
+        ],
+      },
+      contact: {
+        email: "hello@ninan.studio",
+        location: "Berlin — Europa",
+      },
+      bottom: "© 2026 NINAN STUDIO — ALLE RECHTE VORBEHALTEN.",
+    },
+
     contact: {
       kicker: "KONTAKT",
       title: "Lass uns sprechen",
@@ -600,7 +652,11 @@ export const i18n = {
         "Diseño editorial + rendimiento + automatización — empaquetado como servicios claros y orientados a resultados.",
       howItWorks: {
         kicker: "CÓMO FUNCIONA",
-        bullets: ["Llamada breve de estrategia", "Alcance fijo + cronograma", "Construcción → lanzamiento → pulido"],
+        bullets: [
+          "Llamada breve de estrategia",
+          "Alcance fijo + cronograma",
+          "Construcción → lanzamiento → pulido",
+        ],
         cta: "Solicitar disponibilidad",
       },
       blocks: [
@@ -630,11 +686,7 @@ export const i18n = {
           title: "IA",
           time: "1–2 SEMANAS",
           desc: "Integraciones prácticas de IA para soporte, herramientas internas y journeys de cliente.",
-          bullets: [
-            "Flujos asistidos por IA (sin gimmicks)",
-            "Patrones UX de chat/asistente",
-            "Alcance claro + seguridad",
-          ],
+          bullets: ["Flujos asistidos por IA (sin gimmicks)", "Patrones UX de chat/asistente", "Alcance claro + seguridad"],
           cta: "Ver casos de IA",
         },
       ],
@@ -673,6 +725,24 @@ export const i18n = {
           bullets: ["Deploy en Vercel", "QA final", "Documentación si aplica"],
         },
       ],
+    },
+
+    footer: {
+      brand: "NINAN STUDIO",
+      claim: "Websites calmadas y estructuradas — diseñadas para rendir y durar.",
+      links: {
+        items: [
+          { label: "TRABAJOS", href: "/es#work" },
+          { label: "SERVICIOS", href: "/es#services" },
+          { label: "PROCESO", href: "/es#process" },
+          { label: "CONTACTO", href: "/es#contact" },
+        ],
+      },
+      contact: {
+        email: "hello@ninan.studio",
+        location: "Berlín — Europa",
+      },
+      bottom: "© 2026 NINAN STUDIO — TODOS LOS DERECHOS RESERVADOS.",
     },
 
     contact: {

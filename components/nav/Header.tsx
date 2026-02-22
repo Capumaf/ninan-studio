@@ -89,6 +89,9 @@ export default function Header() {
   const hideTimer = useRef<number | null>(null)
   const rafLock = useRef(false)
 
+  // NEW: hide everything when footer is present
+  const [footerInView, setFooterInView] = useState(false)
+
   const clearHideTimer = () => {
     if (hideTimer.current !== null) {
       window.clearTimeout(hideTimer.current)
@@ -97,7 +100,8 @@ export default function Header() {
   }
 
   const showAndArmHide = () => {
-    if (!heroOut) return
+    // CHANGED: do not show when footer is visible
+    if (!heroOut || footerInView) return
     setShowBottom(true)
     clearHideTimer()
     hideTimer.current = window.setTimeout(() => setShowBottom(false), HIDE_DELAY_MS)
@@ -132,9 +136,37 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // NEW: Detect footer presence and force hide
+  useEffect(() => {
+    const footer = document.getElementById("site-footer")
+    if (!footer) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const inView = entry.isIntersecting
+        setFooterInView(inView)
+
+        if (inView) {
+          // force silence: no floating, no timers
+          setShowBottom(false)
+          clearHideTimer()
+        } else {
+          // if user is still below hero, allow the ambient behavior again
+          if (heroOut) showAndArmHide()
+        }
+      },
+      { threshold: 0.12 }
+    )
+
+    observer.observe(footer)
+    return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [heroOut])
+
   // Re-show on user activity while hero is out
   useEffect(() => {
-    if (!heroOut) return
+    // CHANGED: if footer is visible, do nothing
+    if (!heroOut || footerInView) return
 
     const onActivity = () => {
       if (rafLock.current) return
@@ -157,7 +189,7 @@ export default function Header() {
       window.removeEventListener("pointerdown", onActivity)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [heroOut])
+  }, [heroOut, footerInView])
 
   // --- Mobile menu ---
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -227,11 +259,12 @@ export default function Header() {
 
   return (
     <>
-      {/* TOP HEADER (hidden when floating is visible) */}
+      {/* TOP HEADER (hidden when floating is visible OR footer is visible) */}
       <header
         className={[
           "sticky top-0 z-50 border-b border-black/10 bg-white/75 backdrop-blur-sm transition-opacity duration-300",
-          showBottom ? "opacity-0 pointer-events-none" : "opacity-100",
+          // CHANGED:
+          showBottom || footerInView ? "opacity-0 pointer-events-none" : "opacity-100",
         ].join(" ")}
       >
         <div className="mx-auto w-full max-w-[1500px] px-6 lg:px-10 2xl:px-12 h-16 flex items-center justify-between">
@@ -268,11 +301,14 @@ export default function Header() {
         </div>
       </header>
 
-      {/* FLOATING PILL HEADER */}
+      {/* FLOATING PILL HEADER (also hidden when footer is visible) */}
       <div
         className={[
           "fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-50",
-          showBottom ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0 pointer-events-none",
+          // CHANGED:
+          showBottom && !footerInView
+            ? "translate-y-0 opacity-100"
+            : "translate-y-3 opacity-0 pointer-events-none",
           "transition-all duration-300 ease-out",
         ].join(" ")}
       >

@@ -66,25 +66,20 @@ export default function Header() {
   const [footerInView, setFooterInView] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // ─── Refs que mantienen el valor actual accesible en cualquier closure ────
-  // Así evitamos completamente los stale closures sin re-registrar listeners.
+  // ─── Refs ────────────────────────────────────────────────────────────────
   const heroOutRef = useRef(false)
   const footerInViewRef = useRef(false)
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const rafLock = useRef(false)
+  const lastScrollYRef = useRef(0)
 
-  // Sincronizar refs con estado
-  useEffect(() => { heroOutRef.current = heroOut }, [heroOut])
-  useEffect(() => { footerInViewRef.current = footerInView }, [footerInView])
+  useEffect(() => {
+    heroOutRef.current = heroOut
+  }, [heroOut])
 
-  // ─── Lógica del floating pill ─────────────────────────────────────────────
-  // Esta función lee siempre los refs → nunca tiene datos stale
-  const showAndArmHide = () => {
-    if (!heroOutRef.current || footerInViewRef.current) return
-    setShowBottom(true)
-    if (hideTimer.current !== null) clearTimeout(hideTimer.current)
-    hideTimer.current = setTimeout(() => setShowBottom(false), HIDE_DELAY_MS)
-  }
+  useEffect(() => {
+    footerInViewRef.current = footerInView
+  }, [footerInView])
 
   const clearHideTimer = () => {
     if (hideTimer.current !== null) {
@@ -93,8 +88,16 @@ export default function Header() {
     }
   }
 
+  // solo arma el autohide; NO decide cuándo aparece (eso lo decide el scroll-up)
+  const showAndArmHide = () => {
+    if (!heroOutRef.current || footerInViewRef.current) return
+    setShowBottom(true)
+    clearHideTimer()
+    hideTimer.current = setTimeout(() => setShowBottom(false), HIDE_DELAY_MS)
+  }
+
   // ─── Observer del Hero ────────────────────────────────────────────────────
-  // Se registra UNA sola vez. Lee refs en el callback → siempre fresco.
+  // Importante: aquí NO mostramos la pill automáticamente.
   useEffect(() => {
     const hero =
       document.getElementById("hero") ||
@@ -110,12 +113,13 @@ export default function Header() {
         setHeroOut(out)
 
         if (!out) {
-          // El usuario volvió al hero → esconder pill, mostrar header top
+          // cerca / dentro del hero → pill fuera SIEMPRE
           setShowBottom(false)
           clearHideTimer()
         } else {
-          // Salió del hero → mostrar pill si el footer no está visible
-          showAndArmHide()
+          // fuera del hero → NO la muestres aquí (solo con scroll up)
+          setShowBottom(false)
+          clearHideTimer()
         }
       },
       { threshold: [0, 0.2, 1], rootMargin: "-60px 0px 0px 0px" }
@@ -124,9 +128,10 @@ export default function Header() {
     observer.observe(hero)
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // ← intencionalmente vacío: showAndArmHide lee refs, no closures
+  }, [])
 
   // ─── Observer del Footer ──────────────────────────────────────────────────
+  // Importante: aquí NO mostramos la pill automáticamente.
   useEffect(() => {
     const footer = document.getElementById("site-footer")
     if (!footer) return
@@ -139,11 +144,13 @@ export default function Header() {
         setFooterInView(inView)
 
         if (inView) {
+          // footer visible → pill fuera SIEMPRE
           setShowBottom(false)
           clearHideTimer()
         } else {
-          // Footer salió de vista → si el hero ya está out, mostrar pill
-          if (heroOutRef.current) showAndArmHide()
+          // footer fuera → NO la muestres aquí (solo con scroll up)
+          setShowBottom(false)
+          clearHideTimer()
         }
       },
       { threshold: 0.12 }
@@ -152,36 +159,52 @@ export default function Header() {
     observer.observe(footer)
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // ← intencionalmente vacío: misma razón
+  }, [])
 
-  // ─── Listeners de actividad (scroll / touch / pointer) ────────────────────
-  // También se registran UNA sola vez. Leen refs en el callback.
+  // ─── Scroll: SOLO UP muestra la pill ──────────────────────────────────────
   useEffect(() => {
-    const onActivity = () => {
+    lastScrollYRef.current = window.scrollY || 0
+
+    const onScroll = () => {
       if (rafLock.current) return
       rafLock.current = true
+
       requestAnimationFrame(() => {
         rafLock.current = false
-        // Leer refs en tiempo de ejecución → siempre el valor actual
-        if (heroOutRef.current && !footerInViewRef.current) {
+
+        // si hero está en vista o footer visible, nunca mostramos pill
+        if (!heroOutRef.current || footerInViewRef.current) {
+          setShowBottom(false)
+          clearHideTimer()
+          lastScrollYRef.current = window.scrollY || 0
+          return
+        }
+
+        const currentY = window.scrollY || 0
+        const prevY = lastScrollYRef.current
+        const delta = currentY - prevY
+
+        // actualizar SIEMPRE para no romper dirección
+        lastScrollYRef.current = currentY
+
+        // anti-flicker
+        if (Math.abs(delta) < 10) return
+
+        if (delta < 0) {
+          // UP → aparece (y arma autohide)
           showAndArmHide()
+        } else {
+          // DOWN → desaparece
+          setShowBottom(false)
+          clearHideTimer()
         }
       })
     }
 
-    window.addEventListener("scroll", onActivity, { passive: true })
-    window.addEventListener("wheel", onActivity, { passive: true })
-    window.addEventListener("touchstart", onActivity, { passive: true })
-    window.addEventListener("pointerdown", onActivity, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", onActivity)
-      window.removeEventListener("wheel", onActivity)
-      window.removeEventListener("touchstart", onActivity)
-      window.removeEventListener("pointerdown", onActivity)
-    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // ← intencionalmente vacío
+  }, [])
 
   // ─── Mobile menu ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -196,12 +219,16 @@ export default function Header() {
   useEffect(() => {
     if (!mobileOpen) return
     document.documentElement.style.overflow = "hidden"
-    return () => { document.documentElement.style.overflow = "" }
+    return () => {
+      document.documentElement.style.overflow = ""
+    }
   }, [mobileOpen])
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)")
-    const onChange = () => { if (mq.matches) setMobileOpen(false) }
+    const onChange = () => {
+      if (mq.matches) setMobileOpen(false)
+    }
     onChange()
     mq.addEventListener?.("change", onChange)
     return () => mq.removeEventListener?.("change", onChange)
@@ -246,7 +273,7 @@ export default function Header() {
   // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <>
-      {/* TOP HEADER — visible solo cuando el hero está en pantalla */}
+      {/* TOP HEADER — se mantiene como lo tenías: visible cuando hero está en pantalla */}
       <header
         className={[
           "sticky top-0 z-50 border-b border-black/10 bg-white/75 backdrop-blur-sm transition-opacity duration-300",
@@ -280,28 +307,30 @@ export default function Header() {
         </div>
       </header>
 
-      {/* FLOATING PILL — visible cuando el hero está fuera y el footer tampoco */}
+      {/* FLOATING PILL — SOLO UP + hero out + footer out */}
       <div
         className={[
           "fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-50",
-          "transition-all duration-300 ease-out",
+          "transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
           showBottom && !footerInView
             ? "translate-y-0 opacity-100"
             : "translate-y-3 opacity-0 pointer-events-none",
         ].join(" ")}
       >
-        <div className="
-          h-14
-          w-[min(1120px,calc(100vw-1.5rem))]
-          rounded-full
-          bg-white
-          border border-black/10
-          ring-1 ring-black/[0.02]
-          shadow-[0_16px_45px_rgba(0,0,0,0.12)]
-          flex items-center justify-between
-          px-5 sm:px-7
-          overflow-hidden
-        ">
+        <div
+          className="
+            h-14
+            w-[min(1120px,calc(100vw-1.5rem))]
+            rounded-full
+            bg-white
+            border border-black/10
+            ring-1 ring-black/[0.02]
+            shadow-[0_16px_45px_rgba(0,0,0,0.12)]
+            flex items-center justify-between
+            px-5 sm:px-7
+            overflow-hidden
+          "
+        >
           <Link href={"/" + activeLang} className={brandFloat}>
             Ninan Studio
           </Link>
@@ -341,15 +370,17 @@ export default function Header() {
             className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="
-            absolute left-1/2 -translate-x-[40%] top-16
-            w-[min(280px,calc(100vw-2rem))]
-            rounded-xl
-            bg-white/80 backdrop-blur-md
-            border border-black/10
-            shadow-[0_8px_32px_rgba(0,0,0,0.10)]
-            p-5
-          ">
+          <div
+            className="
+              absolute left-1/2 -translate-x-[40%] top-16
+              w-[min(280px,calc(100vw-2rem))]
+              rounded-xl
+              bg-white/80 backdrop-blur-md
+              border border-black/10
+              shadow-[0_8px_32px_rgba(0,0,0,0.10)]
+              p-5
+            "
+          >
             <div className="flex items-center justify-between">
               <Link
                 href={"/" + activeLang}

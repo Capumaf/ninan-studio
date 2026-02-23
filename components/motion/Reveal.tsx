@@ -29,7 +29,7 @@ export function Reveal({
   const Comp = motion[as] as any
 
   const variants: Variants = {
-    hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 },
+    hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 },
     show: { opacity: 1, y: 0 },
   }
 
@@ -40,7 +40,7 @@ export function Reveal({
       initial="hidden"
       whileInView="show"
       viewport={{ once, amount, margin: "0px 0px -15% 0px" }}
-      transition={reduce ? { duration: 0 } : { delay, duration: 0.95, ease: easeSettle }}
+      transition={reduce ? { duration: 0 } : { delay, duration: 0.62, ease: easeSettle }}
     >
       {children}
     </Comp>
@@ -63,8 +63,8 @@ export function RevealGroup({
   as = "div",
   once = true,
   amount = 0.75,
-  delayChildren = 0.06,
-  stagger = 0.12,
+  delayChildren = 0,
+  stagger = 0.06,
 }: RevealGroupProps) {
   const reduce = useReducedMotion()
   const Comp = motion[as] as any

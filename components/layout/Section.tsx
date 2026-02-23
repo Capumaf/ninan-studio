@@ -52,6 +52,8 @@ export default function Section({
     return () => io.disconnect();
   }, [reveal]);
 
+  const hasHeader = !!(kicker || title || description);
+
   return (
     <section
       id={id}
@@ -59,12 +61,26 @@ export default function Section({
       className={`section ${reveal ? "reveal" : ""} ${visible ? "is-visible" : ""} ${className}`.trim()}
     >
       <Container className={containerClassName}>
-        {(kicker || title || description) && (
-          <header className="mb-12 max-w-[72ch]">
-            {kicker && <p className="kicker">{kicker}</p>}
-            {title && <h2 className="h2 mt-4">{title}</h2>}
-            {description && <p className="p mt-6">{description}</p>}
-          </header>
+        {hasHeader && (
+          <>
+            {/* Masthead editorial: kicker + 1 hairline */}
+            <header className="mb-10 lg:mb-12">
+              {kicker && <p className="kicker">{kicker}</p>}
+              <div className="mt-3 border-t border-black/10" />
+            </header>
+
+            {/* Opcional: título/descripcion (si lo usas en secciones no-spread) */}
+            {(title || description) && (
+              <div className="mb-10 lg:mb-12">
+                {title && <h2 className="h2 max-w-[20ch]">{title}</h2>}
+                {description && (
+                  <p className="p mt-6 lg:mt-7 max-w-[52ch]">
+                    {description}
+                  </p>
+                )}
+              </div>
+            )}
+          </>
         )}
 
         {children}

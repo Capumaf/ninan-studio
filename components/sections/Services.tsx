@@ -1,7 +1,7 @@
 "use client"
 
-import { useMemo } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useMemo, useState } from "react"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 
 export default function Services() {
@@ -9,174 +9,234 @@ export default function Services() {
   const s = t.services
 
   const reduceMotion = useReducedMotion()
-  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
+  const [openId, setOpenId] = useState<string | null>(
+    s.blocks?.length ? (s.blocks[0].id ?? s.blocks[0].title) : null
+  )
 
-  // Base como Work: una respiración por bloque (no “UI cascade”)
+  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
+  const vp = { once: true, margin: "-10%" } as const
+
   const itemVariants = useMemo(
     () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 },
+      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
       show: reduceMotion
-        ? { opacity: 1 }
+        ? { opacity: 1, y: 0 }
         : {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.62, ease: easeEditorial },
+            transition: { duration: 0.68, ease: easeEditorial },
           },
     }),
     [reduceMotion]
   )
 
-  // Metadata 6px (solo si la usas en algunos puntos)
   const metaVariants = useMemo(
     () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 },
+      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 },
       show: reduceMotion
-        ? { opacity: 1 }
+        ? { opacity: 1, y: 0 }
         : {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.52, ease: easeEditorial },
+            transition: { duration: 0.55, ease: easeEditorial },
           },
     }),
     [reduceMotion]
   )
 
   return (
-    <section id="services" className="section !before:hidden">
+    <section id="services" className="section">
       <div className="container">
-        {/* Masthead — MISMA BASE QUE WORK */}
-        <div className="mb-12 flex items-center gap-6 lg:mb-16">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
+        <div className="mb-10 lg:mb-12">
+          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
             {s.kicker}
           </p>
-          <div className="h-px flex-1 bg-black/10" />
+          <div className="mt-3 border-t border-black/10" />
         </div>
 
-        {/* Grid — MISMA BASE QUE WORK: 50/50 + tensión (gap más contenido) */}
-        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
-          {/* LEFT — sticky narrativa (como Work) */}
-          <div className="lg:sticky lg:top-24">
+        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
+          <div className="lg:sticky lg:top-24 xl:top-28 self-start">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
               {s.title}
             </h2>
 
-            <div className="mt-7 max-w-[52ch]">
+            <div className="mt-6 lg:mt-7 max-w-[52ch]">
               <p className="text-base leading-[1.75] text-black/70">{s.intro}</p>
+            </div>
+
+            <div className="mt-10 max-w-[52ch]">
+              <motion.p
+                className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
+                variants={metaVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={vp}
+              >
+                {s.howItWorks.kicker}
+              </motion.p>
+
+              <ul className="mt-6 space-y-4">
+                {s.howItWorks.bullets.map((b: string, i: number) => (
+                  <li
+                    key={`${i}-${b}`}
+                    className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
+                  >
+                    <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
+                    <p className="text-sm leading-[1.7] text-black/70">{b}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-8">
+                {/* FIX: faltaba el <a */}
+                <a
+                  href={`/${lang}#contact`}
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                >
+                  {s.howItWorks.cta}
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* RIGHT — lomo estructural + contenido (como Work) */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-12">
-            {/* Hairline mobile cuando desaparece border lateral (como Work) */}
-            <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
+          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
+            <div className="lg:hidden border-t border-black/10 pt-10" />
 
-            {/* Contenido capado (sistema) */}
             <div className="max-w-[52ch]">
-              {/* Una estructura clara: divide-y (hairlines estructurales, no decorativas) */}
               <ul className="divide-y divide-black/10">
-                {/* HOW IT WORKS — integrado en la columna de contenido (no un “bloque aparte”) */}
-                <motion.li
-                  className="py-8"
-                  variants={itemVariants}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-5%" }}
-                >
-                  <motion.p
-                    className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
-                    variants={metaVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-5%" }}
-                  >
-                    {s.howItWorks.kicker}
-                  </motion.p>
+                {s.blocks.map((b: any, idx: number) => {
+                  const id = (b.id ?? b.title) as string
+                  const isOpen = openId === id
+                  const indexLabel = String(idx + 1).padStart(2, "0")
+                  const hasMeta = !!(b.time && String(b.time).trim().length > 0)
 
-                  <ul className="mt-6 space-y-4">
-                    {s.howItWorks.bullets.map((b, i) => (
-                      <li
-                        key={`${i}-${b}`}
-                        className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
-                      >
-                        <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                        <p className="text-sm leading-[1.7] text-black/70">{b}</p>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-8">
-                    <a
-                      href={`/${lang}#contact`}
-                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                  return (
+                    <motion.li
+                      key={id}
+                      className="group"
+                      variants={itemVariants}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={vp}
                     >
-                      {s.howItWorks.cta}
-                    </a>
-                  </div>
-                </motion.li>
+                      <button
+                        type="button"
+                        onClick={() => setOpenId(isOpen ? null : id)}
+                        className="w-full py-8 text-left focus:outline-none"
+                        aria-expanded={isOpen}
+                        aria-controls={`services-panel-${id}`}
+                      >
+                        <div className="grid grid-cols-[20px_minmax(0,1fr)] gap-5">
+                          <span
+                            aria-hidden="true"
+                            className="mt-[3px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
+                          >
+                            {indexLabel}
+                          </span>
 
-                {/* OFFERS — cada bloque como capítulo/entrada editorial */}
-                {s.blocks.map((b, bi) => (
+                          <div className="min-w-0">
+                            <div className="flex items-baseline justify-between gap-6">
+                              <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
+                                {b.title}
+                              </h3>
+
+                              {hasMeta && (
+                                <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
+                                  {b.time}
+                                </span>
+                              )}
+                            </div>
+
+                            {b.desc ? (
+                              <p className="mt-2 text-sm leading-[1.7] text-black/60">
+                                {b.desc}
+                              </p>
+                            ) : null}
+                          </div>
+                        </div>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            key={`panel-${id}`}
+                            id={`services-panel-${id}`}
+                            initial={
+                              reduceMotion
+                                ? { opacity: 1, height: "auto" }
+                                : { opacity: 0, height: 0 }
+                            }
+                            animate={
+                              reduceMotion
+                                ? { opacity: 1, height: "auto" }
+                                : { opacity: 1, height: "auto" }
+                            }
+                            exit={
+                              reduceMotion
+                                ? { opacity: 1, height: "auto" }
+                                : { opacity: 0, height: 0 }
+                            }
+                            transition={
+                              reduceMotion
+                                ? { duration: 0 }
+                                : {
+                                    duration: 0.56,
+                                    ease: easeEditorial,
+                                    opacity: { duration: 0.22, ease: easeEditorial },
+                                  }
+                            }
+                            className="overflow-hidden"
+                          >
+                            <div className="pb-8">
+                              {Array.isArray(b.bullets) && b.bullets.length ? (
+                                <ul className="mt-1 space-y-4">
+                                  {b.bullets.map((x: string, xi: number) => (
+                                    <li
+                                      key={`${xi}-${x}`}
+                                      className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
+                                    >
+                                      <span
+                                        aria-hidden
+                                        className="mt-[10px] h-px w-10 bg-black/20"
+                                      />
+                                      <p className="text-sm leading-[1.7] text-black/70">
+                                        {x}
+                                      </p>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : null}
+
+                              {b.cta ? (
+                                <div className="mt-8">
+                                  {/* FIX: faltaba el <a */}
+                                  <a
+                                    href={`/${lang}#contact`}
+                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                                  >
+                                    {b.cta}
+                                  </a>
+                                </div>
+                              ) : null}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.li>
+                  )
+                })}
+
+                {s.close ? (
                   <motion.li
-                    key={`${bi}-${b.title}`}
                     className="py-8"
                     variants={itemVariants}
                     initial="hidden"
                     whileInView="show"
-                    viewport={{ once: true, margin: "-5%" }}
+                    viewport={vp}
                   >
-                    <div className="flex flex-wrap items-baseline justify-between gap-6">
-                      <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
-                        {b.title}
-                      </h3>
-
-                      <motion.p
-                        className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
-                        variants={metaVariants}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, margin: "-5%" }}
-                      >
-                        {b.time}
-                      </motion.p>
-                    </div>
-
-                    <p className="mt-6 text-base leading-[1.75] text-black/70">
-                      {b.desc}
-                    </p>
-
-                    <ul className="mt-7 space-y-4">
-                      {b.bullets.map((x, xi) => (
-                        <li
-                          key={`${xi}-${x}`}
-                          className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
-                        >
-                          <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                          <p className="text-sm leading-[1.7] text-black/70">{x}</p>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="mt-8">
-                      <a
-                        href={`/${lang}#contact`}
-                        className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
-                      >
-                        {b.cta}
-                      </a>
-                    </div>
+                    <p className="text-base leading-[1.75] text-black/70">{s.close}</p>
                   </motion.li>
-                ))}
-
-                {/* CLOSE */}
-                <motion.li
-                  className="py-8"
-                  variants={itemVariants}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-5%" }}
-                >
-                  <p className="text-base leading-[1.75] text-black/70">{s.close}</p>
-                </motion.li>
+                ) : null}
               </ul>
             </div>
           </div>

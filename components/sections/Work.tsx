@@ -17,9 +17,9 @@ export default function Work() {
 
   const itemVariants = useMemo(
     () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 14 },
+      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
       show: reduceMotion
-        ? { opacity: 1 }
+        ? { opacity: 1, y: 0 }
         : {
             opacity: 1,
             y: 0,
@@ -31,13 +31,13 @@ export default function Work() {
 
   const metaVariants = useMemo(
     () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 },
+      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 },
       show: reduceMotion
-        ? { opacity: 1 }
+        ? { opacity: 1, y: 0 }
         : {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.55, ease: easeEditorial, delay: 0.08 },
+            transition: { duration: 0.55, ease: easeEditorial },
           },
     }),
     [reduceMotion]
@@ -45,13 +45,13 @@ export default function Work() {
 
   const statusVariants = useMemo(
     () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 4 },
+      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 },
       show: reduceMotion
-        ? { opacity: 1 }
+        ? { opacity: 1, y: 0 }
         : {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.5, ease: easeEditorial, delay: 0.16 },
+            transition: { duration: 0.5, ease: easeEditorial },
           },
     }),
     [reduceMotion]
@@ -60,39 +60,37 @@ export default function Work() {
   return (
     <section id="work" className="section !before:hidden">
       <div className="container">
-        {/* Masthead EXACTO como About (FIX: w.kickerRight en lugar de w.kicker) */}
-        <div className="mb-16 flex items-center gap-6 lg:mb-20">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
+        {/* Masthead (spread system): kicker arriba + hairline debajo */}
+        <div className="mb-10 lg:mb-12">
+          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
             {w.kickerRight}
           </p>
-          <div className="h-px flex-1 bg-black/10" />
+          <div className="mt-3 border-t border-black/10" />
         </div>
 
-        {/* Grid EXACTO como About */}
-        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-24">
-          {/* LEFT — sticky narrativa (igual que About) */}
-          <div className="lg:sticky lg:top-28">
+        {/* Spread grid 50/50 (constante) */}
+        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
+          {/* LEFT — sticky narrativa (constante) */}
+          <div className="lg:sticky lg:top-24 xl:top-28 self-start">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
               {w.title}
             </h2>
 
-            <div className="mt-10 max-w-[52ch]">
+            <div className="mt-6 lg:mt-7 max-w-[52ch]">
               <p className="text-base leading-[1.75] text-black/70">{w.desc}</p>
             </div>
           </div>
 
-          {/* RIGHT — border-l + lista (igual que About) */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-14">
-            {/* Hairline en mobile EXACTO como About */}
-            <div className="mb-10 h-px w-full bg-black/10 lg:hidden" />
+          {/* RIGHT — rail fijo (constante) */}
+          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
+            {/* Hairline en mobile cuando desaparece el rail */}
+            <div className="lg:hidden border-t border-black/10 pt-10" />
 
             <div className="max-w-[52ch]">
               <ul className="divide-y divide-black/10">
                 {w.items.map((item, idx) => {
                   const isOpen = openId === item.id
-                  const hasStatus = !!(
-                    item.status && item.status.trim().length > 0
-                  )
+                  const hasStatus = !!(item.status && item.status.trim().length > 0)
                   const indexLabel = String(idx + 1).padStart(2, "0")
 
                   return (
@@ -112,7 +110,6 @@ export default function Work() {
                         aria-controls={`work-panel-${item.id}`}
                       >
                         <div className="grid grid-cols-[20px_minmax(0,1fr)] gap-5">
-                          {/* Índice EXACTO como About */}
                           <span
                             aria-hidden="true"
                             className="mt-[3px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
@@ -158,19 +155,13 @@ export default function Work() {
                             key={`panel-${item.id}`}
                             id={`work-panel-${item.id}`}
                             initial={
-                              reduceMotion
-                                ? { opacity: 1 }
-                                : { height: 0, opacity: 0 }
+                              reduceMotion ? { opacity: 1, height: "auto" } : { height: 0, opacity: 0 }
                             }
                             animate={
-                              reduceMotion
-                                ? { opacity: 1 }
-                                : { height: "auto", opacity: 1 }
+                              reduceMotion ? { opacity: 1, height: "auto" } : { height: "auto", opacity: 1 }
                             }
                             exit={
-                              reduceMotion
-                                ? { opacity: 1 }
-                                : { height: 0, opacity: 0 }
+                              reduceMotion ? { opacity: 1, height: "auto" } : { height: 0, opacity: 0 }
                             }
                             transition={
                               reduceMotion
@@ -178,34 +169,31 @@ export default function Work() {
                                 : {
                                     duration: 0.58,
                                     ease: easeEditorial,
-                                    opacity: { duration: 0.24, ease: "easeOut" },
+                                    opacity: { duration: 0.22, ease: easeEditorial },
                                   }
                             }
                             className="overflow-hidden"
                           >
                             <div className="pb-8">
-                              {/* Sin indent raro: misma columna de texto */}
-                              <div className="ml-0">
-                                <p className="text-base leading-[1.75] text-black/70">
-                                  {item.description}
-                                </p>
+                              <p className="text-base leading-[1.75] text-black/70">
+                                {item.description}
+                              </p>
 
-                                <div className="mt-6 flex flex-wrap items-center gap-6">
-                                  {item.href ? (
-                                    <a
-                                      href={item.href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
-                                    >
-                                      {w.viewLive}
-                                    </a>
-                                  ) : (
-                                    <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-                                      {w.linkOnRequest}
-                                    </span>
-                                  )}
-                                </div>
+                              <div className="mt-6 flex flex-wrap items-center gap-6">
+                                {item.href ? (
+                                  <a
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                                  >
+                                    {w.viewLive}
+                                  </a>
+                                ) : (
+                                  <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
+                                    {w.linkOnRequest}
+                                  </span>
+                                )}
                               </div>
                             </div>
                           </motion.div>

@@ -57,11 +57,14 @@
 /* =========================
    LAYOUT (SECTION / CONTAINER)
    ========================= */
+/* =========================
+   LAYOUT (SECTION / CONTAINER)
+   ========================= */
 @layer components {
   .section {
     scroll-margin-top: 120px;
     padding-block: 6rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    border-bottom: none; /* ← LÍNEA ELIMINADA */
   }
 
   @media (min-width: 768px) {

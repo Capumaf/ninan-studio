@@ -1,140 +1,76 @@
 // content/i18n.ts
+// Ninan Studio — i18n completo EN + ES + DE
+// Basado en el perfil real del estudio
+// Feb 2026
 
 export const languages = ["en", "de", "es"] as const
 export type Lang = (typeof languages)[number]
 
 export type Dictionary = {
   hero: {
-    t1: string
-    t2: string
-    t3: string
-    t4: string
-    p1: string
-    p2: string
-    start: string
-    view: string
-    based: string
-    issue: string
-    place: string
-    est: string
-    principle: string
-    m1: string
-    m2: string
-    m3: string
-    available: string
+    t1: string; t2: string; t3: string; t4: string
+    p1: string; p2: string; start: string; view: string
+    based: string; issue: string; place: string; est: string
+    principle: string; m1: string; m2: string; m3: string; available: string
   }
-
   nav: {
-    about: string
-    work: string
-    services: string
-    process: string
-    contact: string
-    processCta: string
-    contactCta: string
-    menu: string
-    close: string
+    about: string; work: string; services: string; process: string
+    contact: string; processCta: string; contactCta: string
+    menu: string; close: string
   }
-
   about: {
-    kicker: string
-    title: string
-    p1: string
-    p2: string
+    kicker: string; title: string; p1: string; p2: string
     bullets: readonly string[]
   }
-
   work: {
-    kickerLeft: string
-    kickerRight: string
-    title: string
-    desc: string
-    more: string
-    sideNote: string
-    viewLive: string
-    linkOnRequest: string
+    kickerLeft: string; kickerRight: string; title: string; desc: string
+    more: string; sideNote: string; viewLive: string; linkOnRequest: string
     items: readonly {
-      id: string
-      name: string
-      meta: string
-      status: string
-      description: string
-      href?: string
+      id: string; name: string; meta: string; status: string
+      description: string; href?: string
     }[]
   }
-
   services: {
-    kicker: string
-    title: string
-    intro: string
-    howItWorks: {
-      kicker: string
-      bullets: readonly string[]
-      cta: string
-    }
+    kicker: string; title: string; intro: string
+    howItWorks: { kicker: string; bullets: readonly string[]; cta: string }
     blocks: readonly {
-      title: string
-      time: string
-      desc: string
-      bullets: readonly string[]
-      cta: string
+      title: string; time: string; desc: string
+      bullets: readonly string[]; cta: string
     }[]
     close: string
   }
-
   process: {
-    kicker: string
-    title: string
-    intro: string
-    footer: string
+    kicker: string; title: string; intro: string; footer: string
     steps: readonly {
-      step: string
-      title: string
-      desc: string
-      bullets: readonly string[]
+      step: string; title: string; desc: string; bullets: readonly string[]
     }[]
   }
-
   footer: {
-    brand: string
-    claim: string
-    links: {
-      items: readonly {
-        label: string
-        href: string
-      }[]
-    }
-    contact: {
-      email: string
-      location: string
-    }
+    brand: string; claim: string
+    links: { items: readonly { label: string; href: string }[] }
+    contact: { email: string; location: string }
     bottom: string
   }
-
   contact: {
-    kicker: string
-    title: string
-    body: string
-    ctaEmail: string
-    ctaWhatsapp: string
-    form: {
-      name: string
-      email: string
-      details: string
-      submit: string
-    }
+    kicker: string; title: string; body: string
+    ctaEmail: string; ctaWhatsapp: string
+    form: { name: string; email: string; details: string; submit: string }
     footerNote: string
   }
 }
 
 export const i18n = {
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ENGLISH
+  // ═══════════════════════════════════════════════════════════════════════════
   en: {
     hero: {
       t1: "Clarity.",
       t2: "Structure.",
       t3: "Trust.",
       t4: "",
-      p1: "Editorial websites for artists, independent professionals, and small businesses.",
+      p1: "Editorial websites and digital systems for artists, independent professionals, and small businesses.",
       p2: "Built to be taken seriously — calm, structured, and conversion-ready.",
       start: "Start project",
       view: "View process",
@@ -164,13 +100,13 @@ export const i18n = {
     about: {
       kicker: "ABOUT",
       title: "Clarity, structure and execution.",
-      p1: "Ninan Studio is an independent digital studio building structured, performance-driven websites and automation systems for modern professionals.",
-      p2: "With a background in Innovation Design Management and strategic marketing, I combine positioning, UX thinking and technical execution.",
+      p1: "Ninan Studio is an independent digital studio based in Berlin-Brandenburg, with a background in Innovation Design Management, e-commerce operations and international projects across Europe and Latin America. Over three years of hands-on experience in Germany, working across web development, data analytics and AI integration.",
+      p2: "The studio builds structured, performance-driven websites and automation systems for artists, service providers, small businesses and international entrepreneurs — without unnecessary complexity, and with transparent, fixed-scope engagements.",
       bullets: [
-        "International communication (English / German / Spanish)",
-        "Strategic positioning + real implementation",
-        "Clean systems: scalable UI, structured code",
-        "Automation and AI used where they add real value",
+        "International communication — English, German and Spanish",
+        "Web development, process automation and AI integration",
+        "Focused on SMEs, creatives and independent professionals",
+        "GDPR-compliant systems · lean structure · fixed-scope projects",
       ],
     },
 
@@ -178,7 +114,7 @@ export const i18n = {
       kickerLeft: "BUILT TO FIT",
       kickerRight: "WORK",
       title: "Work",
-      desc: "A curated selection. Titles stay minimal—open a project to read the context.",
+      desc: "A curated selection. Titles stay minimal — open a project to read the context.",
       more: "More work available on request.",
       sideNote: "A small archive of work across identity, interface and build.",
       viewLive: "View live",
@@ -227,28 +163,32 @@ export const i18n = {
       kicker: "SERVICES",
       title: "Structured digital systems",
       intro:
-        "Editorial design + performance + automation — packaged as clear, outcome-driven engagements.",
+        "Web development, process automation and AI integration — delivered as clear, fixed-scope engagements for SMEs, creatives and independent professionals.",
       howItWorks: {
         kicker: "HOW IT WORKS",
-        bullets: ["Short strategy call", "Fixed scope + timeline", "Build → launch → polish"],
+        bullets: [
+          "Short strategy call — goals, scope, constraints",
+          "Fixed proposal — timeline, deliverables, price",
+          "Build → launch → optional maintenance",
+        ],
         cta: "Request availability",
       },
       blocks: [
         {
           title: "Web",
           time: "2–4 WEEKS",
-          desc: "One-page landings and structured websites — calm, editorial and built to perform.",
+          desc: "One-page landings and structured multi-section websites — editorial, performance-driven and GDPR-compliant.",
           bullets: [
             "Next.js App Router + Tailwind",
             "Design system + reusable components",
-            "Performance + accessibility",
+            "Performance, accessibility and GDPR",
           ],
           cta: "Request availability",
         },
         {
           title: "Automation",
           time: "1–2 WEEKS",
-          desc: "Workflows and integrations that remove manual work and reduce operational friction.",
+          desc: "Workflows and integrations that remove manual work — booking systems, data pipelines, client communication flows.",
           bullets: [
             "Zapier/Make-style flows or custom scripts",
             "APIs, webhooks, dashboards",
@@ -259,23 +199,23 @@ export const i18n = {
         {
           title: "AI",
           time: "1–2 WEEKS",
-          desc: "Practical AI integrations that improve support, internal tools and customer journeys.",
+          desc: "Practical AI integrations that support — not replace — human work. Chatbots, analysis tools, content assistants.",
           bullets: [
-            "AI-assisted flows (not gimmicks)",
+            "Ethical AI integration (no gimmicks)",
             "Chat/assistant UX patterns",
-            "Scope clarity + security",
+            "Transparent scope + GDPR security",
           ],
           cta: "Explore AI use-cases",
         },
       ],
       close:
-        "Engagements are scoped to fit the problem. Clear plan, timeline and fixed-scope proposal.",
+        "All engagements are fixed-scope. Clear plan, defined timeline, no surprises — from €1,000 per project.",
     },
 
     process: {
       kicker: "PROCESS",
       title: "How we work",
-      intro: "A structured workflow — refined, transparent and designed for reliable delivery.",
+      intro: "A structured workflow — transparent, reliable and designed for independent professionals and small teams.",
       footer: "Typical timeline: 2–4 weeks depending on scope.",
       steps: [
         {
@@ -294,13 +234,13 @@ export const i18n = {
           step: "STEP 03",
           title: "Build",
           desc: "Next.js + Tailwind implementation, QA and performance.",
-          bullets: ["Clean component architecture", "Accessibility checks", "Performance optimisation"],
+          bullets: ["Clean component architecture", "Accessibility + GDPR checks", "Performance optimisation"],
         },
         {
           step: "STEP 04",
           title: "Launch",
           desc: "Deployment, testing and handoff.",
-          bullets: ["Vercel deployment", "Final QA", "Documentation if required"],
+          bullets: ["Vercel deployment", "Final QA", "Documentation + optional maintenance plan"],
         },
       ],
     },
@@ -318,15 +258,15 @@ export const i18n = {
       },
       contact: {
         email: "hello@ninan.studio",
-        location: "Berlin — Europe",
+        location: "Berlin-Brandenburg — Europe",
       },
       bottom: "© 2026 NINAN STUDIO — ALL RIGHTS RESERVED.",
     },
 
     contact: {
       kicker: "CONTACT",
-      title: "Let’s talk",
-      body: "Briefly describe your project, timeline and goals.",
+      title: "Let's talk",
+      body: "Briefly describe your project, timeline and goals. Response within 24–48h.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -339,13 +279,16 @@ export const i18n = {
     },
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DEUTSCH
+  // ═══════════════════════════════════════════════════════════════════════════
   de: {
     hero: {
       t1: "Klarheit.",
       t2: "Struktur.",
       t3: "Vertrauen.",
       t4: "",
-      p1: "Editoriale Websites für Künstler:innen, unabhängige Professionals und kleine Unternehmen.",
+      p1: "Editoriale Websites und digitale Systeme für Künstler:innen, unabhängige Professionals und kleine Unternehmen.",
       p2: "Gemacht, um ernst genommen zu werden — ruhig, strukturiert und conversion-ready.",
       start: "Projekt starten",
       view: "Prozess ansehen",
@@ -375,13 +318,13 @@ export const i18n = {
     about: {
       kicker: "ÜBER",
       title: "Klarheit, Struktur und Umsetzung.",
-      p1: "Ninan Studio ist ein unabhängiges Digitalstudio und entwickelt strukturierte, performance-orientierte Websites und Automationssysteme für moderne Professionals.",
-      p2: "Mit einem Hintergrund in Innovation Design Management und strategischem Marketing verbinde ich Positionierung, UX-Denken und technische Umsetzung.",
+      p1: "Ninan Studio ist ein unabhängiges Digitalstudio mit Sitz in Berlin-Brandenburg. Hintergrund in Innovation Design Management, E-Commerce-Logistik und internationalen Projekten in Europa und Lateinamerika — mit über drei Jahren Berufserfahrung in Deutschland in den Bereichen Webentwicklung, Datenanalyse und KI-Integration.",
+      p2: "Das Studio entwickelt strukturierte, performance-orientierte Websites und Automatisierungssysteme für Künstler:innen, Dienstleistende, Kleinunternehmen und internationale Unternehmer:innen — ohne unnötige Komplexität, mit klaren Festpreisangeboten und DSGVO-konformer Umsetzung.",
       bullets: [
         "Internationale Kommunikation (Englisch / Deutsch / Spanisch)",
-        "Strategische Positionierung + echte Umsetzung",
-        "Saubere Systeme: skalierbare UI, strukturierter Code",
-        "Automation und KI nur dort, wo sie echten Mehrwert bringen",
+        "Webentwicklung, Prozessautomatisierung und KI-Integration",
+        "Fokus auf KMU, Kreative und Selbstständige in Berlin-Brandenburg",
+        "DSGVO-konforme Systeme · schlanke Kostenstruktur · Festpreisprojekte",
       ],
     },
 
@@ -419,7 +362,7 @@ export const i18n = {
           meta: "Visuelle Identität · Website · Full-stack (light)",
           status: "",
           description:
-            "Identität + Website für eine Kanzlei mit starkem Struktur-Fokus: Rechtsgebiete, klare Navigation und direkte Kontaktwege. End-to-end umgesetzt, inkl. Frontend und leichter Backend/Database-Arbeit, wo nötig.",
+            "Identität + Website für eine Kanzlei mit starkem Strukturfokus: Rechtsgebiete, klare Navigation und direkte Kontaktwege. End-to-end umgesetzt, inkl. Frontend und leichter Backend/Datenbankarbeit.",
           href: "https://rfcabogados.com/",
         },
         {
@@ -428,7 +371,7 @@ export const i18n = {
           meta: "Visuelle Identität · Website",
           status: "",
           description:
-            "Service-Website für schnelles Scannen und sichere Navigation. Klare Service-Struktur, reduzierte UI und ein Layout ohne Überladung — gebaut für saubere Präsentation und geringe Reibung.",
+            "Service-Website für schnelles Scannen und sichere Navigation. Klare Service-Struktur, reduzierte UI und ein Layout ohne Überladung — für saubere Präsentation und geringe Reibung.",
           href: "https://www.pnp-remodeling.com/",
         },
       ],
@@ -438,28 +381,32 @@ export const i18n = {
       kicker: "LEISTUNGEN",
       title: "Strukturierte digitale Systeme",
       intro:
-        "Editorial Design + Performance + Automation — als klare, outcome-getriebene Engagements verpackt.",
+        "Webentwicklung, Prozessautomatisierung und KI-Integration — als klare Festpreisangebote für KMU, Kreative und Selbstständige.",
       howItWorks: {
-        kicker: "SO FUNKTIONIERT’S",
-        bullets: ["Kurzer Strategie-Call", "Fester Umfang + Timeline", "Build → Launch → Feinschliff"],
+        kicker: "SO FUNKTIONIERT'S",
+        bullets: [
+          "Kurzer Strategie-Call — Ziele, Scope, Rahmenbedingungen",
+          "Festpreisangebot — Timeline, Lieferumfang, kein Overrun",
+          "Build → Launch → optionale Wartung",
+        ],
         cta: "Verfügbarkeit anfragen",
       },
       blocks: [
         {
           title: "Web",
           time: "2–4 WOCHEN",
-          desc: "Onepager und strukturierte Websites — ruhig, editorial und performance-orientiert.",
+          desc: "Onepager und strukturierte Websites — editorial, performance-orientiert und DSGVO-konform.",
           bullets: [
             "Next.js App Router + Tailwind",
             "Designsystem + wiederverwendbare Komponenten",
-            "Performance + Accessibility",
+            "Performance, Accessibility und DSGVO",
           ],
           cta: "Verfügbarkeit anfragen",
         },
         {
           title: "Automation",
           time: "1–2 WOCHEN",
-          desc: "Workflows und Integrationen, die manuelle Arbeit reduzieren und Reibung entfernen.",
+          desc: "Workflows und Integrationen, die manuelle Arbeit reduzieren — Buchungssysteme, Datenpipelines, Kundenkommunikation.",
           bullets: [
             "Zapier/Make-Flows oder Custom Scripts",
             "APIs, Webhooks, Dashboards",
@@ -470,23 +417,23 @@ export const i18n = {
         {
           title: "KI",
           time: "1–2 WOCHEN",
-          desc: "Praktische KI-Integrationen für Support, interne Tools und Customer Journeys.",
+          desc: "Praxisnahe KI-Integrationen, die menschliche Arbeit unterstützen — kein Ersatz, sondern Verstärkung.",
           bullets: [
-            "KI-gestützte Abläufe (ohne Gimmicks)",
+            "Ethische KI-Integration (keine Gimmicks)",
             "Chat/Assistant UX-Patterns",
-            "Scope-Klarheit + Sicherheit",
+            "Klarer Scope + DSGVO-Sicherheit",
           ],
           cta: "KI Use-Cases prüfen",
         },
       ],
       close:
-        "Engagements werden passend zum Problem definiert. Klarer Plan, Timeline und Fixed-Scope-Angebot.",
+        "Alle Projekte werden als Festpreisangebot definiert. Klarer Plan, definierte Timeline, keine Überraschungen — ab 1.000 € pro Projekt.",
     },
 
     process: {
       kicker: "PROZESS",
       title: "So arbeiten wir",
-      intro: "Ein strukturierter Workflow — verfeinert, transparent und für verlässliche Lieferung gemacht.",
+      intro: "Ein strukturierter Workflow — transparent, verlässlich und auf die Anforderungen kleiner Teams ausgerichtet.",
       footer: "Typische Timeline: 2–4 Wochen je nach Umfang.",
       steps: [
         {
@@ -505,13 +452,13 @@ export const i18n = {
           step: "SCHRITT 03",
           title: "Build",
           desc: "Next.js + Tailwind Umsetzung, QA und Performance.",
-          bullets: ["Saubere Komponenten-Architektur", "Accessibility Checks", "Performance-Optimierung"],
+          bullets: ["Saubere Komponenten-Architektur", "Accessibility + DSGVO-Checks", "Performance-Optimierung"],
         },
         {
           step: "SCHRITT 04",
           title: "Launch",
           desc: "Deployment, Tests und Handoff.",
-          bullets: ["Vercel Deployment", "Finale QA", "Dokumentation bei Bedarf"],
+          bullets: ["Vercel Deployment", "Finale QA", "Dokumentation + optionaler Wartungsplan"],
         },
       ],
     },
@@ -529,7 +476,7 @@ export const i18n = {
       },
       contact: {
         email: "hello@ninan.studio",
-        location: "Berlin — Europa",
+        location: "Berlin-Brandenburg — Europa",
       },
       bottom: "© 2026 NINAN STUDIO — ALLE RECHTE VORBEHALTEN.",
     },
@@ -537,7 +484,7 @@ export const i18n = {
     contact: {
       kicker: "KONTAKT",
       title: "Lass uns sprechen",
-      body: "Beschreibe kurz dein Projekt, deine Timeline und deine Ziele.",
+      body: "Beschreibe kurz dein Projekt, deine Timeline und deine Ziele. Antwort innerhalb von 24–48 Stunden.",
       ctaEmail: "E-Mail",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -550,13 +497,16 @@ export const i18n = {
     },
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ESPAÑOL
+  // ═══════════════════════════════════════════════════════════════════════════
   es: {
     hero: {
       t1: "Claridad.",
       t2: "Estructura.",
       t3: "Confianza.",
       t4: "",
-      p1: "Websites editoriales para artistas, profesionales independientes y pequeños negocios.",
+      p1: "Websites editoriales y sistemas digitales para artistas, profesionales independientes y pequeños negocios.",
       p2: "Diseñadas para que te tomen en serio — calmadas, estructuradas y listas para convertir.",
       start: "Iniciar proyecto",
       view: "Ver proceso",
@@ -586,13 +536,13 @@ export const i18n = {
     about: {
       kicker: "ACERCA DE",
       title: "Claridad, estructura y ejecución.",
-      p1: "Ninan Studio es un estudio digital independiente que crea websites estructuradas, orientadas al rendimiento, y sistemas de automatización para profesionales modernos.",
-      p2: "Con formación en Innovation Design Management y marketing estratégico, combino posicionamiento, pensamiento UX y ejecución técnica.",
+      p1: "Ninan Studio es un estudio digital independiente con base en Berlín-Brandenburg, con formación en Innovation Design Management, operaciones de e-commerce y proyectos internacionales en Europa y Latinoamérica. Más de tres años de experiencia profesional en Alemania en desarrollo web, análisis de datos e integración de IA.",
+      p2: "El estudio construye websites estructuradas y sistemas de automatización para artistas, proveedores de servicios, pequeños negocios y emprendedores internacionales — sin complejidad innecesaria, con propuestas de alcance fijo y cumplimiento del RGPD.",
       bullets: [
-        "Comunicación internacional (Inglés / Alemán / Español)",
-        "Posicionamiento estratégico + implementación real",
-        "Sistemas limpios: UI escalable, código estructurado",
-        "Automatización e IA solo donde aportan valor real",
+        "Comunicación internacional — Inglés, Alemán y Español",
+        "Desarrollo web, automatización de procesos e integración de IA",
+        "Enfocado en pymes, creativos y profesionales independientes",
+        "Sistemas conformes al RGPD · estructura lean · proyectos de alcance fijo",
       ],
     },
 
@@ -612,7 +562,7 @@ export const i18n = {
           meta: "Sitio editorial · Identidad visual · Desarrollo",
           status: "EN PROCESO",
           description:
-            "Un sitio silencioso guiado por contenido, diseñado alrededor del ritmo y la tipografía. La interfaz se mantiene contenida — navegación mínima y un layout que deja espacio para secuencias de imagen, bloques de texto y secciones de archivo sin ruido visual.",
+            "Un sitio silencioso guiado por contenido, diseñado alrededor del ritmo y la tipografía. Navegación mínima y un layout que deja espacio para secuencias de imagen, bloques de texto y secciones de archivo sin ruido visual.",
           href: "https://ingridpumayalla.vercel.app/",
         },
         {
@@ -630,7 +580,7 @@ export const i18n = {
           meta: "Identidad visual · Website · Full-stack (ligero)",
           status: "",
           description:
-            "Identidad + website para un estudio legal con énfasis en estructura: áreas de práctica, navegación clara y vías directas de contacto. Implementación end-to-end, incluyendo frontend y trabajo ligero de backend/base de datos cuando fue necesario.",
+            "Identidad + website para un estudio legal con énfasis en estructura: áreas de práctica, navegación clara y vías directas de contacto. Implementación end-to-end incluyendo frontend y trabajo ligero de backend/base de datos.",
           href: "https://rfcabogados.com/",
         },
         {
@@ -639,7 +589,7 @@ export const i18n = {
           meta: "Identidad visual · Website",
           status: "",
           description:
-            "Website de servicios diseñada para escaneo rápido y navegación segura. Estructura clara, UI contenida y un layout sin saturación — hecha para presentar servicios con limpieza y reducir fricción.",
+            "Website de servicios diseñada para escaneo rápido y navegación segura. Estructura clara, UI contenida y un layout sin saturación — para presentar servicios con limpieza y reducir fricción.",
           href: "https://www.pnp-remodeling.com/",
         },
       ],
@@ -649,13 +599,13 @@ export const i18n = {
       kicker: "SERVICIOS",
       title: "Sistemas digitales estructurados",
       intro:
-        "Diseño editorial + rendimiento + automatización — empaquetado como servicios claros y orientados a resultados.",
+        "Desarrollo web, automatización de procesos e integración de IA — entregados como propuestas claras de alcance fijo para pymes, creativos y profesionales independientes.",
       howItWorks: {
         kicker: "CÓMO FUNCIONA",
         bullets: [
-          "Llamada breve de estrategia",
-          "Alcance fijo + cronograma",
-          "Construcción → lanzamiento → pulido",
+          "Llamada breve de estrategia — objetivos, alcance, restricciones",
+          "Propuesta de precio fijo — cronograma, entregables, sin sorpresas",
+          "Construcción → lanzamiento → mantenimiento opcional",
         ],
         cta: "Solicitar disponibilidad",
       },
@@ -663,41 +613,45 @@ export const i18n = {
         {
           title: "Web",
           time: "2–4 SEMANAS",
-          desc: "Landings y websites estructuradas — calmadas, editoriales y con rendimiento real.",
+          desc: "Landings y websites estructuradas — editoriales, orientadas al rendimiento y conformes al RGPD.",
           bullets: [
             "Next.js App Router + Tailwind",
             "Sistema de diseño + componentes reutilizables",
-            "Rendimiento + accesibilidad",
+            "Rendimiento, accesibilidad y RGPD",
           ],
           cta: "Solicitar disponibilidad",
         },
         {
           title: "Automatización",
           time: "1–2 SEMANAS",
-          desc: "Flujos e integraciones que eliminan trabajo manual y reducen fricción operativa.",
+          desc: "Flujos e integraciones que eliminan trabajo manual — sistemas de reserva, pipelines de datos, flujos de comunicación.",
           bullets: [
             "Flujos tipo Zapier/Make o scripts custom",
             "APIs, webhooks, dashboards",
-            "Setup primero confiable",
+            "Setup orientado a la fiabilidad",
           ],
           cta: "Hablar de automatización",
         },
         {
           title: "IA",
           time: "1–2 SEMANAS",
-          desc: "Integraciones prácticas de IA para soporte, herramientas internas y journeys de cliente.",
-          bullets: ["Flujos asistidos por IA (sin gimmicks)", "Patrones UX de chat/asistente", "Alcance claro + seguridad"],
-          cta: "Ver casos de IA",
+          desc: "Integraciones prácticas de IA que apoyan — no reemplazan — el trabajo humano. Chatbots, herramientas de análisis, asistentes de contenido.",
+          bullets: [
+            "Integración ética de IA (sin gimmicks)",
+            "Patrones UX de chat/asistente",
+            "Alcance transparente + seguridad RGPD",
+          ],
+          cta: "Ver casos de uso de IA",
         },
       ],
       close:
-        "Los proyectos se definen según el problema. Plan claro, cronograma y propuesta de alcance fijo.",
+        "Todos los proyectos se definen con alcance fijo. Plan claro, cronograma definido, sin sorpresas — desde 1.000 € por proyecto.",
     },
 
     process: {
       kicker: "PROCESO",
       title: "Cómo trabajamos",
-      intro: "Un flujo de trabajo estructurado — refinado, transparente y diseñado para entregar con fiabilidad.",
+      intro: "Un flujo de trabajo estructurado — transparente, fiable y diseñado para profesionales independientes y equipos pequeños.",
       footer: "Cronograma típico: 2–4 semanas según el alcance.",
       steps: [
         {
@@ -708,21 +662,21 @@ export const i18n = {
         },
         {
           step: "PASO 02",
-          title: "Design",
+          title: "Diseño",
           desc: "Tipografía, layout e interacciones con precisión editorial.",
           bullets: ["Jerarquía editorial", "Sistema responsive", "Detalle de interfaz"],
         },
         {
           step: "PASO 03",
-          title: "Build",
+          title: "Construcción",
           desc: "Implementación con Next.js + Tailwind, QA y rendimiento.",
-          bullets: ["Arquitectura limpia", "Revisión de accesibilidad", "Optimización de performance"],
+          bullets: ["Arquitectura de componentes limpia", "Accesibilidad + verificación RGPD", "Optimización de rendimiento"],
         },
         {
           step: "PASO 04",
-          title: "Launch",
+          title: "Lanzamiento",
           desc: "Deploy, pruebas finales y entrega.",
-          bullets: ["Deploy en Vercel", "QA final", "Documentación si aplica"],
+          bullets: ["Deploy en Vercel", "QA final", "Documentación + plan de mantenimiento opcional"],
         },
       ],
     },
@@ -740,7 +694,7 @@ export const i18n = {
       },
       contact: {
         email: "hello@ninan.studio",
-        location: "Berlín — Europa",
+        location: "Berlín-Brandenburg — Europa",
       },
       bottom: "© 2026 NINAN STUDIO — TODOS LOS DERECHOS RESERVADOS.",
     },
@@ -748,7 +702,7 @@ export const i18n = {
     contact: {
       kicker: "CONTACTO",
       title: "Hablemos",
-      body: "Describe brevemente tu proyecto, tu cronograma y tus objetivos.",
+      body: "Describe brevemente tu proyecto, tu cronograma y tus objetivos. Respuesta en 24–48h.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -760,4 +714,5 @@ export const i18n = {
       footerNote: "Tiempo de respuesta: 24–48h · Inglés / Alemán / Español · Alemania",
     },
   },
+
 } as const satisfies Record<Lang, Dictionary>

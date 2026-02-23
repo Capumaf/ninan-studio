@@ -26,34 +26,11 @@ function buildLangHref(pathname: string, next: Lang) {
   return "/" + next + "/" + restParts.join("/")
 }
 
-/** Mobile trigger icon (zigzag) — replaces the circle hamburger */
-function ZigZagButtonIcon() {
+function TriggerIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 18 18" fill="none" className="block">
-      <path
-        d="M3 6 L7 6 L5.5 9 L12.5 9 L11 12 L15 12"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-/** Divider editorial zigzag (desktop: between nav and langs) */
-function ZigZagDivider({ className = "" }: { className?: string }) {
-  return (
-    <span aria-hidden="true" className={["hidden md:inline-flex items-center", className].join(" ")}>
-      <svg width="10" height="28" viewBox="0 0 10 28" fill="none" className="block">
-        <path
-          d="M5 1 L2 5 L8 9 L2 13 L8 17 L2 21 L5 27"
-          stroke="currentColor"
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+    <span aria-hidden="true" className="flex items-center gap-[5px]">
+      <span className="block w-[14px] h-[1px] bg-current" />
+      <span className="block w-[3px] h-[3px] rounded-full bg-current" />
     </span>
   )
 }
@@ -83,48 +60,61 @@ export default function Header() {
   const hrefForLang = (next: Lang) => buildLangHref(pathname, next)
   const hrefToSection = (id: NavLink["id"]) => "/" + activeLang + "#" + id
 
-  // --- Floating behavior (ambient) ---
+  // ─── Estado ───────────────────────────────────────────────────────────────
   const [heroOut, setHeroOut] = useState(false)
   const [showBottom, setShowBottom] = useState(false)
-  const hideTimer = useRef<number | null>(null)
+  const [footerInView, setFooterInView] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  // ─── Refs que mantienen el valor actual accesible en cualquier closure ────
+  // Así evitamos completamente los stale closures sin re-registrar listeners.
+  const heroOutRef = useRef(false)
+  const footerInViewRef = useRef(false)
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const rafLock = useRef(false)
 
-  // NEW: hide everything when footer is present
-  const [footerInView, setFooterInView] = useState(false)
+  // Sincronizar refs con estado
+  useEffect(() => { heroOutRef.current = heroOut }, [heroOut])
+  useEffect(() => { footerInViewRef.current = footerInView }, [footerInView])
+
+  // ─── Lógica del floating pill ─────────────────────────────────────────────
+  // Esta función lee siempre los refs → nunca tiene datos stale
+  const showAndArmHide = () => {
+    if (!heroOutRef.current || footerInViewRef.current) return
+    setShowBottom(true)
+    if (hideTimer.current !== null) clearTimeout(hideTimer.current)
+    hideTimer.current = setTimeout(() => setShowBottom(false), HIDE_DELAY_MS)
+  }
 
   const clearHideTimer = () => {
     if (hideTimer.current !== null) {
-      window.clearTimeout(hideTimer.current)
+      clearTimeout(hideTimer.current)
       hideTimer.current = null
     }
   }
 
-  const showAndArmHide = () => {
-    // CHANGED: do not show when footer is visible
-    if (!heroOut || footerInView) return
-    setShowBottom(true)
-    clearHideTimer()
-    hideTimer.current = window.setTimeout(() => setShowBottom(false), HIDE_DELAY_MS)
-  }
-
-  // Detect hero exit
+  // ─── Observer del Hero ────────────────────────────────────────────────────
+  // Se registra UNA sola vez. Lee refs en el callback → siempre fresco.
   useEffect(() => {
     const hero =
       document.getElementById("hero") ||
       (document.querySelector("main > :first-child") as HTMLElement | null)
-
     if (!hero) return
 
     const observer = new IntersectionObserver(
       (entries) => {
         const ratio = entries[0].intersectionRatio
         const out = ratio < 0.2
+
+        heroOutRef.current = out
         setHeroOut(out)
 
         if (!out) {
+          // El usuario volvió al hero → esconder pill, mostrar header top
           setShowBottom(false)
           clearHideTimer()
         } else {
+          // Salió del hero → mostrar pill si el footer no está visible
           showAndArmHide()
         }
       },
@@ -134,9 +124,9 @@ export default function Header() {
     observer.observe(hero)
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []) // ← intencionalmente vacío: showAndArmHide lee refs, no closures
 
-  // NEW: Detect footer presence and force hide
+  // ─── Observer del Footer ──────────────────────────────────────────────────
   useEffect(() => {
     const footer = document.getElementById("site-footer")
     if (!footer) return
@@ -144,15 +134,16 @@ export default function Header() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const inView = entry.isIntersecting
+
+        footerInViewRef.current = inView
         setFooterInView(inView)
 
         if (inView) {
-          // force silence: no floating, no timers
           setShowBottom(false)
           clearHideTimer()
         } else {
-          // if user is still below hero, allow the ambient behavior again
-          if (heroOut) showAndArmHide()
+          // Footer salió de vista → si el hero ya está out, mostrar pill
+          if (heroOutRef.current) showAndArmHide()
         }
       },
       { threshold: 0.12 }
@@ -161,19 +152,20 @@ export default function Header() {
     observer.observe(footer)
     return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [heroOut])
+  }, []) // ← intencionalmente vacío: misma razón
 
-  // Re-show on user activity while hero is out
+  // ─── Listeners de actividad (scroll / touch / pointer) ────────────────────
+  // También se registran UNA sola vez. Leen refs en el callback.
   useEffect(() => {
-    // CHANGED: if footer is visible, do nothing
-    if (!heroOut || footerInView) return
-
     const onActivity = () => {
       if (rafLock.current) return
       rafLock.current = true
       requestAnimationFrame(() => {
         rafLock.current = false
-        showAndArmHide()
+        // Leer refs en tiempo de ejecución → siempre el valor actual
+        if (heroOutRef.current && !footerInViewRef.current) {
+          showAndArmHide()
+        }
       })
     }
 
@@ -189,11 +181,9 @@ export default function Header() {
       window.removeEventListener("pointerdown", onActivity)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [heroOut, footerInView])
+  }, []) // ← intencionalmente vacío
 
-  // --- Mobile menu ---
-  const [mobileOpen, setMobileOpen] = useState(false)
-
+  // ─── Mobile menu ──────────────────────────────────────────────────────────
   useEffect(() => {
     if (!mobileOpen) return
     const onKey = (e: KeyboardEvent) => {
@@ -206,26 +196,22 @@ export default function Header() {
   useEffect(() => {
     if (!mobileOpen) return
     document.documentElement.style.overflow = "hidden"
-    return () => {
-      document.documentElement.style.overflow = ""
-    }
+    return () => { document.documentElement.style.overflow = "" }
   }, [mobileOpen])
 
-  // close mobile menu when switching to desktop
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)")
-    const onChange = () => {
-      if (mq.matches) setMobileOpen(false)
-    }
+    const onChange = () => { if (mq.matches) setMobileOpen(false) }
     onChange()
     mq.addEventListener?.("change", onChange)
     return () => mq.removeEventListener?.("change", onChange)
   }, [])
 
-  // --- Classes (editorial / luxury minimal) ---
+  // ─── Clases ───────────────────────────────────────────────────────────────
   const navItemTop =
     "text-[11px] uppercase font-normal tracking-[0.16em] text-neutral-700 hover:text-neutral-950 transition-colors duration-200"
-  const brandTop = "text-[12px] uppercase font-medium tracking-[0.28em] text-neutral-950"
+  const brandTop =
+    "text-[12px] uppercase font-medium tracking-[0.28em] text-neutral-950"
   const langTop = (l: Lang) =>
     [
       "text-[11px] uppercase tracking-[0.20em] transition-colors duration-200",
@@ -234,51 +220,46 @@ export default function Header() {
 
   const navItemFloat =
     "text-[11px] uppercase font-normal tracking-[0.18em] text-neutral-600 hover:text-neutral-950 transition-colors duration-200"
-  const brandFloat = "text-[11px] uppercase font-medium tracking-[0.32em] text-neutral-950"
+  const brandFloat =
+    "text-[11px] uppercase font-medium tracking-[0.32em] text-neutral-950"
   const langFloat = (l: Lang) =>
     [
       "text-[11px] uppercase font-normal tracking-[0.22em] transition-colors duration-200",
       l === activeLang ? "text-neutral-950" : "text-neutral-500 hover:text-neutral-950",
     ].join(" ")
 
-  const MobileTriggerButton = ({ className = "" }: { className?: string }) => (
+  const MobileTrigger = ({ className = "" }: { className?: string }) => (
     <button
       type="button"
       aria-label="Open menu"
       onClick={() => setMobileOpen(true)}
       className={[
-        "md:hidden inline-flex items-center justify-center",
-        "p-2",
+        "md:hidden inline-flex items-center justify-center p-1",
         "text-neutral-500 hover:text-neutral-950 transition-colors duration-200",
         className,
       ].join(" ")}
     >
-      <ZigZagButtonIcon />
+      <TriggerIcon />
     </button>
   )
 
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <>
-      {/* TOP HEADER (hidden when floating is visible OR footer is visible) */}
+      {/* TOP HEADER — visible solo cuando el hero está en pantalla */}
       <header
         className={[
           "sticky top-0 z-50 border-b border-black/10 bg-white/75 backdrop-blur-sm transition-opacity duration-300",
-          // CHANGED:
           showBottom || footerInView ? "opacity-0 pointer-events-none" : "opacity-100",
         ].join(" ")}
       >
         <div className="mx-auto w-full max-w-[1500px] px-6 lg:px-10 2xl:px-12 h-16 flex items-center justify-between">
-          {/* Left */}
-          <div className="flex items-center gap-3">
-            <Link href={"/" + activeLang} className={brandTop}>
-              Ninan Studio
-            </Link>
+          <Link href={"/" + activeLang} className={brandTop}>
+            Ninan Studio
+          </Link>
 
-            {/* Mobile: ONLY the zigzag trigger (no circle) */}
-            <MobileTriggerButton />
-          </div>
+          <MobileTrigger />
 
-          {/* Desktop */}
           <div className="hidden md:flex items-center gap-x-10">
             <nav className="flex items-center gap-x-9">
               {links.map((l) => (
@@ -287,9 +268,7 @@ export default function Header() {
                 </Link>
               ))}
             </nav>
-
             <div className="h-5 w-px bg-black/10" />
-
             <div className="flex items-center gap-x-5">
               {languages.map((l) => (
                 <Link key={String(l)} href={hrefForLang(l as Lang)} className={langTop(l as Lang)}>
@@ -301,45 +280,35 @@ export default function Header() {
         </div>
       </header>
 
-      {/* FLOATING PILL HEADER (also hidden when footer is visible) */}
+      {/* FLOATING PILL — visible cuando el hero está fuera y el footer tampoco */}
       <div
         className={[
           "fixed bottom-5 sm:bottom-6 left-1/2 -translate-x-1/2 z-50",
-          // CHANGED:
+          "transition-all duration-300 ease-out",
           showBottom && !footerInView
             ? "translate-y-0 opacity-100"
             : "translate-y-3 opacity-0 pointer-events-none",
-          "transition-all duration-300 ease-out",
         ].join(" ")}
       >
-        <div
-          className="
-            h-14
-            w-[min(1120px,calc(100vw-1.5rem))]
-            rounded-full
-            bg-white
-            border border-black/10
-            ring-1 ring-black/[0.02]
-            shadow-[0_16px_45px_rgba(0,0,0,0.12)]
-            flex items-center
-            px-5 sm:px-7
-            gap-x-5
-            overflow-hidden
-          "
-        >
-          {/* Left */}
-          <div className="flex items-center gap-3 shrink-0">
-            <Link href={"/" + activeLang} className={brandFloat}>
-              Ninan Studio
-            </Link>
+        <div className="
+          h-14
+          w-[min(1120px,calc(100vw-1.5rem))]
+          rounded-full
+          bg-white
+          border border-black/10
+          ring-1 ring-black/[0.02]
+          shadow-[0_16px_45px_rgba(0,0,0,0.12)]
+          flex items-center justify-between
+          px-5 sm:px-7
+          overflow-hidden
+        ">
+          <Link href={"/" + activeLang} className={brandFloat}>
+            Ninan Studio
+          </Link>
 
-            {/* Mobile: ONLY the zigzag trigger (no circle) */}
-            <MobileTriggerButton />
-          </div>
+          <MobileTrigger />
 
-          {/* Desktop: 3-zone layout (stable) */}
-          <div className="hidden md:flex items-center min-w-0 flex-1">
-            {/* Center (flex): nav can scroll if needed */}
+          <div className="hidden md:flex items-center min-w-0 flex-1 ml-8">
             <nav className="flex-1 min-w-0">
               <div className="flex items-center gap-x-10 overflow-x-auto whitespace-nowrap pr-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {links.map((l) => (
@@ -349,17 +318,13 @@ export default function Header() {
                 ))}
               </div>
             </nav>
-
-            {/* Right (fixed): divider + langs */}
-            <ZigZagDivider className="mx-6 text-black/18 flex-none" />
-
+            <span aria-hidden="true" className="flex items-center gap-[5px] mx-6 flex-none text-black/90">
+              <span className="block w-[14px] h-[1px] bg-current" />
+              <span className="block w-[3px] h-[3px] rounded-full bg-current" />
+            </span>
             <div className="flex items-center gap-x-4 flex-none">
               {languages.map((l) => (
-                <Link
-                  key={String(l)}
-                  href={hrefForLang(l as Lang)}
-                  className={langFloat(l as Lang)}
-                >
+                <Link key={String(l)} href={hrefForLang(l as Lang)} className={langFloat(l as Lang)}>
                   {String(l).toUpperCase()}
                 </Link>
               ))}
@@ -373,22 +338,18 @@ export default function Header() {
         <div className="fixed inset-0 z-[60]">
           <button
             aria-label="Close menu"
-            className="absolute inset-0 bg-black/20"
+            className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"
             onClick={() => setMobileOpen(false)}
           />
-
-          <div
-            className="
-              absolute left-1/2 top-20 -translate-x-1/2
-              w-[calc(100vw-1.5rem)]
-              max-w-md
-              rounded-2xl
-              bg-white
-              border border-black/10
-              shadow-[0_20px_60px_rgba(0,0,0,0.18)]
-              p-5
-            "
-          >
+          <div className="
+            absolute left-1/2 -translate-x-[40%] top-16
+            w-[min(280px,calc(100vw-2rem))]
+            rounded-xl
+            bg-white/80 backdrop-blur-md
+            border border-black/10
+            shadow-[0_8px_32px_rgba(0,0,0,0.10)]
+            p-5
+          ">
             <div className="flex items-center justify-between">
               <Link
                 href={"/" + activeLang}
@@ -397,34 +358,43 @@ export default function Header() {
               >
                 Ninan Studio
               </Link>
-
               <button
                 type="button"
                 aria-label="Close"
                 onClick={() => setMobileOpen(false)}
-                className="h-9 w-9 rounded-full border border-black/10 bg-white hover:bg-neutral-50 transition"
+                className="h-8 w-8 rounded-full border border-black/10 bg-white/60 hover:bg-white/90 transition flex items-center justify-center relative"
               >
                 <span className="sr-only">Close</span>
-                <span className="block h-[1px] w-4 bg-neutral-900 rotate-45 translate-y-[0.5px] mx-auto" />
-                <span className="block h-[1px] w-4 bg-neutral-900 -rotate-45 -translate-y-[0.5px] mx-auto" />
+                <span className="block h-[1px] w-3.5 bg-neutral-900 rotate-45 absolute" />
+                <span className="block h-[1px] w-3.5 bg-neutral-900 -rotate-45 absolute" />
               </button>
             </div>
 
-            <div className="mt-5 border-t border-black/10 pt-4">
-              <nav className="grid gap-3">
+            <div className="mt-4 border-t border-black/8 pt-4">
+              <nav className="grid gap-0">
                 {links.map((l) => (
                   <Link
                     key={l.id}
                     href={hrefToSection(l.id)}
-                    onClick={() => setMobileOpen(false)}
-                    className="text-[12px] uppercase font-normal tracking-[0.18em] text-neutral-800 hover:text-neutral-950 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setMobileOpen(false)
+                      setTimeout(() => {
+                        document.getElementById(l.id)?.scrollIntoView({ behavior: "smooth" })
+                      }, 150)
+                    }}
+                    className="flex items-center gap-2.5 py-2.5 text-[11px] uppercase font-normal tracking-[0.18em] text-neutral-800 hover:text-neutral-950 transition-colors group"
                   >
+                    <span className="flex items-center gap-[4px] text-neutral-300 group-hover:text-neutral-500 transition-colors flex-none">
+                      <span className="block w-[10px] h-[1px] bg-current" />
+                      <span className="block w-[2.5px] h-[2.5px] rounded-full bg-current" />
+                    </span>
                     {l.label}
                   </Link>
                 ))}
               </nav>
 
-              <div className="mt-5 border-t border-black/10 pt-4 flex items-center gap-x-4">
+              <div className="mt-4 border-t border-black/8 pt-4 flex items-center gap-x-4">
                 {languages.map((l) => (
                   <Link
                     key={String(l)}
@@ -432,7 +402,7 @@ export default function Header() {
                     onClick={() => setMobileOpen(false)}
                     className={[
                       "text-[11px] uppercase font-normal tracking-[0.22em] transition-colors",
-                      l === activeLang ? "text-neutral-950" : "text-neutral-500 hover:text-neutral-950",
+                      l === activeLang ? "text-neutral-950" : "text-neutral-400 hover:text-neutral-950",
                     ].join(" ")}
                   >
                     {String(l).toUpperCase()}

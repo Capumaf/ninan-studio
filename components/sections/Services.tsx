@@ -1,135 +1,105 @@
 "use client"
 
+import { useMemo } from "react"
+import { motion, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 
 export default function Services() {
   const { lang, t } = useI18n()
   const s = t.services
 
+  const reduceMotion = useReducedMotion()
+  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
+  // Base como Work: una respiración por bloque (no “UI cascade”)
+  const itemVariants = useMemo(
+    () => ({
+      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 },
+      show: reduceMotion
+        ? { opacity: 1 }
+        : {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.62, ease: easeEditorial },
+          },
+    }),
+    [reduceMotion]
+  )
+
+  // Metadata 6px (solo si la usas en algunos puntos)
+  const metaVariants = useMemo(
+    () => ({
+      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 },
+      show: reduceMotion
+        ? { opacity: 1 }
+        : {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.52, ease: easeEditorial },
+          },
+    }),
+    [reduceMotion]
+  )
+
   return (
-    <section id="services" className="section">
+    <section id="services" className="section !before:hidden">
       <div className="container">
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,72ch)] lg:gap-20">
-          {/* LEFT — intro */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                {s.kicker}
-              </p>
+        {/* Masthead — MISMA BASE QUE WORK */}
+        <div className="mb-12 flex items-center gap-6 lg:mb-16">
+          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
+            {s.kicker}
+          </p>
+          <div className="h-px flex-1 bg-black/10" />
+        </div>
 
-              <div className="mt-8 h-px w-20 bg-black/20" />
+        {/* Grid — MISMA BASE QUE WORK: 50/50 + tensión (gap más contenido) */}
+        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
+          {/* LEFT — sticky narrativa (como Work) */}
+          <div className="lg:sticky lg:top-24">
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
+              {s.title}
+            </h2>
 
-              <h2 className="mt-8 text-2xl md:text-3xl font-semibold tracking-tight leading-[1.08] max-w-[22ch]">
-                {s.title}
-              </h2>
-
-              <p className="p mt-6 max-w-[38ch]">
-                {s.intro}
-              </p>
-
-              {/* HOW IT WORKS (en left, editorial note) */}
-              <div className="mt-12">
-                <div className="h-px w-full bg-black/10" />
-
-                <p className="mt-8 text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                  {s.howItWorks.kicker}
-                </p>
-
-                <ul className="mt-6 space-y-4">
-                  {s.howItWorks.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="grid grid-cols-[44px_minmax(0,1fr)] gap-6"
-                    >
-                      <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                      <p className="text-sm leading-[1.7] text-black/80">{b}</p>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-8">
-                  <a
-                    href={`/${lang}#contact`}
-                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4"
-                  >
-                    {s.howItWorks.cta} →
-                  </a>
-                </div>
-              </div>
+            <div className="mt-7 max-w-[52ch]">
+              <p className="text-base leading-[1.75] text-black/70">{s.intro}</p>
             </div>
-          </aside>
+          </div>
 
-          {/* RIGHT — offers */}
-          <div className="lg:pl-10">
-            {/* Mobile header (porque aside se oculta) */}
-            <div className="lg:hidden">
-              <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                {s.kicker}
-              </p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight leading-[1.08]">
-                {s.title}
-              </h2>
-              <p className="p mt-6 max-w-[62ch]">
-                {s.intro}
-              </p>
+          {/* RIGHT — lomo estructural + contenido (como Work) */}
+          <div className="lg:border-l lg:border-black/10 lg:pl-12">
+            {/* Hairline mobile cuando desaparece border lateral (como Work) */}
+            <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
 
-              <div className="mt-10 h-px w-full bg-black/10" />
-
-              <p className="mt-8 text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                {s.howItWorks.kicker}
-              </p>
-
-              <ul className="mt-6 space-y-4">
-                {s.howItWorks.bullets.map((b) => (
-                  <li
-                    key={b}
-                    className="grid grid-cols-[44px_minmax(0,1fr)] gap-6"
-                  >
-                    <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                    <p className="text-sm leading-[1.7] text-black/80">{b}</p>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8">
-                <a
-                  href={`/${lang}#contact`}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4"
+            {/* Contenido capado (sistema) */}
+            <div className="max-w-[52ch]">
+              {/* Una estructura clara: divide-y (hairlines estructurales, no decorativas) */}
+              <ul className="divide-y divide-black/10">
+                {/* HOW IT WORKS — integrado en la columna de contenido (no un “bloque aparte”) */}
+                <motion.li
+                  className="py-8"
+                  variants={itemVariants}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-5%" }}
                 >
-                  {s.howItWorks.cta} →
-                </a>
-              </div>
+                  <motion.p
+                    className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
+                    variants={metaVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-5%" }}
+                  >
+                    {s.howItWorks.kicker}
+                  </motion.p>
 
-              <div className="mt-12 h-px w-full bg-black/10" />
-            </div>
-
-            {/* Offers list (matches your static example but driven by s.blocks) */}
-            <div className="space-y-12">
-              {s.blocks.map((b) => (
-                <div key={b.title} className="pt-10">
-                  <div className="h-px w-full bg-black/10" />
-
-                  <div className="mt-8 flex flex-wrap items-baseline justify-between gap-3">
-                    <h3 className="text-lg md:text-xl font-semibold tracking-tight leading-snug">
-                      {b.title}
-                    </h3>
-                    <p className="text-[11px] tracking-[0.18em] uppercase text-black/50">
-                      {b.time}
-                    </p>
-                  </div>
-
-                  <p className="p mt-6 max-w-[62ch]">
-                    {b.desc}
-                  </p>
-
-                  <ul className="mt-8 space-y-4">
-                    {b.bullets.map((x) => (
+                  <ul className="mt-6 space-y-4">
+                    {s.howItWorks.bullets.map((b, i) => (
                       <li
-                        key={x}
-                        className="grid grid-cols-[44px_minmax(0,1fr)] gap-6"
+                        key={`${i}-${b}`}
+                        className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
                       >
                         <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                        <p className="text-sm leading-[1.7] text-black/80">{x}</p>
+                        <p className="text-sm leading-[1.7] text-black/70">{b}</p>
                       </li>
                     ))}
                   </ul>
@@ -137,18 +107,77 @@ export default function Services() {
                   <div className="mt-8">
                     <a
                       href={`/${lang}#contact`}
-                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4"
+                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
                     >
-                      {b.cta} →
+                      {s.howItWorks.cta}
                     </a>
                   </div>
-                </div>
-              ))}
+                </motion.li>
 
-              <div className="pt-10">
-                <div className="h-px w-full bg-black/10" />
-                <p className="p mt-8 max-w-[62ch]">{s.close}</p>
-              </div>
+                {/* OFFERS — cada bloque como capítulo/entrada editorial */}
+                {s.blocks.map((b, bi) => (
+                  <motion.li
+                    key={`${bi}-${b.title}`}
+                    className="py-8"
+                    variants={itemVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-5%" }}
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-6">
+                      <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
+                        {b.title}
+                      </h3>
+
+                      <motion.p
+                        className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
+                        variants={metaVariants}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, margin: "-5%" }}
+                      >
+                        {b.time}
+                      </motion.p>
+                    </div>
+
+                    <p className="mt-6 text-base leading-[1.75] text-black/70">
+                      {b.desc}
+                    </p>
+
+                    <ul className="mt-7 space-y-4">
+                      {b.bullets.map((x, xi) => (
+                        <li
+                          key={`${xi}-${x}`}
+                          className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
+                        >
+                          <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
+                          <p className="text-sm leading-[1.7] text-black/70">{x}</p>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-8">
+                      <a
+                        href={`/${lang}#contact`}
+                        className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                      >
+                        {b.cta}
+                      </a>
+                    </div>
+                  </motion.li>
+                ))}
+
+                {/* CLOSE */}
+                <motion.li
+                  className="py-8"
+                  variants={itemVariants}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-5%" }}
+                >
+                  <p className="text-base leading-[1.75] text-black/70">{s.close}</p>
+                </motion.li>
+              </ul>
             </div>
           </div>
         </div>

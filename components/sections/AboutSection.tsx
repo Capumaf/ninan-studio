@@ -8,56 +8,53 @@ export default function AboutSection({ a }: Props) {
   return (
     <section id="about" className="section">
       <div className="container">
-        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,72ch)] lg:gap-20">
-          {/* LEFT — editorial margin */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                {a.kicker}
+        {/* Hairline superior con kicker — ancla la sección */}
+        <div className="flex items-center gap-6 mb-16 lg:mb-20">
+          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
+            {a.kicker}
+          </p>
+          <div className="h-px flex-1 bg-black/10" />
+        </div>
+
+        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-24">
+          {/* LEFT — narrativa (H2 sticky + texto) */}
+          <div className="lg:sticky lg:top-28">
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
+              {a.title}
+            </h2>
+
+            <div className="mt-10 max-w-[52ch]">
+              <p className="text-base leading-[1.75] text-black/70">{a.p1}</p>
+              <p className="text-base leading-[1.75] text-black/70 mt-6">
+                {a.p2}
               </p>
-
-              <div className="mt-8 h-px w-20 bg-black/20" />
-
-              <h2 className="mt-8 text-2xl md:text-3xl font-semibold tracking-tight leading-[1.08] max-w-[22ch]">
-                {a.title}
-              </h2>
             </div>
-          </aside>
+          </div>
 
-          {/* RIGHT — content */}
-          <div className="lg:pl-10">
-            {/* Mobile header (porque el aside se oculta) */}
-            <div className="lg:hidden">
-              <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-[hsl(var(--muted-2))]">
-                {a.kicker}
-              </p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight leading-[1.08] max-w-[26ch]">
-                {a.title}
-              </h2>
-              <div className="mt-8 h-px w-full bg-black/10" />
-            </div>
+          {/* RIGHT — lista (estructura) */}
+          <div className="lg:border-l lg:border-black/10 lg:pl-14">
+            {/* Hairline en mobile para mantener el ritmo sin borde lateral */}
+            <div className="h-px w-full bg-black/10 mb-10 lg:hidden" />
 
-            <div className="max-w-[72ch]">
-              <div className="max-w-[62ch]">
-                <p className="p">{a.p1}</p>
-                <p className="p mt-6">{a.p2}</p>
-              </div>
-
-              {/* Editorial cut */}
-              <div className="mt-12 h-px w-full bg-black/10" />
-
-              {/* Bullets → lista editorial (sin bullets UI) */}
-              <ul className="mt-10 space-y-6">
-                {a.bullets.map((b) => (
+            {/* Ancho controlado para que no se sienta “vacío” */}
+            <div className="max-w-[52ch]">
+              <ol>
+                {a.bullets.map((b, i) => (
                   <li
-                    key={b}
-                    className="grid grid-cols-[44px_minmax(0,1fr)] gap-6 lg:grid-cols-[52px_minmax(0,1fr)]"
+                    key={`${i}-${b}`}
+                    className="grid grid-cols-[20px_minmax(0,1fr)] gap-5 py-5 border-b border-black/10"
                   >
-                    <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                    <p className="text-sm leading-[1.7] text-black/80">{b}</p>
+                    <span
+                      aria-hidden="true"
+                      className="text-[10px] font-medium tracking-[0.14em] text-black/25 mt-[3px] tabular-nums"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <p className="text-sm leading-[1.8] text-black/70">{b}</p>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           </div>
         </div>

@@ -10,8 +10,8 @@ export default function Services() {
 
   const reduceMotion = useReducedMotion()
   const [openId, setOpenId] = useState<string | null>(
-    s.blocks?.length ? (s.blocks[0].id ?? s.blocks[0].title) : null
-  )
+  s.blocks?.length ? s.blocks[0].title : null
+)
 
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
   const vp = { once: true, margin: "-10%" } as const
@@ -105,7 +105,7 @@ export default function Services() {
             <div className="max-w-[52ch]">
               <ul className="divide-y divide-black/10">
                 {s.blocks.map((b: any, idx: number) => {
-                  const id = (b.id ?? b.title) as string
+                  const id = b.title
                   const isOpen = openId === id
                   const indexLabel = String(idx + 1).padStart(2, "0")
                   const hasMeta = !!(b.time && String(b.time).trim().length > 0)

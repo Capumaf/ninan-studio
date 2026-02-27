@@ -70,7 +70,7 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "I build clean, fast web interfaces with strong fundamentals — focused on Next.js (App Router), React and TypeScript.",
+      p1: "I build structured, performance-minded web interfaces with Next.js (App Router), React and TypeScript.",,
       p2: "Backend exposure: Spring Boot CRUD + SQL (junior level, actively improving). Ninan Studio is my personal label — I apply as an individual developer.",
 
       start: "Download CV",
@@ -80,7 +80,7 @@ export const i18n = {
 
       issue: "Portfolio",
       place: "Berlin / EU",
-      est: "Active since 2026",
+      est: "Currently building a Next.js + Spring Boot project",
 
       principle: "Working principles",
       m1: "Clarity over cleverness.",
@@ -302,7 +302,7 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "Ich entwickle schnelle, saubere Web-UIs mit soliden Basics — Fokus auf Next.js (App Router), React und TypeScript.",
+      p1: "Ich entwickle strukturierte, performance-orientierte Web-Interfaces mit Next.js (App Router), React und TypeScript.",
       p2: "Backend-Exposure: Spring Boot CRUD + SQL (Junior-Level, aktiv im Aufbau). Ninan Studio ist mein persönliches Label — ich bewerbe mich als Einzelentwickler.",
 
       start: "Lebenslauf",
@@ -312,7 +312,7 @@ export const i18n = {
 
       issue: "Portfolio",
       place: "Berlin / EU",
-      est: "Aktiv seit 2026",
+      est:  "Aktuell Next.js + Spring Boot Projekt",
 
       principle: "Arbeitsprinzipien",
       m1: "Klarheit statt Cleverness.",
@@ -534,7 +534,7 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "Construyo interfaces limpias y rápidas con fundamentos sólidos — foco en Next.js (App Router), React y TypeScript.",
+      p1: "Construyo interfaces web estructuradas y orientadas al rendimiento con Next.js (App Router), React y TypeScript.",
       p2: "Exposición backend: Spring Boot CRUD + SQL (nivel junior, mejorando). Ninan Studio es mi etiqueta personal — aplico como developer individual.",
 
       start: "Descargar CV",
@@ -544,7 +544,7 @@ export const i18n = {
 
       issue: "Portfolio",
       place: "Berlín / UE",
-      est: "Activo desde 2026",
+      est: "Proyecto actual: Next.js + Spring Boot",
 
       principle: "Principios de trabajo",
       m1: "Claridad sobre trucos.",

@@ -1,4 +1,4 @@
-// content/i18n.ts
+\// content/i18n.ts
 // Ninan Studio — i18n EN + ES + DE (portfolio-focused)
 // Personal brand: name first, studio as secondary label
 // Feb 2026
@@ -157,6 +157,17 @@ export const i18n = {
           status: "",
           description:
             "I’ve shipped and maintained WordPress sites (Elementor/Plugins) with real delivery constraints: structure, SEO basics, security plugins, performance fixes, and pragmatic PHP/CSS adjustments. I position this as production experience — my core stack remains Next.js/React/TypeScript.",
+        },
+
+        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
+        {
+          id: "rfc-abogados",
+          name: "RFC Abogados — landing in production",
+          meta: "WordPress / Elementor · Custom HTML/CSS blocks · SEO basics",
+          status: "SHIPPED",
+          description:
+            "Legal firm landing page delivered on WordPress (Elementor) with custom HTML/CSS sections. Focus: clear hierarchy, fast scanning, pragmatic SEO setup, and production maintenance constraints.",
+          href: "https://rfcabogados.com/",
         },
       ],
     },
@@ -379,6 +390,17 @@ export const i18n = {
           description:
             "WordPress-Sites in echten Projekten: Umsetzung (Elementor/Plugins), Struktur/SEO-Basics, Security-Plugins, Performance-Fixes und pragmatische PHP/CSS-Anpassungen. WordPress als Production-Erfahrung — Kern-Stack bleibt Next.js/React/TypeScript.",
         },
+
+        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
+        {
+          id: "rfc-abogados",
+          name: "RFC Abogados — Landing (Production)",
+          meta: "WordPress / Elementor · Custom HTML/CSS · SEO Basics",
+          status: "GELIEFERT",
+          description:
+            "Landing Page für eine Kanzlei auf WordPress (Elementor) mit Custom HTML/CSS Sections. Fokus: klare Hierarchie, schnelles Scanning, pragmatisches SEO-Setup und reale Maintenance-Constraints.",
+          href: "https://rfcabogados.com/",
+        },
       ],
     },
 
@@ -599,6 +621,17 @@ export const i18n = {
           status: "",
           description:
             "He entregado y mantenido sitios WordPress (Elementor/Plugins) con restricciones reales: estructura, SEO básico, plugins de seguridad, fixes de performance y ajustes pragmáticos en PHP/CSS. WordPress como experiencia de producción — mi core stack es Next.js/React/TypeScript.",
+        },
+
+        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
+        {
+          id: "rfc-abogados",
+          name: "RFC Abogados — landing en producción",
+          meta: "WordPress / Elementor · Bloques HTML/CSS custom · SEO básico",
+          status: "ENTREGADO",
+          description:
+            "Landing para estudio jurídico entregada en WordPress (Elementor) con secciones HTML/CSS custom. Foco: jerarquía clara, lectura rápida, setup SEO pragmático y mantenimiento en producción.",
+          href: "https://rfcabogados.com/",
         },
       ],
     },

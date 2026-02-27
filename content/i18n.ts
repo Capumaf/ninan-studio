@@ -70,7 +70,7 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "I build structured, performance-minded web interfaces with Next.js (App Router), React and TypeScript.",,
+      p1: "I build structured, performance-minded web interfaces with Next.js (App Router), React and TypeScript.",
       p2: "Backend exposure: Spring Boot CRUD + SQL (junior level, actively improving). Ninan Studio is my personal label — I apply as an individual developer.",
 
       start: "Download CV",

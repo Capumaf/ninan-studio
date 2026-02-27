@@ -1,4 +1,4 @@
-\// content/i18n.ts
+// content/i18n.ts
 // Ninan Studio — i18n EN + ES + DE (portfolio-focused)
 // Personal brand: name first, studio as secondary label
 // Feb 2026

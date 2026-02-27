@@ -3,15 +3,18 @@
 import { useMemo, useState } from "react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
+import type { Dictionary } from "@/content/i18n"
+
+type ServiceBlock = Dictionary["services"]["blocks"][number]
 
 export default function Services() {
   const { lang, t } = useI18n()
   const s = t.services
 
   const reduceMotion = useReducedMotion()
-  const [openId, setOpenId] = useState<string | null>(
-  s.blocks?.length ? s.blocks[0].title : null
-)
+
+  // Cleaner first impression (employment-friendly): start collapsed.
+  const [openId, setOpenId] = useState<string | null>(null)
 
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
   const vp = { once: true, margin: "-10%" } as const
@@ -55,6 +58,7 @@ export default function Services() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
+          {/* LEFT */}
           <div className="lg:sticky lg:top-24 xl:top-28 self-start">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
               {s.title}
@@ -76,11 +80,8 @@ export default function Services() {
               </motion.p>
 
               <ul className="mt-6 space-y-4">
-                {s.howItWorks.bullets.map((b: string, i: number) => (
-                  <li
-                    key={`${i}-${b}`}
-                    className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
-                  >
+                {s.howItWorks.bullets.map((b, i) => (
+                  <li key={`${i}-${b}`} className="grid grid-cols-[40px_minmax(0,1fr)] gap-5">
                     <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
                     <p className="text-sm leading-[1.7] text-black/70">{b}</p>
                   </li>
@@ -88,10 +89,9 @@ export default function Services() {
               </ul>
 
               <div className="mt-8">
-                {/* FIX: faltaba el <a */}
                 <a
-                  href={`/${lang}#contact`}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                  href={`/${lang}#work`}
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
                 >
                   {s.howItWorks.cta}
                 </a>
@@ -99,16 +99,18 @@ export default function Services() {
             </div>
           </div>
 
+          {/* RIGHT */}
           <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
             <div className="lg:hidden border-t border-black/10 pt-10" />
 
             <div className="max-w-[52ch]">
               <ul className="divide-y divide-black/10">
-                {s.blocks.map((b: any, idx: number) => {
-                  const id = b.title
+                {s.blocks.map((b: ServiceBlock, idx: number) => {
+                  // Stable id independent from translation/title
+                  const id = `b-${idx + 1}`
                   const isOpen = openId === id
                   const indexLabel = String(idx + 1).padStart(2, "0")
-                  const hasMeta = !!(b.time && String(b.time).trim().length > 0)
+                  const hasMeta = !!(b.time && b.time.trim().length > 0)
 
                   return (
                     <motion.li
@@ -188,20 +190,15 @@ export default function Services() {
                             className="overflow-hidden"
                           >
                             <div className="pb-8">
-                              {Array.isArray(b.bullets) && b.bullets.length ? (
+                              {b.bullets?.length ? (
                                 <ul className="mt-1 space-y-4">
-                                  {b.bullets.map((x: string, xi: number) => (
+                                  {b.bullets.map((x, xi) => (
                                     <li
                                       key={`${xi}-${x}`}
                                       className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
                                     >
-                                      <span
-                                        aria-hidden
-                                        className="mt-[10px] h-px w-10 bg-black/20"
-                                      />
-                                      <p className="text-sm leading-[1.7] text-black/70">
-                                        {x}
-                                      </p>
+                                      <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
+                                      <p className="text-sm leading-[1.7] text-black/70">{x}</p>
                                     </li>
                                   ))}
                                 </ul>
@@ -209,10 +206,9 @@ export default function Services() {
 
                               {b.cta ? (
                                 <div className="mt-8">
-                                  {/* FIX: faltaba el <a */}
                                   <a
-                                    href={`/${lang}#contact`}
-                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                                    href={`/${lang}#work`}
+                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
                                   >
                                     {b.cta}
                                   </a>

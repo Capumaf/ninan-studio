@@ -1,8 +1,15 @@
 "use client"
 
-import { useId, useMemo } from "react"
+import { useId, useMemo, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
+
+const EMAIL_TO = "cesarpumayallaf@ninanstudio.com"
+
+function buildMailto(params: { to: string; subject: string; body: string }) {
+  const { to, subject, body } = params
+  return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
 
 export default function Contact() {
   const { t } = useI18n()
@@ -11,6 +18,10 @@ export default function Contact() {
   const nameId = useId()
   const emailId = useId()
   const messageId = useId()
+
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
 
   const reduceMotion = useReducedMotion()
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -43,6 +54,22 @@ export default function Contact() {
     [reduceMotion]
   )
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const subject = `Portfolio inquiry — ${name || "No name"}`
+    const body =
+      `Name: ${name}\n` +
+      `Email: ${email}\n\n` +
+      `Message:\n${message}`
+
+    window.location.href = buildMailto({
+      to: EMAIL_TO,
+      subject,
+      body,
+    })
+  }
+
   return (
     <section id="contact" className="section !before:hidden">
       <div className="container">
@@ -54,9 +81,10 @@ export default function Contact() {
           <div className="h-px flex-1 bg-black/10" />
         </div>
 
-        {/* Spread 50/50 */}
+        {/* Grid 50/50 */}
         <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
-          {/* LEFT — titular + form (protagonista) */}
+
+          {/* LEFT */}
           <div className="lg:sticky lg:top-24">
             <motion.h2
               className="font-light leading-[1.05] tracking-[-0.025em] text-[clamp(2rem,4vw,3.25rem)]"
@@ -68,11 +96,8 @@ export default function Contact() {
               {c.title}
             </motion.h2>
 
-            {/* FORM — debajo del titular, como cuerpo editorial */}
             <motion.form
-              action="mailto:contact@ninanstudio.com"
-              method="POST"
-              encType="text/plain"
+              onSubmit={onSubmit}
               className="mt-10 max-w-[52ch] space-y-8"
               variants={blockVariants}
               initial="hidden"
@@ -94,9 +119,9 @@ export default function Contact() {
                 <input
                   id={nameId}
                   type="text"
-                  name="name"
                   required
-                  autoComplete="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="w-full border-b border-black/20 bg-transparent pb-3 outline-none"
                 />
               </div>
@@ -116,9 +141,9 @@ export default function Contact() {
                 <input
                   id={emailId}
                   type="email"
-                  name="email"
                   required
-                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full border-b border-black/20 bg-transparent pb-3 outline-none"
                 />
               </div>
@@ -137,25 +162,25 @@ export default function Contact() {
 
                 <textarea
                   id={messageId}
-                  name="message"
                   rows={5}
                   required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full border-b border-black/20 bg-transparent pb-3 outline-none resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
               >
                 {c.form.submit}
               </button>
             </motion.form>
           </div>
 
-          {/* RIGHT — lomo + info (notas / metadatos) */}
+          {/* RIGHT */}
           <div className="lg:border-l lg:border-black/10 lg:pl-12">
-            {/* Hairline mobile cuando desaparece border lateral */}
             <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
 
             <motion.div
@@ -165,15 +190,16 @@ export default function Contact() {
               whileInView="show"
               viewport={{ once: true, margin: "-5%" }}
             >
-              {/* Regla estructural única dentro del capítulo */}
               <div className="mb-10 h-px w-full bg-black/10" />
 
-              <p className="text-base leading-[1.75] text-black/70">{c.body}</p>
+              <p className="text-base leading-[1.75] text-black/70">
+                {c.body}
+              </p>
 
               <div className="mt-8 flex flex-wrap gap-6">
                 <a
-                  href="mailto:contact@ninanstudio.com"
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                  href={`mailto:${EMAIL_TO}`}
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
                 >
                   {c.ctaEmail}
                 </a>
@@ -182,7 +208,7 @@ export default function Contact() {
                   href="https://wa.me/491722722723"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
                 >
                   {c.ctaWhatsapp}
                 </a>
@@ -193,6 +219,7 @@ export default function Contact() {
               </p>
             </motion.div>
           </div>
+
         </div>
       </div>
     </section>

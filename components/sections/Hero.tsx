@@ -21,18 +21,18 @@ export default function Hero() {
 
   const vp = { once: true, amount: 0.28 } as const
 
+  // If you add /public/cv.pdf this becomes a strong hiring CTA.
+  // Keep it simple and predictable for recruiters.
+  const cvHref = "/cv.pdf"
+  const primaryHref = cvHref // change to `/${lang}#contact` if you don't want a PDF yet
+
   return (
     <section id="hero" className="pt-6 md:pt-8 lg:pt-10 pb-14 md:pb-16">
       <Container>
         {/* Spread 50/50 — eje fijo */}
         <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16">
           {/* LEFT */}
-          <motion.div
-            variants={col}
-            initial="hidden"
-            whileInView="show"
-            viewport={vp}
-          >
+          <motion.div variants={col} initial="hidden" whileInView="show" viewport={vp}>
             {/* Hairline (structural) */}
             <div className="mb-10 lg:mb-12 h-px w-16 bg-black/50" />
 
@@ -41,10 +41,7 @@ export default function Hero() {
               <span className="block">{h.t2}</span>
 
               {/* Accent line: ink, not animation */}
-              <span
-                className="block accent"
-                style={{ position: "relative", display: "inline-block" }}
-              >
+              <span className="block accent" style={{ position: "relative", display: "inline-block" }}>
                 {h.t3}
                 <span
                   aria-hidden
@@ -71,11 +68,18 @@ export default function Hero() {
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-8">
-              <a href={`/${lang}#contact`} className="btn">
+              <a
+                href={primaryHref}
+                className="btn"
+                // open PDF in new tab is recruiter-friendly; remove if you prefer same tab
+                target={primaryHref.endsWith(".pdf") ? "_blank" : undefined}
+                rel={primaryHref.endsWith(".pdf") ? "noopener noreferrer" : undefined}
+              >
                 {h.start}
               </a>
+
               <a
-                href={`/${lang}#process`}
+                href={`/${lang}#work`}
                 className="text-xs uppercase tracking-[0.18em] underline underline-offset-4 text-black/60 hover:text-black/85 transition"
               >
                 {h.view}

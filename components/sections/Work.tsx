@@ -5,13 +5,14 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 
 export default function Work() {
-  const { t } = useI18n()
+  const { lang, t } = useI18n()
   const w = t.work
 
   const reduceMotion = useReducedMotion()
-  const [openId, setOpenId] = useState<string | null>(
-    w.items.length ? w.items[0].id : null
-  )
+
+  // Cleaner first impression for recruiters: start collapsed.
+  // If you want default open for featured, set to w.items[0]?.id ?? null
+  const [openId, setOpenId] = useState<string | null>(null)
 
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -92,6 +93,7 @@ export default function Work() {
                   const isOpen = openId === item.id
                   const hasStatus = !!(item.status && item.status.trim().length > 0)
                   const indexLabel = String(idx + 1).padStart(2, "0")
+                  const isFeatured = idx === 0
 
                   return (
                     <motion.li
@@ -119,9 +121,18 @@ export default function Work() {
 
                           <div className="min-w-0">
                             <div className="flex items-baseline justify-between gap-6">
-                              <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
-                                {item.name}
-                              </h3>
+                              <div className="min-w-0">
+                                <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
+                                  {item.name}
+                                </h3>
+
+                                {/* tiny featured marker (index-based, no schema changes) */}
+                                {isFeatured && (
+                                  <p className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
+                                    Featured
+                                  </p>
+                                )}
+                              </div>
 
                               {hasStatus && (
                                 <motion.span
@@ -194,6 +205,14 @@ export default function Work() {
                                     {w.linkOnRequest}
                                   </span>
                                 )}
+
+                                {/* Optional: a recruiter-friendly follow-up path without "sales" vibe */}
+                                {/* <a
+                                  href={`/${lang}#contact`}
+                                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/60 hover:text-black/85 transition"
+                                >
+                                  Contact for details
+                                </a> */}
                               </div>
                             </div>
                           </motion.div>

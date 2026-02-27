@@ -35,6 +35,17 @@ function TriggerIcon() {
   )
 }
 
+function Brand({ href, className = "", subClassName = "" }: { href: string; className?: string; subClassName?: string }) {
+  return (
+    <Link href={href} className={["flex items-baseline gap-2 min-w-0", className].join(" ")}>
+      {/* Name first */}
+      <span className="truncate">Cesar Pumayalla</span>
+      {/* Label secondary (only md+ to keep mobile clean) */}
+      <span className={["hidden md:inline text-neutral-500", subClassName].join(" ")}>· Ninan Studio</span>
+    </Link>
+  )
+}
+
 export default function Header() {
   const { lang: ctxLang, t } = useI18n()
   const pathname = usePathname() || "/" + ctxLang
@@ -237,8 +248,13 @@ export default function Header() {
   // ─── Clases ───────────────────────────────────────────────────────────────
   const navItemTop =
     "text-[11px] uppercase font-normal tracking-[0.16em] text-neutral-700 hover:text-neutral-950 transition-colors duration-200"
+
+  // IMPORTANT: name should NOT be forced uppercase
   const brandTop =
-    "text-[12px] uppercase font-medium tracking-[0.28em] text-neutral-950"
+    "text-[13px] font-medium tracking-[0.06em] text-neutral-950"
+  const brandTopSub =
+    "text-[11px] font-normal tracking-[0.16em]"
+
   const langTop = (l: Lang) =>
     [
       "text-[11px] uppercase tracking-[0.20em] transition-colors duration-200",
@@ -247,8 +263,12 @@ export default function Header() {
 
   const navItemFloat =
     "text-[11px] uppercase font-normal tracking-[0.18em] text-neutral-600 hover:text-neutral-950 transition-colors duration-200"
+
   const brandFloat =
-    "text-[11px] uppercase font-medium tracking-[0.32em] text-neutral-950"
+    "text-[12px] font-medium tracking-[0.08em] text-neutral-950"
+  const brandFloatSub =
+    "text-[11px] font-normal tracking-[0.18em]"
+
   const langFloat = (l: Lang) =>
     [
       "text-[11px] uppercase font-normal tracking-[0.22em] transition-colors duration-200",
@@ -258,7 +278,7 @@ export default function Header() {
   const MobileTrigger = ({ className = "" }: { className?: string }) => (
     <button
       type="button"
-      aria-label="Open menu"
+      aria-label={nav.menu}
       onClick={() => setMobileOpen(true)}
       className={[
         "md:hidden inline-flex items-center justify-center p-1",
@@ -281,9 +301,11 @@ export default function Header() {
         ].join(" ")}
       >
         <div className="mx-auto w-full max-w-[1500px] px-6 lg:px-10 2xl:px-12 h-16 flex items-center justify-between">
-          <Link href={"/" + activeLang} className={brandTop}>
-            Ninan Studio
-          </Link>
+          <Brand
+            href={"/" + activeLang}
+            className={brandTop}
+            subClassName={brandTopSub}
+          />
 
           <MobileTrigger />
 
@@ -331,9 +353,11 @@ export default function Header() {
             overflow-hidden
           "
         >
-          <Link href={"/" + activeLang} className={brandFloat}>
-            Ninan Studio
-          </Link>
+          <Brand
+            href={"/" + activeLang}
+            className={brandFloat}
+            subClassName={brandFloatSub}
+          />
 
           <MobileTrigger />
 
@@ -366,7 +390,7 @@ export default function Header() {
       {mobileOpen && (
         <div className="fixed inset-0 z-[60]">
           <button
-            aria-label="Close menu"
+            aria-label={nav.close}
             className="absolute inset-0 bg-black/10 backdrop-blur-[2px]"
             onClick={() => setMobileOpen(false)}
           />
@@ -382,20 +406,19 @@ export default function Header() {
             "
           >
             <div className="flex items-center justify-between">
-              <Link
+              <Brand
                 href={"/" + activeLang}
-                onClick={() => setMobileOpen(false)}
-                className="text-[12px] uppercase font-medium tracking-[0.28em] text-neutral-950"
-              >
-                Ninan Studio
-              </Link>
+                className="text-[13px] font-medium tracking-[0.06em] text-neutral-950"
+                subClassName="text-[11px] font-normal tracking-[0.18em]"
+              />
+
               <button
                 type="button"
-                aria-label="Close"
+                aria-label={nav.close}
                 onClick={() => setMobileOpen(false)}
                 className="h-8 w-8 rounded-full border border-black/10 bg-white/60 hover:bg-white/90 transition flex items-center justify-center relative"
               >
-                <span className="sr-only">Close</span>
+                <span className="sr-only">{nav.close}</span>
                 <span className="block h-[1px] w-3.5 bg-neutral-900 rotate-45 absolute" />
                 <span className="block h-[1px] w-3.5 bg-neutral-900 -rotate-45 absolute" />
               </button>

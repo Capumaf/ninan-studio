@@ -9,7 +9,9 @@ export default function Process() {
   const p = t.process
 
   const reduceMotion = useReducedMotion()
-  const [openId, setOpenId] = useState<number | null>(0)
+
+  // Cleaner first impression: start collapsed.
+  const [openId, setOpenId] = useState<number | null>(null)
 
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -76,6 +78,7 @@ export default function Process() {
                         onClick={() => setOpenId(isOpen ? null : i)}
                         className="w-full text-left focus:outline-none"
                         aria-expanded={isOpen}
+                        aria-controls={`process-panel-${i}`}
                       >
                         <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
                           {step.step}
@@ -85,7 +88,6 @@ export default function Process() {
                           {step.title}
                         </h3>
 
-                        {/* Desc recortada cuando está cerrado */}
                         {!isOpen && (
                           <p className="mt-4 line-clamp-2 text-base leading-[1.75] text-black/60">
                             {step.desc}
@@ -97,6 +99,7 @@ export default function Process() {
                         {isOpen && (
                           <motion.div
                             key={`panel-${i}`}
+                            id={`process-panel-${i}`}
                             initial={
                               reduceMotion
                                 ? { opacity: 1 }

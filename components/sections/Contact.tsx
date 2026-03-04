@@ -4,7 +4,7 @@ import { useId, useMemo, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 
-const EMAIL_TO = "cesarpumayallaf@ninanstudio.com"
+const EMAIL_TO = "cesarpumayalla@ninan-studio.com"
 
 function buildMailto(params: { to: string; subject: string; body: string }) {
   const { to, subject, body } = params

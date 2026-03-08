@@ -1,7 +1,6 @@
 // content/i18n.ts
-// Ninan Studio — i18n EN + ES + DE (portfolio-focused)
+// Ninan Studio — i18n EN + ES + DE
 // Personal brand: name first, studio as secondary label
-// Feb 2026
 
 export const languages = ["en", "de", "es"] as const
 export type Lang = (typeof languages)[number]
@@ -60,9 +59,6 @@ export type Dictionary = {
 }
 
 export const i18n = {
-  // ═══════════════════════════════════════════════════════════════════════════
-  // ENGLISH
-  // ═══════════════════════════════════════════════════════════════════════════
   en: {
     hero: {
       t1: "Frontend.",
@@ -70,8 +66,8 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "I build structured, performance-minded web interfaces with Next.js (App Router), React and TypeScript.",
-      p2: "Backend exposure: Spring Boot CRUD + SQL (junior level, actively improving). Ninan Studio is my personal label — I apply as an individual developer.",
+      p1: "I build structured, performance-focused web interfaces with Next.js, React and TypeScript.",
+      p2: "I focus on clean UI architecture, maintainable components and production-ready implementations. Ninan Studio is my personal label — I apply as an individual developer.",
 
       start: "Download CV",
       view: "View work",
@@ -103,14 +99,14 @@ export const i18n = {
 
     about: {
       kicker: "ABOUT",
-      title: "Frontend developer with strong delivery focus.",
-      p1: "I’m Cesar Pumayalla — a developer focused on frontend (Next.js / React / TypeScript). I care about clean UI architecture, performance, and accessibility, with a minimal editorial approach that supports content rather than marketing.",
-      p2: "My background is non-traditional (marketing → digital → product/innovation), and I transitioned into development through bootcamps and hands-on projects. I also have backend exposure (Spring Boot CRUD + SQL) and I’m building full-stack skills without overstating my level.",
+      title: "Frontend developer focused on clear structure and real delivery.",
+      p1: "I’m Cesar Pumayalla — a frontend developer focused on building structured interfaces with Next.js, React and TypeScript. My work emphasizes clean UI architecture, performance awareness and accessibility fundamentals.",
+      p2: "My background is non-traditional (marketing → digital → product). I transitioned into development through hands-on projects and continue expanding my full-stack knowledge through a Next.js + Spring Boot project.",
       bullets: [
         "Core: Next.js (App Router), React, TypeScript, Tailwind",
-        "Quality: semantic HTML, performance mindset, WCAG basics",
+        "Quality: semantic HTML, performance awareness, accessibility basics",
         "Tooling: Git/GitHub, Vercel CI/CD, DNS/domains, basic security",
-        "Backend exposure: Spring Boot REST + SQL (junior, improving)",
+        "Working backend knowledge: Spring Boot REST + SQL",
       ],
     },
 
@@ -118,9 +114,9 @@ export const i18n = {
       kickerLeft: "SELECTED",
       kickerRight: "WORK",
       title: "Work",
-      desc: "A small set of projects that show how I build: structure, readability, performance, and real delivery.",
-      more: "More code samples and context available on request.",
-      sideNote: "One featured direction + shipped production sites.",
+      desc: "A focused selection of projects that show how I build: structure, readability, performance and real delivery.",
+      more: "More code samples and project context are available on request.",
+      sideNote: "One featured direction + shipped production websites.",
       viewLive: "View live",
       linkOnRequest: "Repo on request.",
       items: [
@@ -130,7 +126,7 @@ export const i18n = {
           meta: "Full-stack portfolio project · JWT auth · REST API · Postgres",
           status: "IN PROGRESS (MVP SHIPPED)",
           description:
-            "A product-style portal to show practical engineering: authentication (JWT), simple roles, CRUD workflows, pagination, and a clean dashboard UI. Focus: typed contracts, predictable error handling, and production-style structure.",
+            "A full-stack portfolio project built to demonstrate practical engineering skills: authentication, CRUD workflows, pagination and a structured dashboard interface. Focus: typed contracts, predictable error handling and production-style architecture.",
         },
         {
           id: "pp",
@@ -138,7 +134,7 @@ export const i18n = {
           meta: "Next.js + TypeScript · Structured pages · Real deploy",
           status: "SHIPPED",
           description:
-            "A service website built with Next.js + TypeScript, focused on clear structure and quick scanning. Delivered with production deployment on Vercel and a maintainable component setup.",
+            "A production website built with Next.js and TypeScript. The project focuses on clear structure, fast loading and readable content hierarchy, delivered with a maintainable component system and deployed on Vercel.",
           href: "https://www.pnp-remodeling.com/",
         },
         {
@@ -147,7 +143,7 @@ export const i18n = {
           meta: "Production delivery · Content structure · Accessibility details",
           status: "SHIPPED",
           description:
-            "A calm, trust-focused site built for readability and clear information architecture. Priorities: clean hierarchy, performance, and SEO-ready structure.",
+            "A calm, content-focused website designed for clarity and trust. The implementation prioritizes readable typography, clean hierarchy and SEO-ready structure.",
           href: "https://guillermo-rios.com",
         },
         {
@@ -156,17 +152,15 @@ export const i18n = {
           meta: "Client delivery · SEO setup · Pragmatic fixes",
           status: "",
           description:
-            "I’ve shipped and maintained WordPress sites (Elementor/Plugins) with real delivery constraints: structure, SEO basics, security plugins, performance fixes, and pragmatic PHP/CSS adjustments. I position this as production experience — my core stack remains Next.js/React/TypeScript.",
+            "Production work delivered with WordPress. Projects included implementation, SEO setup, security plugins, performance improvements and pragmatic fixes in PHP and CSS.",
         },
-
-        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
         {
           id: "rfc-abogados",
           name: "RFC Abogados — landing in production",
           meta: "WordPress / Elementor · Custom HTML/CSS blocks · SEO basics",
           status: "SHIPPED",
           description:
-            "Legal firm landing page delivered on WordPress (Elementor) with custom HTML/CSS sections. Focus: clear hierarchy, fast scanning, pragmatic SEO setup, and production maintenance constraints.",
+            "Landing page for a legal firm delivered in WordPress (Elementor) with custom HTML/CSS sections. Focus: clear hierarchy, readable structure and practical production delivery.",
           href: "https://rfcabogados.com/",
         },
       ],
@@ -176,13 +170,13 @@ export const i18n = {
       kicker: "CAPABILITIES",
       title: "What I build",
       intro:
-        "I’m applying as a frontend developer. These are the areas where I deliver reliably — without agency positioning.",
+        "These are the areas where I deliver most consistently: structured frontend implementation, production websites and practical full-stack foundations.",
       howItWorks: {
         kicker: "HOW I WORK",
         bullets: [
           "Clarify scope → define a clean structure",
           "Build with predictable components and typed interfaces",
-          "Ship, validate, iterate (performance + UX details)",
+          "Ship, validate and refine",
         ],
         cta: "See work",
       },
@@ -190,18 +184,18 @@ export const i18n = {
         {
           title: "Frontend (Next.js / React / TypeScript)",
           time: "CORE",
-          desc: "Clean UI architecture and fast delivery with Next.js App Router and TypeScript.",
+          desc: "Structured frontend implementation with clean components, consistent patterns and production-ready delivery.",
           bullets: [
             "Component systems + consistent patterns",
-            "Responsive layouts + editorial hierarchy",
+            "Responsive layouts + clear hierarchy",
             "Performance and accessibility basics",
           ],
           cta: "View projects",
         },
         {
-          title: "Backend exposure (Spring Boot / SQL)",
-          time: "JUNIOR",
-          desc: "CRUD APIs and SQL basics — enough to collaborate cross-stack and build small services.",
+          title: "Working backend knowledge (Spring Boot / SQL)",
+          time: "PRACTICAL",
+          desc: "Practical backend foundations that support collaboration across the stack and small full-stack builds.",
           bullets: [
             "REST endpoints + validation + error handling",
             "SQL basics (relations, queries, migrations)",
@@ -211,8 +205,8 @@ export const i18n = {
         },
         {
           title: "Production websites (WordPress / PHP)",
-          time: "PRACTICAL",
-          desc: "Client delivery experience: implementation, fixes, maintenance, SEO setup and deployments.",
+          time: "DELIVERY",
+          desc: "Client delivery experience across implementation, maintenance, SEO setup and pragmatic fixes.",
           bullets: [
             "Elementor builds + structure improvements",
             "SEO basics + forms + tracking setup",
@@ -222,19 +216,19 @@ export const i18n = {
         },
       ],
       close:
-        "Targeting frontend roles (Next.js/React/TS). Backend is positioned honestly as exposure and improved through a focused full-stack project.",
+        "I’m targeting frontend roles with Next.js, React and TypeScript, while continuing to strengthen my full-stack range through practical project work.",
     },
 
     process: {
       kicker: "PROCESS",
       title: "How I work",
-      intro: "A simple workflow that mirrors team work: clarity first, then delivery and iteration.",
-      footer: "Focus: maintainable structure, predictable UI, and shipped results.",
+      intro: "A simple workflow focused on clarity, structure and reliable delivery.",
+      footer: "Focus: maintainable structure, predictable UI and shipped results.",
       steps: [
         {
           step: "STEP 01",
           title: "Scope & structure",
-          desc: "Clarify the problem, define minimal information architecture, and set constraints.",
+          desc: "Clarify the problem, define the information architecture and set clear constraints.",
           bullets: ["Goals + content map", "Route/section structure", "Plan + constraints"],
         },
         {
@@ -246,13 +240,13 @@ export const i18n = {
         {
           step: "STEP 03",
           title: "Implementation",
-          desc: "Ship with Next.js/TypeScript patterns, QA, and performance checks.",
+          desc: "Ship with clear Next.js and TypeScript patterns, QA and performance checks.",
           bullets: ["Clean App Router structure", "A11y/performance pass", "Error/edge states"],
         },
         {
           step: "STEP 04",
-          title: "Deploy & iterate",
-          desc: "Deploy, verify, and improve based on feedback.",
+          title: "Deploy & refine",
+          desc: "Deploy, verify and improve based on feedback.",
           bullets: ["Vercel previews + deploy", "SEO sanity checks", "Small iteration loop"],
         },
       ],
@@ -278,8 +272,8 @@ export const i18n = {
 
     contact: {
       kicker: "CONTACT",
-      title: "Reach out",
-      body: "For roles or introductions: send a short message with the job link and what you’re hiring for. I reply within 24–48h.",
+      title: "Get in touch",
+      body: "For roles or project discussions, feel free to send a short message with some context about the position or opportunity. I usually reply within 24–48 hours.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -292,9 +286,6 @@ export const i18n = {
     },
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // DEUTSCH
-  // ═══════════════════════════════════════════════════════════════════════════
   de: {
     hero: {
       t1: "Frontend.",
@@ -302,8 +293,8 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "Ich entwickle strukturierte, performance-orientierte Web-Interfaces mit Next.js (App Router), React und TypeScript.",
-      p2: "Backend-Exposure: Spring Boot CRUD + SQL (Junior-Level, aktiv im Aufbau). Ninan Studio ist mein persönliches Label — ich bewerbe mich als Einzelentwickler.",
+      p1: "Ich entwickle strukturierte, performante Web-Interfaces mit Next.js (App Router), React und TypeScript.",
+      p2: "Ergänzend arbeite ich mit Backend-Technologien wie Spring Boot und SQL und baue meine Full-Stack-Kenntnisse kontinuierlich aus. Ninan Studio ist mein persönliches Label — ich bewerbe mich als individueller Entwickler.",
 
       start: "Lebenslauf",
       view: "Projekte ansehen",
@@ -312,7 +303,7 @@ export const i18n = {
 
       issue: "Portfolio",
       place: "Berlin / EU",
-      est:  "Aktuell Next.js + Spring Boot Projekt",
+      est: "Aktuell Next.js + Spring Boot Projekt",
 
       principle: "Arbeitsprinzipien",
       m1: "Klarheit statt Cleverness.",
@@ -335,14 +326,14 @@ export const i18n = {
 
     about: {
       kicker: "ÜBER",
-      title: "Frontend Developer mit Delivery-Fokus.",
-      p1: "Ich bin Cesar Pumayalla — Developer mit Fokus auf Frontend (Next.js / React / TypeScript). Wichtig sind mir saubere UI-Architektur, Performance und Accessibility, kombiniert mit einem minimalistischen Editorial-Ansatz.",
-      p2: "Mein Background ist nicht klassisch (Marketing → Digital → Produkt/Innovation). Den Übergang in Development habe ich über Bootcamps und praxisnahe Projekte gemacht. Zusätzlich habe ich Backend-Exposure (Spring Boot CRUD + SQL) und baue Full-Stack-Skills aus — ohne mein Level zu übertreiben.",
+      title: "Frontend Developer mit Fokus auf klare Struktur und echte Delivery.",
+      p1: "Ich bin Cesar Pumayalla — Frontend Developer mit Fokus auf strukturierte Interfaces mit Next.js, React und TypeScript. Im Mittelpunkt stehen saubere UI-Architektur, Performance-Bewusstsein und Accessibility-Grundlagen.",
+      p2: "Mein Background ist nicht klassisch (Marketing → Digital → Produkt). Den Wechsel in Development habe ich über praxisnahe Projekte gemacht und erweitere meine Full-Stack-Kenntnisse kontinuierlich über ein Next.js + Spring Boot Projekt.",
       bullets: [
         "Core: Next.js (App Router), React, TypeScript, Tailwind",
-        "Qualität: semantisches HTML, Performance-Mindset, WCAG-Basics",
+        "Qualität: semantisches HTML, Performance-Bewusstsein, Accessibility-Basics",
         "Tooling: Git/GitHub, Vercel CI/CD, DNS/Domains, Basic Security",
-        "Backend-Exposure: Spring Boot REST + SQL (Junior, im Aufbau)",
+        "Praktische Backend-Kenntnisse: Spring Boot REST + SQL",
       ],
     },
 
@@ -350,9 +341,9 @@ export const i18n = {
       kickerLeft: "AUSWAHL",
       kickerRight: "ARBEITEN",
       title: "Arbeiten",
-      desc: "Wenige Projekte mit hohem Signal: Struktur, Lesbarkeit, Performance und echte Lieferung.",
-      more: "Mehr Code-Beispiele und Kontext auf Anfrage.",
-      sideNote: "Ein Featured-Projekt + ausgelieferte Production Sites.",
+      desc: "Eine fokussierte Auswahl an Projekten, die zeigt, wie ich arbeite: Struktur, Lesbarkeit, Performance und echte Delivery.",
+      more: "Mehr Code-Beispiele und Projektkontext auf Anfrage.",
+      sideNote: "Eine Featured-Richtung + ausgelieferte Production Websites.",
       viewLive: "Live ansehen",
       linkOnRequest: "Repo auf Anfrage.",
       items: [
@@ -362,7 +353,7 @@ export const i18n = {
           meta: "Full-stack Portfolio · JWT Auth · REST API · Postgres",
           status: "IN ARBEIT (MVP GELIEFERT)",
           description:
-            "Portal im Produkt-Stil zur Demonstration praktischer Engineering-Arbeit: Auth (JWT), einfache Rollen, CRUD-Workflows, Pagination und sauberes Dashboard-UI. Fokus: typisierte Schnittstellen, konsistentes Error-Handling und Production-Struktur.",
+            "Ein Full-Stack-Portfolio-Projekt zur Demonstration praktischer Engineering-Skills: Authentifizierung, CRUD-Workflows, Pagination und eine strukturierte Dashboard-Oberfläche. Fokus: typisierte Schnittstellen, konsistentes Error-Handling und produktionsnahe Architektur.",
         },
         {
           id: "pp",
@@ -370,7 +361,7 @@ export const i18n = {
           meta: "Next.js + TypeScript · Strukturierte Seiten · Real Deploy",
           status: "GELIEFERT",
           description:
-            "Service-Website mit Next.js + TypeScript, Fokus auf klare Struktur und schnelles Scanning. Production-Deployment auf Vercel und wartbares Component-Setup.",
+            "Eine Production Website mit Next.js und TypeScript. Fokus: klare Struktur, schnelle Ladezeiten und gut lesbare Content-Hierarchie, umgesetzt mit einem wartbaren Component-System und Deploy auf Vercel.",
           href: "https://www.pnp-remodeling.com/",
         },
         {
@@ -379,7 +370,7 @@ export const i18n = {
           meta: "Production Delivery · Content-Struktur · Accessibility-Details",
           status: "GELIEFERT",
           description:
-            "Ruhige Website mit Fokus auf Vertrauen und Klarheit. Prioritäten: saubere Hierarchie, Performance und SEO-Struktur.",
+            "Eine ruhige, content-orientierte Website mit Fokus auf Klarheit und Vertrauen. Die Umsetzung priorisiert lesbare Typografie, saubere Hierarchie und SEO-fähige Struktur.",
           href: "https://guillermo-rios.com",
         },
         {
@@ -388,17 +379,15 @@ export const i18n = {
           meta: "Kunden-Delivery · SEO Setup · Pragmatic Fixes",
           status: "",
           description:
-            "WordPress-Sites in echten Projekten: Umsetzung (Elementor/Plugins), Struktur/SEO-Basics, Security-Plugins, Performance-Fixes und pragmatische PHP/CSS-Anpassungen. WordPress als Production-Erfahrung — Kern-Stack bleibt Next.js/React/TypeScript.",
+            "Production Work mit WordPress. Dazu gehörten Umsetzung, SEO-Setup, Security-Plugins, Performance-Verbesserungen sowie pragmatische Fixes in PHP und CSS.",
         },
-
-        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
         {
           id: "rfc-abogados",
           name: "RFC Abogados — Landing (Production)",
           meta: "WordPress / Elementor · Custom HTML/CSS · SEO Basics",
           status: "GELIEFERT",
           description:
-            "Landing Page für eine Kanzlei auf WordPress (Elementor) mit Custom HTML/CSS Sections. Fokus: klare Hierarchie, schnelles Scanning, pragmatisches SEO-Setup und reale Maintenance-Constraints.",
+            "Landing Page für eine Kanzlei, umgesetzt in WordPress (Elementor) mit Custom HTML/CSS Sections. Fokus: klare Hierarchie, lesbare Struktur und pragmatische Delivery in Production.",
           href: "https://rfcabogados.com/",
         },
       ],
@@ -408,13 +397,13 @@ export const i18n = {
       kicker: "FÄHIGKEITEN",
       title: "Was ich baue",
       intro:
-        "Ich bewerbe mich als Frontend Developer. Das sind die Bereiche, in denen ich zuverlässig liefere — ohne Agency-Positionierung.",
+        "Das sind die Bereiche, in denen ich am zuverlässigsten liefere: strukturierte Frontend-Implementierung, Production Websites und praktische Full-Stack-Grundlagen.",
       howItWorks: {
         kicker: "ARBEITSWEISE",
         bullets: [
           "Scope klären → saubere Struktur definieren",
           "Mit konsistenten Komponenten und Typisierung bauen",
-          "Liefern, prüfen, iterieren (Performance + UX-Details)",
+          "Liefern, prüfen und verfeinern",
         ],
         cta: "Projekte ansehen",
       },
@@ -422,18 +411,18 @@ export const i18n = {
         {
           title: "Frontend (Next.js / React / TypeScript)",
           time: "CORE",
-          desc: "Saubere UI-Architektur und schnelle Delivery mit Next.js App Router und TypeScript.",
+          desc: "Strukturierte Frontend-Implementierung mit sauberen Komponenten, konsistenten Patterns und produktionsnaher Delivery.",
           bullets: [
             "Komponentensysteme + konsistente Patterns",
-            "Responsive Layouts + Editorial Hierarchie",
-            "Performance & Accessibility Basics",
+            "Responsive Layouts + klare Hierarchie",
+            "Performance- und Accessibility-Basics",
           ],
           cta: "Projekte ansehen",
         },
         {
-          title: "Backend-Exposure (Spring Boot / SQL)",
-          time: "JUNIOR",
-          desc: "CRUD APIs und SQL Basics — genug für Zusammenarbeit cross-stack und kleine Services.",
+          title: "Praktische Backend-Kenntnisse (Spring Boot / SQL)",
+          time: "PRAKTISCH",
+          desc: "Praktische Backend-Grundlagen für Zusammenarbeit über den Stack hinweg und kleinere Full-Stack-Builds.",
           bullets: [
             "REST Endpoints + Validation + Error-Handling",
             "SQL Basics (Relationen, Queries, Migrationen)",
@@ -443,8 +432,8 @@ export const i18n = {
         },
         {
           title: "Production Websites (WordPress / PHP)",
-          time: "PRAKTISCH",
-          desc: "Kunden-Delivery: Umsetzung, Fixes, Maintenance, SEO Setup und Deployments.",
+          time: "DELIVERY",
+          desc: "Erfahrung in Kundenprojekten über Umsetzung, Maintenance, SEO-Setup und pragmatische Fixes.",
           bullets: [
             "Elementor Builds + Struktur verbessern",
             "SEO Basics + Forms + Tracking Setup",
@@ -454,37 +443,37 @@ export const i18n = {
         },
       ],
       close:
-        "Ziel: Frontend-Rollen (Next.js/React/TS). Backend ist ehrlich als Exposure positioniert und wird aktiv ausgebaut.",
+        "Ich fokussiere mich auf Frontend-Rollen mit Next.js, React und TypeScript und erweitere meine Full-Stack-Range kontinuierlich über praktische Projektarbeit.",
     },
 
     process: {
       kicker: "PROZESS",
       title: "Wie ich arbeite",
-      intro: "Ein schlanker Workflow wie im Team: Klarheit zuerst, dann Lieferung und Iteration.",
-      footer: "Fokus: wartbare Struktur, vorhersehbares UI und echte Ergebnisse.",
+      intro: "Ein einfacher Workflow mit Fokus auf Klarheit, Struktur und zuverlässige Delivery.",
+      footer: "Fokus: wartbare Struktur, vorhersehbares UI und ausgelieferte Ergebnisse.",
       steps: [
         {
           step: "SCHRITT 01",
           title: "Scope & Struktur",
-          desc: "Problem klären, minimale Informationsarchitektur definieren, Constraints setzen.",
+          desc: "Problem klären, Informationsarchitektur definieren und klare Constraints setzen.",
           bullets: ["Ziele + Content Map", "Route/Section-Struktur", "Plan + Constraints"],
         },
         {
           step: "SCHRITT 02",
           title: "UI-System",
-          desc: "Kleines, konsistentes Set an Komponenten und Layout-Regeln.",
+          desc: "Ein kleines, konsistentes Set an Komponenten und Layout-Regeln aufbauen.",
           bullets: ["Typografie + Spacing", "Reusable Components", "Responsive Verhalten"],
         },
         {
           step: "SCHRITT 03",
           title: "Implementierung",
-          desc: "Mit Next.js/TypeScript Patterns liefern, QA, Performance-Checks.",
+          desc: "Mit klaren Next.js- und TypeScript-Patterns umsetzen, testen und prüfen.",
           bullets: ["Saubere App Router Struktur", "A11y/Performance Pass", "Error/Edge States"],
         },
         {
           step: "SCHRITT 04",
-          title: "Deploy & Iteration",
-          desc: "Deployen, verifizieren, und per Feedback verbessern.",
+          title: "Deploy & Verfeinerung",
+          desc: "Deployen, verifizieren und auf Basis von Feedback verbessern.",
           bullets: ["Vercel Previews + Deploy", "SEO Checks", "Kleine Iterationsschleife"],
         },
       ],
@@ -511,7 +500,7 @@ export const i18n = {
     contact: {
       kicker: "KONTAKT",
       title: "Kontakt",
-      body: "Für Rollen oder Intro: sende kurz den Job-Link und was ihr sucht. Ich antworte in 24–48h.",
+      body: "Für Rollen oder Projektgespräche kannst du mir gern eine kurze Nachricht mit etwas Kontext zur Position oder Möglichkeit schicken. Ich antworte in der Regel innerhalb von 24–48 Stunden.",
       ctaEmail: "E-Mail",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -524,9 +513,6 @@ export const i18n = {
     },
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // ESPAÑOL
-  // ═══════════════════════════════════════════════════════════════════════════
   es: {
     hero: {
       t1: "Frontend.",
@@ -534,8 +520,8 @@ export const i18n = {
       t3: "TypeScript.",
       t4: "React.",
 
-      p1: "Construyo interfaces web estructuradas y orientadas al rendimiento con Next.js (App Router), React y TypeScript.",
-      p2: "Exposición backend: Spring Boot CRUD + SQL (nivel junior, mejorando). Ninan Studio es mi etiqueta personal — aplico como developer individual.",
+      p1: "Construyo interfaces web estructuradas y orientadas al rendimiento con Next.js, React y TypeScript.",
+      p2: "Me enfoco en arquitectura UI limpia, componentes mantenibles e implementaciones listas para producción. Ninan Studio es mi etiqueta personal — aplico como developer individual.",
 
       start: "Descargar CV",
       view: "Ver proyectos",
@@ -567,14 +553,14 @@ export const i18n = {
 
     about: {
       kicker: "ACERCA DE",
-      title: "Frontend developer con enfoque en entrega.",
-      p1: "Soy Cesar Pumayalla — developer enfocado en frontend (Next.js / React / TypeScript). Me importa la arquitectura limpia, el rendimiento y la accesibilidad, con una estética editorial minimal que apoya el contenido sin marketing agresivo.",
-      p2: "Mi background no es tradicional (marketing → digital → producto/innovación). La transición a development la hice con bootcamps y proyectos reales. También tengo exposición backend (Spring Boot CRUD + SQL) y estoy construyendo habilidades full-stack sin inflar el nivel.",
+      title: "Frontend developer con enfoque en estructura clara y entrega real.",
+      p1: "Soy Cesar Pumayalla — frontend developer enfocado en construir interfaces estructuradas con Next.js, React y TypeScript. Mi trabajo prioriza arquitectura UI limpia, criterio de performance y fundamentos de accesibilidad.",
+      p2: "Mi background no es tradicional (marketing → digital → producto). Hice la transición a development a través de proyectos prácticos y sigo ampliando mi rango full-stack con un proyecto en Next.js + Spring Boot.",
       bullets: [
         "Core: Next.js (App Router), React, TypeScript, Tailwind",
-        "Calidad: HTML semántico, performance mindset, WCAG básico",
+        "Calidad: HTML semántico, criterio de performance, accesibilidad básica",
         "Tooling: Git/GitHub, Vercel CI/CD, DNS/dominios, seguridad básica",
-        "Exposición backend: Spring Boot REST + SQL (junior, mejorando)",
+        "Conocimiento práctico de backend: Spring Boot REST + SQL",
       ],
     },
 
@@ -582,9 +568,9 @@ export const i18n = {
       kickerLeft: "SELECCIÓN",
       kickerRight: "TRABAJOS",
       title: "Trabajos",
-      desc: "Pocos proyectos con señal alta: estructura, legibilidad, performance y entrega real.",
-      more: "Más ejemplos y contexto disponibles a petición.",
-      sideNote: "Un proyecto featured + sitios en producción.",
+      desc: "Una selección enfocada de proyectos que muestra cómo construyo: estructura, legibilidad, performance y entrega real.",
+      more: "Más ejemplos de código y contexto del proyecto disponibles a petición.",
+      sideNote: "Una dirección principal + websites ya entregados en producción.",
       viewLive: "Ver en vivo",
       linkOnRequest: "Repo a petición.",
       items: [
@@ -594,7 +580,7 @@ export const i18n = {
           meta: "Full-stack portfolio · JWT auth · REST API · Postgres",
           status: "EN PROGRESO (MVP ENTREGADO)",
           description:
-            "Portal estilo producto para demostrar ingeniería práctica: auth (JWT), roles simples, flujos CRUD, paginación y UI de dashboard limpia. Foco: contratos tipados, manejo de errores consistente y estructura tipo producción.",
+            "Proyecto full-stack de portfolio construido para demostrar habilidades prácticas de ingeniería: autenticación, flujos CRUD, paginación e interfaz de dashboard estructurada. Foco: contratos tipados, manejo de errores predecible y arquitectura tipo producción.",
         },
         {
           id: "pp",
@@ -602,7 +588,7 @@ export const i18n = {
           meta: "Next.js + TypeScript · Páginas estructuradas · Deploy real",
           status: "ENTREGADO",
           description:
-            "Website de servicios construida con Next.js + TypeScript, enfocada en estructura clara y escaneo rápido. Deploy en producción con Vercel y setup mantenible.",
+            "Website en producción construida con Next.js y TypeScript. El proyecto se enfoca en estructura clara, carga rápida y jerarquía de contenido legible, con un sistema de componentes mantenible y deploy en Vercel.",
           href: "https://www.pnp-remodeling.com/",
         },
         {
@@ -611,7 +597,7 @@ export const i18n = {
           meta: "Entrega en producción · Estructura de contenido · Accesibilidad",
           status: "ENTREGADO",
           description:
-            "Sitio calmado enfocado en confianza y claridad. Prioridades: jerarquía limpia, performance y estructura SEO.",
+            "Un sitio calmado y centrado en el contenido, diseñado para transmitir claridad y confianza. La implementación prioriza tipografía legible, jerarquía limpia y estructura preparada para SEO.",
           href: "https://guillermo-rios.com",
         },
         {
@@ -620,17 +606,15 @@ export const i18n = {
           meta: "Delivery a clientes · SEO setup · Fixes pragmáticos",
           status: "",
           description:
-            "He entregado y mantenido sitios WordPress (Elementor/Plugins) con restricciones reales: estructura, SEO básico, plugins de seguridad, fixes de performance y ajustes pragmáticos en PHP/CSS. WordPress como experiencia de producción — mi core stack es Next.js/React/TypeScript.",
+            "Trabajo en producción entregado con WordPress. Incluyó implementación, setup SEO, plugins de seguridad, mejoras de performance y fixes pragmáticos en PHP y CSS.",
         },
-
-        // ✅ ADDED: RFC Abogados (kept last to avoid changing Featured index logic)
         {
           id: "rfc-abogados",
           name: "RFC Abogados — landing en producción",
           meta: "WordPress / Elementor · Bloques HTML/CSS custom · SEO básico",
           status: "ENTREGADO",
           description:
-            "Landing para estudio jurídico entregada en WordPress (Elementor) con secciones HTML/CSS custom. Foco: jerarquía clara, lectura rápida, setup SEO pragmático y mantenimiento en producción.",
+            "Landing para estudio jurídico desarrollada en WordPress (Elementor) con secciones HTML/CSS custom. Foco: jerarquía clara, estructura legible y entrega práctica en producción.",
           href: "https://rfcabogados.com/",
         },
       ],
@@ -640,13 +624,13 @@ export const i18n = {
       kicker: "CAPACIDADES",
       title: "Lo que construyo",
       intro:
-        "Estoy aplicando como frontend developer. Estas son mis áreas de entrega real — sin posicionamiento de agencia.",
+        "Estas son las áreas donde entrego con mayor consistencia: implementación frontend estructurada, websites en producción y bases prácticas de full-stack.",
       howItWorks: {
         kicker: "CÓMO TRABAJO",
         bullets: [
           "Aclaro alcance → defino estructura limpia",
-          "Construyo con componentes consistentes y tipado",
-          "Entrego, valido e itero (performance + detalles UX)",
+          "Construyo con componentes predecibles e interfaces tipadas",
+          "Entrego, valido y refino",
         ],
         cta: "Ver trabajos",
       },
@@ -654,29 +638,29 @@ export const i18n = {
         {
           title: "Frontend (Next.js / React / TypeScript)",
           time: "CORE",
-          desc: "Arquitectura limpia y entrega rápida con Next.js App Router y TypeScript.",
+          desc: "Implementación frontend estructurada con componentes limpios, patrones consistentes y entrega lista para producción.",
           bullets: [
             "Sistemas de componentes + patrones consistentes",
-            "Layouts responsive + jerarquía editorial",
-            "Performance + accesibilidad básica",
+            "Layouts responsive + jerarquía clara",
+            "Performance y accesibilidad básica",
           ],
           cta: "Ver proyectos",
         },
         {
-          title: "Exposición backend (Spring Boot / SQL)",
-          time: "JUNIOR",
-          desc: "CRUD APIs y SQL básico — para colaborar cross-stack y construir servicios pequeños.",
+          title: "Conocimiento práctico de backend (Spring Boot / SQL)",
+          time: "PRÁCTICO",
+          desc: "Bases prácticas de backend para colaborar a través del stack y construir proyectos full-stack pequeños.",
           bullets: [
             "Endpoints REST + validación + manejo de errores",
-            "SQL (relaciones, queries, migraciones)",
+            "SQL básico (relaciones, queries, migraciones)",
             "Conceptos de auth (JWT básico)",
           ],
           cta: "Proyecto full-stack",
         },
         {
           title: "Websites en producción (WordPress / PHP)",
-          time: "PRÁCTICO",
-          desc: "Delivery real a clientes: implementación, fixes, mantenimiento, SEO setup y deployments.",
+          time: "DELIVERY",
+          desc: "Experiencia de entrega a clientes en implementación, mantenimiento, setup SEO y fixes pragmáticos.",
           bullets: [
             "Elementor + mejoras de estructura",
             "SEO básico + formularios + tracking",
@@ -686,38 +670,38 @@ export const i18n = {
         },
       ],
       close:
-        "Si estás contratando: apunto a roles frontend (Next.js/React/TS). Mi backend está posicionado honestamente como exposure y lo estoy mejorando con un proyecto full-stack enfocado.",
+        "Estoy apuntando a roles frontend con Next.js, React y TypeScript, mientras sigo fortaleciendo mi rango full-stack a través de trabajo práctico en proyectos.",
     },
 
     process: {
       kicker: "PROCESO",
       title: "Cómo trabajo",
-      intro: "Un flujo simple tipo equipo: claridad primero, luego entrega e iteración.",
+      intro: "Un flujo simple con foco en claridad, estructura y entrega confiable.",
       footer: "Foco: estructura mantenible, UI predecible y resultados entregados.",
       steps: [
         {
           step: "PASO 01",
           title: "Alcance y estructura",
-          desc: "Aclarar el problema, definir arquitectura mínima de información y restricciones.",
+          desc: "Aclaro el problema, defino la arquitectura de información y establezco restricciones claras.",
           bullets: ["Objetivos + mapa de contenido", "Estructura de rutas/secciones", "Plan + restricciones"],
         },
         {
           step: "PASO 02",
           title: "Sistema UI",
-          desc: "Construir un set pequeño y consistente de componentes y reglas de layout.",
+          desc: "Construyo un set pequeño y consistente de componentes y reglas de layout.",
           bullets: ["Tipografía + spacing", "Componentes reutilizables", "Comportamiento responsive"],
         },
         {
           step: "PASO 03",
           title: "Implementación",
-          desc: "Entregar con patrones Next.js/TypeScript, QA y performance.",
+          desc: "Entrego con patrones claros de Next.js y TypeScript, QA y revisión de performance.",
           bullets: ["Estructura limpia App Router", "Revisión a11y/performance", "Estados de error/edge"],
         },
         {
           step: "PASO 04",
-          title: "Deploy e iteración",
-          desc: "Deploy, verificación y mejoras iterativas.",
-          bullets: ["Deploy en Vercel + previews", "Checks SEO", "Iteración pequeña por feedback"],
+          title: "Deploy y refinamiento",
+          desc: "Hago deploy, verifico y mejoro en base al feedback.",
+          bullets: ["Deploy en Vercel + previews", "Checks SEO", "Iteración pequeña"],
         },
       ],
     },
@@ -743,7 +727,7 @@ export const i18n = {
     contact: {
       kicker: "CONTACTO",
       title: "Contacto",
-      body: "Para roles o introducciones: envía el link del puesto y qué están buscando. Respondo en 24–48h.",
+      body: "Para roles o conversaciones sobre proyectos, puedes enviarme un mensaje corto con algo de contexto sobre la posición o la oportunidad. Normalmente respondo dentro de 24–48 horas.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {

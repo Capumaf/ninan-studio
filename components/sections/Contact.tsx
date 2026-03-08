@@ -23,6 +23,9 @@ export default function Contact() {
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
 
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
+  const [feedback, setFeedback] = useState("")
+
   const reduceMotion = useReducedMotion()
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -54,26 +57,92 @@ export default function Contact() {
     [reduceMotion]
   )
 
-  const onSubmit = (e: React.FormEvent) => {
+  const resetFeedbackOnInput = () => {
+    if (status === "sent" || status === "error") {
+      setStatus("idle")
+      setFeedback("")
+    }
+  }
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const subject = `Portfolio inquiry — ${name || "No name"}`
-    const body =
-      `Name: ${name}\n` +
-      `Email: ${email}\n\n` +
-      `Message:\n${message}`
+    if (status === "sending") return
 
-    window.location.href = buildMailto({
-      to: EMAIL_TO,
-      subject,
-      body,
+    const trimmedName = name.trim()
+    const trimmedEmail = email.trim()
+    const trimmedMessage = message.trim()
+
+    console.log("[contact] submit", {
+      name: trimmedName,
+      email: trimmedEmail,
+      message: trimmedMessage,
     })
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setStatus("error")
+      setFeedback("Please complete all fields before sending.")
+      return
+    }
+
+    setStatus("sending")
+    setFeedback("")
+
+    const subject = `Portfolio inquiry — ${trimmedName || "No name"}`
+    const body =
+      `Name: ${trimmedName}\n` +
+      `Email: ${trimmedEmail}\n\n` +
+      `Message:\n${trimmedMessage}`
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: trimmedName,
+          email: trimmedEmail,
+          message: trimmedMessage,
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      console.log("[contact] api response", res.status, data)
+
+      if (!res.ok || data?.success !== true) {
+        setStatus("error")
+        setFeedback(
+          "Couldn’t send via the form. Please try again or email me directly at cesarpumayalla@ninan-studio.com."
+        )
+
+        const href = buildMailto({ to: EMAIL_TO, subject, body })
+        window.location.href = href
+        return
+      }
+
+      setStatus("sent")
+      setFeedback(
+        "Thank you — your message has been sent. I’ll get back to you by email as soon as possible."
+      )
+
+      setName("")
+      setEmail("")
+      setMessage("")
+    } catch (err) {
+      console.error("[contact] error", err)
+
+      setStatus("error")
+      setFeedback(
+        "Couldn’t send via the form. Please try again or email me directly at cesarpumayalla@ninan-studio.com."
+      )
+
+      const href = buildMailto({ to: EMAIL_TO, subject, body })
+      window.location.href = href
+    }
   }
 
   return (
     <section id="contact" className="section !before:hidden">
       <div className="container">
-        {/* Masthead */}
         <div className="mb-12 flex items-center gap-6 lg:mb-16">
           <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
             {c.kicker}
@@ -81,10 +150,7 @@ export default function Contact() {
           <div className="h-px flex-1 bg-black/10" />
         </div>
 
-        {/* Grid 50/50 */}
         <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
-
-          {/* LEFT */}
           <div className="lg:sticky lg:top-24">
             <motion.h2
               className="font-light leading-[1.05] tracking-[-0.025em] text-[clamp(2rem,4vw,3.25rem)]"
@@ -121,8 +187,12 @@ export default function Contact() {
                   type="text"
                   required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none"
+                  onChange={(e) => {
+                    setName(e.target.value)
+                    resetFeedbackOnInput()
+                  }}
+                  disabled={status === "sending"}
+                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
                 />
               </div>
 
@@ -143,8 +213,12 @@ export default function Contact() {
                   type="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none"
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    resetFeedbackOnInput()
+                  }}
+                  disabled={status === "sending"}
+                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
                 />
               </div>
 
@@ -165,21 +239,34 @@ export default function Contact() {
                   rows={5}
                   required
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none resize-none"
+                  onChange={(e) => {
+                    setMessage(e.target.value)
+                    resetFeedbackOnInput()
+                  }}
+                  disabled={status === "sending"}
+                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none resize-none disabled:opacity-70"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
+                disabled={status === "sending"}
+                className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition disabled:opacity-50"
               >
-                {c.form.submit}
+                {status === "sending" ? "Sending..." : c.form.submit}
               </button>
+
+              {feedback ? (
+                <p
+                  aria-live="polite"
+                  className="text-sm leading-[1.7] text-black/60"
+                >
+                  {feedback}
+                </p>
+              ) : null}
             </motion.form>
           </div>
 
-          {/* RIGHT */}
           <div className="lg:border-l lg:border-black/10 lg:pl-12">
             <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
 
@@ -192,9 +279,7 @@ export default function Contact() {
             >
               <div className="mb-10 h-px w-full bg-black/10" />
 
-              <p className="text-base leading-[1.75] text-black/70">
-                {c.body}
-              </p>
+              <p className="text-base leading-[1.75] text-black/70">{c.body}</p>
 
               <div className="mt-8 flex flex-wrap gap-6">
                 <a
@@ -214,12 +299,9 @@ export default function Contact() {
                 </a>
               </div>
 
-              <p className="mt-10 text-sm leading-[1.7] text-black/60">
-                {c.footerNote}
-              </p>
+              <p className="mt-10 text-sm leading-[1.7] text-black/60">{c.footerNote}</p>
             </motion.div>
           </div>
-
         </div>
       </div>
     </section>

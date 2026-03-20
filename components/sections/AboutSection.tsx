@@ -24,9 +24,11 @@ export default function AboutSection({ a }: Props) {
               {a.title}
             </h2>
 
-            <div className="mt-6 lg:mt-7 max-w-[52ch]">
-              <p className="text-base leading-[1.75] text-black/70">{a.p1}</p>
-              <p className="text-base leading-[1.75] text-black/70 mt-6">
+            <div className="mt-6 lg:mt-7 max-w-[46ch] space-y-5">
+              <p className="text-base leading-[1.75] text-black/70">
+                {a.p1}
+              </p>
+              <p className="text-base leading-[1.75] text-black/60">
                 {a.p2}
               </p>
             </div>
@@ -42,11 +44,11 @@ export default function AboutSection({ a }: Props) {
                 {a.bullets.map((b, i) => (
                   <li
                     key={`${i}-${b}`}
-                    className="grid grid-cols-[20px_minmax(0,1fr)] gap-5 py-6 border-b border-black/10"
+                    className="grid grid-cols-[20px_minmax(0,1fr)] gap-5 border-b border-black/10 py-6"
                   >
                     <span
                       aria-hidden="true"
-                      className="text-[10px] font-medium tracking-[0.14em] text-black/25 mt-[3px] tabular-nums"
+                      className="mt-[3px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>

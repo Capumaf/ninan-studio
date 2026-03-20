@@ -85,7 +85,7 @@ export const i18n = {
       start: "Start a conversation",
       view: "View work",
 
-      based: "Berlin, Germany · Available for freelance and selected Germany / EU roles · EN / DE / ES",
+      based: "Berlin, Germany · Open to EU roles · EN / DE / ES",
 
       issue: "Independent practice",
       place: "Berlin / EU",
@@ -326,7 +326,7 @@ export const i18n = {
       start: "Gespräch starten",
       view: "Projekte ansehen",
 
-      based: "Berlin, Deutschland · Verfügbar für Freelance und ausgewählte DE / EU Rollen · EN / DE / ES",
+      based: "Berlin, Deutschland · Verfügbar für  DE / EU Rollen · EN / DE / ES",
 
       issue: "Unabhängige Praxis",
       place: "Berlin / EU",
@@ -567,7 +567,7 @@ export const i18n = {
       start: "Iniciar conversación",
       view: "Ver proyectos",
 
-      based: "Berlín, Alemania · Disponible para freelance y roles seleccionados en DE / UE · EN / DE / ES",
+      based: "Berlín, Alemania · Disponible para roles en DE / UE · EN / DE / ES",
 
       issue: "Práctica independiente",
       place: "Berlín / UE",

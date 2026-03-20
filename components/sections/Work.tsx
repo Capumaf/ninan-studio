@@ -10,9 +10,8 @@ export default function Work() {
 
   const reduceMotion = useReducedMotion()
 
-  // Cleaner first impression for recruiters: start collapsed.
-  // If you want default open for featured, set to w.items[0]?.id ?? null
-  const [openId, setOpenId] = useState<string | null>(null)
+  // Open first item by default to avoid empty first impression
+  const [openId, setOpenId] = useState<string | null>(w.items[0]?.id ?? null)
 
   const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -61,7 +60,7 @@ export default function Work() {
   return (
     <section id="work" className="section !before:hidden">
       <div className="container">
-        {/* Masthead (spread system): kicker arriba + hairline debajo */}
+        {/* Masthead */}
         <div className="mb-10 lg:mb-12">
           <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
             {w.kickerRight}
@@ -69,25 +68,51 @@ export default function Work() {
           <div className="mt-3 border-t border-black/10" />
         </div>
 
-        {/* Spread grid 50/50 (constante) */}
         <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
-          {/* LEFT — sticky narrativa (constante) */}
+          {/* LEFT — stronger editorial framing */}
           <div className="lg:sticky lg:top-24 xl:top-28 self-start">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
               {w.title}
             </h2>
 
-            <div className="mt-6 lg:mt-7 max-w-[52ch]">
-              <p className="text-base leading-[1.75] text-black/70">{w.desc}</p>
+            <div className="mt-6 lg:mt-7 max-w-[52ch] space-y-6">
+              <p className="text-base leading-[1.75] text-black/70">
+                {w.desc}
+              </p>
+
+              <div className="border-t border-black/10 pt-6">
+                <p className="text-sm leading-[1.8] text-black/60">
+                  {w.sideNote}
+                </p>
+              </div>
+
+              <div className="grid gap-4 pt-2">
+                <div className="border-t border-black/10 pt-4">
+                  <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
+                    Selection
+                  </p>
+                  <p className="mt-2 text-sm leading-[1.75] text-black/60">
+                    A focused set of shipped work, production delivery and product-oriented builds.
+                  </p>
+                </div>
+
+                <div className="border-t border-black/10 pt-4">
+                  <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
+                    Direction
+                  </p>
+                  <p className="mt-2 text-sm leading-[1.75] text-black/60">
+                    Frontend systems, practical implementation and real project constraints.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* RIGHT — rail fijo (constante) */}
+          {/* RIGHT — rail */}
           <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
-            {/* Hairline en mobile cuando desaparece el rail */}
             <div className="lg:hidden border-t border-black/10 pt-10" />
 
-            <div className="max-w-[52ch]">
+            <div className="max-w-[56ch]">
               <ul className="divide-y divide-black/10">
                 {w.items.map((item, idx) => {
                   const isOpen = openId === item.id
@@ -120,18 +145,17 @@ export default function Work() {
                           </span>
 
                           <div className="min-w-0">
-                            <div className="flex items-baseline justify-between gap-6">
+                            <div className="flex items-start justify-between gap-6">
                               <div className="min-w-0">
-                                <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
-                                  {item.name}
-                                </h3>
-
-                                {/* tiny featured marker (index-based, no schema changes) */}
                                 {isFeatured && (
-                                  <p className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
-                                    Featured
+                                  <p className="mb-3 text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
+                                    Featured project
                                   </p>
                                 )}
+
+                                <h3 className="text-lg font-medium leading-[1.25] md:text-[1.35rem]">
+                                  {item.name}
+                                </h3>
                               </div>
 
                               {hasStatus && (
@@ -148,7 +172,7 @@ export default function Work() {
                             </div>
 
                             <motion.p
-                              className="mt-2 text-sm leading-[1.7] text-black/60"
+                              className="mt-3 text-sm leading-[1.7] text-black/60"
                               variants={metaVariants}
                               initial="hidden"
                               whileInView="show"
@@ -156,6 +180,13 @@ export default function Work() {
                             >
                               {item.meta}
                             </motion.p>
+
+                            {/* richer collapsed state */}
+                            {!isOpen && (
+                              <p className="mt-4 max-w-[48ch] text-sm leading-[1.8] text-black/55 line-clamp-3">
+                                {item.description}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </button>
@@ -186,33 +217,34 @@ export default function Work() {
                             className="overflow-hidden"
                           >
                             <div className="pb-8">
-                              <p className="text-base leading-[1.75] text-black/70">
-                                {item.description}
-                              </p>
+                              <div className="border-t border-black/10 pt-6">
+                                <p className="text-base leading-[1.8] text-black/70">
+                                  {item.description}
+                                </p>
 
-                              <div className="mt-6 flex flex-wrap items-center gap-6">
-                                {item.href ? (
+                                <div className="mt-6 flex flex-wrap items-center gap-6">
+                                  {item.href ? (
+                                    <a
+                                      href={item.href}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                                    >
+                                      {w.viewLive}
+                                    </a>
+                                  ) : (
+                                    <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
+                                      {w.linkOnRequest}
+                                    </span>
+                                  )}
+
                                   <a
-                                    href={item.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
+                                    href={`/${lang}#contact`}
+                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/55 transition hover:text-black/80"
                                   >
-                                    {w.viewLive}
+                                    Contact for details
                                   </a>
-                                ) : (
-                                  <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-                                    {w.linkOnRequest}
-                                  </span>
-                                )}
-
-                                {/* Optional: a recruiter-friendly follow-up path without "sales" vibe */}
-                                {/* <a
-                                  href={`/${lang}#contact`}
-                                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/60 hover:text-black/85 transition"
-                                >
-                                  Contact for details
-                                </a> */}
+                                </div>
                               </div>
                             </div>
                           </motion.div>
@@ -223,7 +255,9 @@ export default function Work() {
                 })}
               </ul>
 
-              <p className="mt-8 text-sm text-black/60">{w.more}</p>
+              <div className="mt-10 border-t border-black/10 pt-6">
+                <p className="text-sm leading-[1.8] text-black/60">{w.more}</p>
+              </div>
             </div>
           </div>
         </div>

@@ -39,9 +39,22 @@ export type Dictionary = {
     close: string
   }
   process: {
-    kicker: string; title: string; intro: string; footer: string
+    kicker: string
+    title: string
+    intro: string
+    intro2: string
+    rail: readonly {
+      title: string
+      body: string
+    }[]
+    toggleOpen: string
+    toggleView: string
+    footer: string
     steps: readonly {
-      step: string; title: string; desc: string; bullets: readonly string[]
+      step: string
+      title: string
+      desc: string
+      bullets: readonly string[]
     }[]
   }
   footer: {
@@ -66,23 +79,23 @@ export const i18n = {
       t3: "Clarity.",
       t4: "Execution.",
 
-      p1: "I build structured digital interfaces with Next.js, React and TypeScript — focused on clarity, performance and real-world usability.",
-      p2: "My work combines frontend engineering, content structure and system thinking to create websites and products that are clear to use, maintain and scale.",
+      p1: "I build structured digital interfaces with Next.js, React and TypeScript — focused on clarity, reliability and real production use.",
+      p2: "My work combines frontend engineering, content structure and system thinking to create websites and product interfaces that are easier to use, maintain and scale.",
 
-      start: "Download CV",
+      start: "Start a conversation",
       view: "View work",
 
-      based: "Berlin, Germany · Open to Germany / EU roles · EN / DE / ES",
+      based: "Berlin, Germany · Available for freelance and selected Germany / EU roles · EN / DE / ES",
 
-      issue: "Portfolio",
+      issue: "Independent practice",
       place: "Berlin / EU",
-      est: "Currently building a Next.js + Spring Boot project",
+      est: "Focused on production-ready frontend systems and practical full-stack range",
 
       principle: "Working principles",
       m1: "Clarity over cleverness.",
       m2: "Structure over noise.",
       m3: "Build, validate, refine.",
-      available: "Open to roles",
+      available: "Available for freelance and selected roles",
     },
 
     nav: {
@@ -99,7 +112,7 @@ export const i18n = {
 
     about: {
       kicker: "ABOUT",
-      title: "Frontend developer focused on structure, usability and reliable execution.",
+      title: "Frontend systems focused on structure, usability and reliable execution.",
       p1: "I’m Cesar Pumayalla — a frontend developer building digital interfaces with Next.js, React and TypeScript. My work focuses on structure, readability and implementation quality across production websites and product-oriented builds.",
       p2: "I approach frontend as part of a broader system: content, hierarchy, interaction and technical decisions need to work together. My background across marketing, digital and product has shaped a practical perspective on how interfaces support both users and business goals.",
       bullets: [
@@ -168,7 +181,7 @@ export const i18n = {
 
     services: {
       kicker: "CAPABILITIES",
-      title: "What I build",
+      title: "Where I bring the most value",
       intro:
         "The areas where I deliver most consistently: structured frontend implementation, production websites and practical full-stack foundations.",
       howItWorks: {
@@ -223,6 +236,20 @@ export const i18n = {
       kicker: "PROCESS",
       title: "How I work",
       intro: "A clear workflow focused on structure, implementation quality and reliable delivery.",
+      intro2:
+        "From scope to deployment, the process stays focused on clarity, predictable execution and practical delivery.",
+      rail: [
+        {
+          title: "Structure",
+          body: "Define the problem, reduce ambiguity and create a cleaner foundation before building.",
+        },
+        {
+          title: "Delivery",
+          body: "Translate decisions into interfaces that are consistent, maintainable and ready for real use.",
+        },
+      ],
+      toggleOpen: "Open",
+      toggleView: "View",
       footer: "Focus: maintainable systems, predictable UI and shipped results.",
       steps: [
         {
@@ -254,7 +281,7 @@ export const i18n = {
 
     footer: {
       brand: "CESAR PUMAYALLA",
-      claim: "Frontend developer building structured digital systems with Next.js, React and TypeScript. Ninan Studio is my personal label.",
+      claim: "Independent frontend practice building structured digital systems with Next.js, React and TypeScript.",
       links: {
         items: [
           { label: "WORK", href: "/en#work" },
@@ -265,15 +292,15 @@ export const i18n = {
       },
       contact: {
         email: "cesarpumayalla@ninan-studio.com",
-        location: "Berlin, Germany · Open to Germany / EU · Full-time / Contract",
+        location: "Berlin, Germany · Available for Germany / EU · Full-time / Contract / Freelance",
       },
-      bottom: "© 2026 Cesar Pumayalla — Ninan Studio (personal label).",
+      bottom: "© 2026 Cesar Pumayalla — Ninan Studio.",
     },
 
     contact: {
       kicker: "CONTACT",
       title: "Let’s discuss the right fit",
-      body: "For roles, collaborations or selected projects, feel free to reach out with brief context. I’m most interested in opportunities where structure, product thinking and implementation quality matter.",
+      body: "For freelance work, roles, collaborations or selected projects, feel free to reach out with brief context. I’m most interested in opportunities where structure, product thinking and implementation quality matter.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -293,23 +320,23 @@ export const i18n = {
       t3: "Klarheit.",
       t4: "Umsetzung.",
 
-      p1: "Ich entwickle strukturierte digitale Interfaces mit Next.js, React und TypeScript — mit Fokus auf Klarheit, Performance und reale Nutzbarkeit.",
-      p2: "Meine Arbeit verbindet Frontend Engineering, Content-Struktur und Systemdenken, um Websites und Produkte zu schaffen, die klar nutzbar, wartbar und skalierbar sind.",
+      p1: "Ich entwickle strukturierte digitale Interfaces mit Next.js, React und TypeScript — mit Fokus auf Klarheit, Verlässlichkeit und reale Nutzung in Produktion.",
+      p2: "Meine Arbeit verbindet Frontend Engineering, Content-Struktur und Systemdenken, um Websites und Produktinterfaces zu schaffen, die leichter nutzbar, wartbar und skalierbar sind.",
 
-      start: "Lebenslauf",
+      start: "Gespräch starten",
       view: "Projekte ansehen",
 
-      based: "Berlin, Deutschland · Offen für DE / EU Rollen · EN / DE / ES",
+      based: "Berlin, Deutschland · Verfügbar für Freelance und ausgewählte DE / EU Rollen · EN / DE / ES",
 
-      issue: "Portfolio",
+      issue: "Unabhängige Praxis",
       place: "Berlin / EU",
-      est: "Aktuell baue ich ein Next.js + Spring Boot Projekt",
+      est: "Fokus auf produktionsreife Frontend-Systeme und praktische Full-stack-Weiterentwicklung",
 
       principle: "Arbeitsprinzipien",
       m1: "Klarheit statt Cleverness.",
       m2: "Struktur statt Lärm.",
       m3: "Bauen, prüfen, verfeinern.",
-      available: "Offen für Rollen",
+      available: "Verfügbar für Freelance und ausgewählte Rollen",
     },
 
     nav: {
@@ -326,7 +353,7 @@ export const i18n = {
 
     about: {
       kicker: "ÜBER",
-      title: "Frontend Developer mit Fokus auf Struktur, Nutzbarkeit und zuverlässige Umsetzung.",
+      title: "Frontend-Systeme mit Fokus auf Struktur, Nutzbarkeit und zuverlässige Umsetzung.",
       p1: "Ich bin Cesar Pumayalla — Frontend Developer und entwickle digitale Interfaces mit Next.js, React und TypeScript. Meine Arbeit konzentriert sich auf Struktur, Lesbarkeit und saubere Umsetzung über Production Websites und produktorientierte Builds hinweg.",
       p2: "Ich betrachte Frontend als Teil eines größeren Systems: Content, Hierarchie, Interaktion und technische Entscheidungen müssen zusammen funktionieren. Mein Background in Marketing, Digital und Product hat meinen praktischen Blick darauf geprägt, wie Interfaces sowohl Nutzer als auch Business-Ziele unterstützen.",
       bullets: [
@@ -395,7 +422,7 @@ export const i18n = {
 
     services: {
       kicker: "FÄHIGKEITEN",
-      title: "Was ich baue",
+      title: "Wo ich den größten Mehrwert bringe",
       intro:
         "Die Bereiche, in denen ich am konstantesten liefere: strukturierte Frontend-Umsetzung, Production Websites und praktische Full-stack-Grundlagen.",
       howItWorks: {
@@ -450,6 +477,20 @@ export const i18n = {
       kicker: "PROZESS",
       title: "Wie ich arbeite",
       intro: "Ein klarer Workflow mit Fokus auf Struktur, Umsetzungsqualität und zuverlässige Delivery.",
+      intro2:
+        "Vom Scope bis zum Deploy bleibt der Prozess auf Klarheit, vorhersehbare Umsetzung und pragmatische Delivery ausgerichtet.",
+      rail: [
+        {
+          title: "Struktur",
+          body: "Das Problem definieren, Unklarheit reduzieren und vor dem Bauen eine sauberere Grundlage schaffen.",
+        },
+        {
+          title: "Delivery",
+          body: "Entscheidungen in Interfaces übersetzen, die konsistent, wartbar und für den realen Einsatz bereit sind.",
+        },
+      ],
+      toggleOpen: "Offen",
+      toggleView: "Ansehen",
       footer: "Fokus: wartbare Systeme, vorhersehbares UI und gelieferte Ergebnisse.",
       steps: [
         {
@@ -481,7 +522,7 @@ export const i18n = {
 
     footer: {
       brand: "CESAR PUMAYALLA",
-      claim: "Frontend Developer, der strukturierte digitale Systeme mit Next.js, React und TypeScript baut. Ninan Studio ist mein persönliches Label.",
+      claim: "Unabhängige Frontend-Praxis für strukturierte digitale Systeme mit Next.js, React und TypeScript.",
       links: {
         items: [
           { label: "ARBEITEN", href: "/de#work" },
@@ -492,15 +533,15 @@ export const i18n = {
       },
       contact: {
         email: "cesarpumayalla@ninan-studio.com",
-        location: "Berlin, Deutschland · Offen für DE / EU · Full-time / Contract",
+        location: "Berlin, Deutschland · Verfügbar für DE / EU · Full-time / Contract / Freelance",
       },
-      bottom: "© 2026 Cesar Pumayalla — Ninan Studio (persönliches Label).",
+      bottom: "© 2026 Cesar Pumayalla — Ninan Studio.",
     },
 
     contact: {
       kicker: "KONTAKT",
       title: "Lass uns über den passenden Fit sprechen",
-      body: "Für Rollen, Kollaborationen oder ausgewählte Projekte kannst du mir gern mit etwas Kontext schreiben. Besonders interessant sind für mich Möglichkeiten, bei denen Struktur, Product Thinking und Umsetzungsqualität zählen.",
+      body: "Für Freelance-Projekte, Rollen, Kollaborationen oder ausgewählte Projekte kannst du mir gern mit etwas Kontext schreiben. Besonders interessant sind für mich Möglichkeiten, bei denen Struktur, Product Thinking und Umsetzungsqualität zählen.",
       ctaEmail: "E-Mail",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -520,23 +561,23 @@ export const i18n = {
       t3: "Claridad.",
       t4: "Ejecución.",
 
-      p1: "Construyo interfaces digitales estructuradas con Next.js, React y TypeScript — con foco en claridad, performance y usabilidad real.",
-      p2: "Mi trabajo combina frontend engineering, estructura de contenido y pensamiento sistémico para crear websites y productos claros de usar, mantener y escalar.",
+      p1: "Construyo interfaces digitales estructuradas con Next.js, React y TypeScript — con foco en claridad, confiabilidad y uso real en producción.",
+      p2: "Mi trabajo combina frontend engineering, estructura de contenido y pensamiento sistémico para crear websites e interfaces de producto más fáciles de usar, mantener y escalar.",
 
-      start: "Descargar CV",
+      start: "Iniciar conversación",
       view: "Ver proyectos",
 
-      based: "Berlín, Alemania · Abierto a roles en DE / UE · EN / DE / ES",
+      based: "Berlín, Alemania · Disponible para freelance y roles seleccionados en DE / UE · EN / DE / ES",
 
-      issue: "Portfolio",
+      issue: "Práctica independiente",
       place: "Berlín / UE",
-      est: "Actualmente construyendo un proyecto con Next.js + Spring Boot",
+      est: "Enfocado en sistemas frontend listos para producción y crecimiento práctico en full-stack",
 
       principle: "Principios de trabajo",
       m1: "Claridad sobre trucos.",
       m2: "Estructura sobre ruido.",
       m3: "Construir, validar, refinar.",
-      available: "Disponible para roles",
+      available: "Disponible para freelance y roles seleccionados",
     },
 
     nav: {
@@ -553,7 +594,7 @@ export const i18n = {
 
     about: {
       kicker: "ACERCA DE",
-      title: "Frontend developer enfocado en estructura, usabilidad y ejecución confiable.",
+      title: "Sistemas frontend enfocados en estructura, usabilidad y ejecución confiable.",
       p1: "Soy Cesar Pumayalla — frontend developer y construyo interfaces digitales con Next.js, React y TypeScript. Mi trabajo se centra en estructura, legibilidad y calidad de implementación en websites en producción y proyectos orientados a producto.",
       p2: "Entiendo el frontend como parte de un sistema más amplio: contenido, jerarquía, interacción y decisiones técnicas deben funcionar en conjunto. Mi background en marketing, digital y producto me ha dado una perspectiva práctica sobre cómo las interfaces pueden apoyar tanto a los usuarios como a los objetivos de negocio.",
       bullets: [
@@ -622,7 +663,7 @@ export const i18n = {
 
     services: {
       kicker: "CAPACIDADES",
-      title: "Lo que construyo",
+      title: "Dónde aporto más valor",
       intro:
         "Las áreas donde entrego con mayor consistencia: implementación frontend estructurada, websites en producción y bases prácticas de full-stack.",
       howItWorks: {
@@ -677,6 +718,20 @@ export const i18n = {
       kicker: "PROCESO",
       title: "Cómo trabajo",
       intro: "Un flujo claro con foco en estructura, calidad de implementación y entrega confiable.",
+      intro2:
+        "Desde el alcance hasta el deploy, el proceso se mantiene enfocado en claridad, ejecución predecible y entrega práctica.",
+      rail: [
+        {
+          title: "Estructura",
+          body: "Definir el problema, reducir ambigüedad y crear una base más limpia antes de construir.",
+        },
+        {
+          title: "Entrega",
+          body: "Traducir decisiones en interfaces consistentes, mantenibles y listas para uso real.",
+        },
+      ],
+      toggleOpen: "Abierto",
+      toggleView: "Ver",
       footer: "Foco: sistemas mantenibles, UI predecible y resultados entregados.",
       steps: [
         {
@@ -708,7 +763,7 @@ export const i18n = {
 
     footer: {
       brand: "CESAR PUMAYALLA",
-      claim: "Frontend developer que construye sistemas digitales estructurados con Next.js, React y TypeScript. Ninan Studio es mi etiqueta personal.",
+      claim: "Práctica independiente de frontend para construir sistemas digitales estructurados con Next.js, React y TypeScript.",
       links: {
         items: [
           { label: "TRABAJOS", href: "/es#work" },
@@ -719,15 +774,15 @@ export const i18n = {
       },
       contact: {
         email: "cesarpumayalla@ninan-studio.com",
-        location: "Berlín, Alemania · Abierto a DE / UE · Full-time / Contract",
+        location: "Berlín, Alemania · Disponible para DE / UE · Full-time / Contract / Freelance",
       },
-      bottom: "© 2026 Cesar Pumayalla — Ninan Studio (etiqueta personal).",
+      bottom: "© 2026 Cesar Pumayalla — Ninan Studio.",
     },
 
     contact: {
       kicker: "CONTACTO",
       title: "Hablemos del encaje correcto",
-      body: "Para roles, colaboraciones o proyectos seleccionados, puedes escribirme con algo de contexto. Me interesan especialmente oportunidades donde importen la estructura, el pensamiento de producto y la calidad de implementación.",
+      body: "Para trabajo freelance, roles, colaboraciones o proyectos seleccionados, puedes escribirme con algo de contexto. Me interesan especialmente oportunidades donde importen la estructura, el pensamiento de producto y la calidad de implementación.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {

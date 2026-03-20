@@ -20,72 +20,72 @@ export default function Hero() {
 
   const vp = { once: true, amount: 0.3 } as const
 
-  const cvHref = "/cv.pdf"
-  const primaryHref = cvHref
+  const primaryHref = `/${lang}#contact`
 
   return (
-    <section id="hero" className="pt-16 md:pt-20 lg:pt-24 pb-14 md:pb-16">
+    <section id="hero" className="pt-4 md:pt-6 lg:pt-8 pb-10 md:pb-12">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-y-12 lg:gap-x-16 items-start">
-          
-          {/* LEFT */}
-          <motion.div variants={col} initial="hidden" whileInView="show" viewport={vp}>
-            <div className="mb-10 h-px w-16 bg-black/50" />
+        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-16 items-stretch lg:min-h-[62vh]">
+          <motion.div
+            variants={col}
+            initial="hidden"
+            whileInView="show"
+            viewport={vp}
+            className="flex h-full flex-col gap-10 lg:gap-12"
+          >
+            <div>
+              <div className="mb-7 h-px w-16 bg-black/50" />
 
-            <h1 className="h1 max-w-[18ch]">
-              <span className="block">{h.t1}</span>
-              <span className="block">{h.t2}</span>
+              <h1 className="h1 max-w-[18ch]">
+                <span className="block">{h.t1}</span>
+                <span className="block">{h.t2}</span>
 
-              <span className="block accent relative inline-block">
-                {h.t3}
-                <span
-                  aria-hidden
-                  className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
-                />
-              </span>
+                <span className="block accent relative inline-block">
+                  {h.t3}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
+                  />
+                </span>
 
-              {h.t4 && <span className="block">{h.t4}</span>}
-            </h1>
+                {h.t4 && <span className="block">{h.t4}</span>}
+              </h1>
 
-            {/* TEXTO FIX (NO CORRIDO) */}
-            <div className="mt-8 max-w-[44ch] space-y-4">
-              <p className="text-[1.05rem] leading-[1.75] text-black/75">
-                {h.p1}
-              </p>
-              <p className="text-[1.05rem] leading-[1.75] text-black/60">
-                {h.p2}
-              </p>
+              <div className="mt-7 max-w-[44ch] space-y-4">
+                <p className="text-[1.05rem] leading-[1.75] text-black/75">
+                  {h.p1}
+                </p>
+                <p className="text-[1.05rem] leading-[1.75] text-black/60">
+                  {h.p2}
+                </p>
+              </div>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-8">
-              <a
-                href={primaryHref}
-                className="btn"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {h.start}
-              </a>
+            <div className="mt-10">
+              <div className="flex flex-wrap items-center gap-8">
+                <a href={primaryHref} className="btn">
+                  {h.start}
+                </a>
 
-              <a
-                href={`/${lang}#work`}
-                className="text-xs uppercase tracking-[0.18em] underline underline-offset-4 text-black/60 hover:text-black/85 transition"
-              >
-                {h.view}
-              </a>
+                <a
+                  href={`/${lang}#work`}
+                  className="text-xs uppercase tracking-[0.18em] underline underline-offset-4 text-black/60 hover:text-black/85 transition"
+                >
+                  {h.view}
+                </a>
+              </div>
+
+              <p className="mt-7 text-[12px] tracking-[0.18em] uppercase text-black/50">
+                {h.based}
+              </p>
             </div>
-
-            <p className="mt-8 text-[12px] tracking-[0.18em] uppercase text-black/50">
-              {h.based}
-            </p>
           </motion.div>
 
-          {/* RIGHT */}
           <aside className="lg:border-l lg:border-black/10 lg:pl-12">
-            <div className="lg:hidden border-t border-black/10 pt-10" />
+            <div className="lg:hidden border-t border-black/10 pt-8" />
 
             <motion.div
-              className="flex flex-col gap-8"
+              className="flex h-full flex-col gap-12 lg:gap-14"
               variants={col}
               initial="hidden"
               whileInView="show"
@@ -99,19 +99,18 @@ export default function Hero() {
 
               <div className="max-w-[38ch]">
                 <div className="kicker">{h.principle}</div>
-                <div className="mt-4 text-[17px] leading-[1.7] font-medium">
+                <div className="mt-4 text-[17px] leading-[1.7] font-medium space-y-1">
                   <div>{h.m1}</div>
                   <div>{h.m2}</div>
                   <div>{h.m3}</div>
                 </div>
               </div>
 
-              <div className="max-w-[38ch]">
+              <div className="max-w-[38ch] pt-0">
                 <div className="kicker">{h.available}</div>
               </div>
             </motion.div>
           </aside>
-
         </div>
       </Container>
     </section>

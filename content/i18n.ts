@@ -79,8 +79,8 @@ export const i18n = {
       t3: "Clarity.",
       t4: "Execution.",
 
-      p1: "I build structured digital interfaces with Next.js, React and TypeScript — focused on clarity, reliability and real production use.",
-      p2: "My work combines frontend engineering, content structure and system thinking to create websites and product interfaces that are easier to use, maintain and scale.",
+      p1: "I build production-ready web interfaces with Next.js, React and TypeScript — focused on clarity, performance and real-world use.",
+      p2: "From landing pages to scalable web applications, I design and develop structured frontend systems that translate business needs into reliable, maintainable interfaces.",
 
       start: "Start a conversation",
       view: "View work",
@@ -89,13 +89,13 @@ export const i18n = {
 
       issue: "Independent practice",
       place: "Berlin / EU",
-      est: "Focused on production-ready frontend systems and practical full-stack range",
+      est: "Focused on production-ready frontend systems, scalable interfaces and business-driven execution",
 
       principle: "Working principles",
       m1: "Clarity over cleverness.",
       m2: "Structure over noise.",
-      m3: "Build, validate, refine.",
-      available: "Available for freelance and selected roles",
+      m3: "Execution over theory.",
+      available: "Available for freelance, contract and selected product roles",
     },
 
     nav: {
@@ -320,23 +320,23 @@ export const i18n = {
       t3: "Klarheit.",
       t4: "Umsetzung.",
 
-      p1: "Ich entwickle strukturierte digitale Interfaces mit Next.js, React und TypeScript — mit Fokus auf Klarheit, Verlässlichkeit und reale Nutzung in Produktion.",
-      p2: "Meine Arbeit verbindet Frontend Engineering, Content-Struktur und Systemdenken, um Websites und Produktinterfaces zu schaffen, die leichter nutzbar, wartbar und skalierbar sind.",
+      p1: "Ich entwickle produktionsreife Web-Interfaces mit Next.js, React und TypeScript — mit Fokus auf Klarheit, Performance und reale Nutzung.",
+      p2: "Von Landingpages bis zu skalierbaren Webanwendungen entwerfe und entwickle ich strukturierte Frontend-Systeme, die Business-Anforderungen in verlässliche, wartbare Interfaces übersetzen.",
 
       start: "Gespräch starten",
       view: "Projekte ansehen",
 
-      based: "Berlin, Deutschland · Verfügbar für  DE / EU Rollen · EN / DE / ES",
+      based: "Berlin, Deutschland · Verfügbar für DE / EU Rollen · EN / DE / ES",
 
       issue: "Unabhängige Praxis",
       place: "Berlin / EU",
-      est: "Fokus auf produktionsreife Frontend-Systeme und praktische Full-stack-Weiterentwicklung",
+      est: "Fokus auf produktionsreife Frontend-Systeme, skalierbare Interfaces und Business-orientierte Umsetzung",
 
       principle: "Arbeitsprinzipien",
       m1: "Klarheit statt Cleverness.",
       m2: "Struktur statt Lärm.",
-      m3: "Bauen, prüfen, verfeinern.",
-      available: "Verfügbar für Freelance und ausgewählte Rollen",
+      m3: "Umsetzung statt Theorie.",
+      available: "Verfügbar für Freelance, Contract und ausgewählte Product-Rollen",
     },
 
     nav: {
@@ -561,8 +561,8 @@ export const i18n = {
       t3: "Claridad.",
       t4: "Ejecución.",
 
-      p1: "Construyo interfaces digitales estructuradas con Next.js, React y TypeScript — con foco en claridad, confiabilidad y uso real en producción.",
-      p2: "Mi trabajo combina frontend engineering, estructura de contenido y pensamiento sistémico para crear websites e interfaces de producto más fáciles de usar, mantener y escalar.",
+      p1: "Construyo interfaces web listas para producción con Next.js, React y TypeScript — con foco en claridad, performance y uso real.",
+      p2: "Desde landing pages hasta aplicaciones web escalables, diseño y desarrollo sistemas frontend estructurados que traducen necesidades de negocio en interfaces confiables y mantenibles.",
 
       start: "Iniciar conversación",
       view: "Ver proyectos",
@@ -571,13 +571,13 @@ export const i18n = {
 
       issue: "Práctica independiente",
       place: "Berlín / UE",
-      est: "Enfocado en sistemas frontend listos para producción y crecimiento práctico en full-stack",
+      est: "Enfocado en sistemas frontend listos para producción, interfaces escalables y ejecución guiada por negocio",
 
       principle: "Principios de trabajo",
       m1: "Claridad sobre trucos.",
       m2: "Estructura sobre ruido.",
-      m3: "Construir, validar, refinar.",
-      available: "Disponible para freelance y roles seleccionados",
+      m3: "Ejecución sobre teoría.",
+      available: "Disponible para freelance, contract y roles de producto seleccionados",
     },
 
     nav: {

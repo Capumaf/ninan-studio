@@ -25,13 +25,13 @@ export default function Hero() {
   return (
     <section id="hero" className="pt-4 md:pt-6 lg:pt-8 pb-10 md:pb-12">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-16 items-stretch lg:min-h-[62vh]">
+        <div className="grid items-start gap-y-10 lg:min-h-[54vh] lg:grid-cols-[minmax(0,1.22fr)_minmax(320px,0.78fr)] lg:gap-x-12">
           <motion.div
             variants={col}
             initial="hidden"
             whileInView="show"
             viewport={vp}
-            className="flex h-full flex-col gap-10 lg:gap-12"
+            className="flex h-full flex-col gap-10 lg:gap-10"
           >
             <div>
               <div className="mb-7 h-px w-16 bg-black/50" />
@@ -69,7 +69,7 @@ export default function Hero() {
 
                 <a
                   href={`/${lang}#work`}
-                  className="text-xs uppercase tracking-[0.18em] underline underline-offset-4 text-black/60 hover:text-black/85 transition"
+                  className="text-xs uppercase tracking-[0.18em] underline underline-offset-4 text-black/60 transition hover:text-black/85"
                 >
                   {h.view}
                 </a>
@@ -81,32 +81,32 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          <aside className="lg:border-l lg:border-black/10 lg:pl-12">
-            <div className="lg:hidden border-t border-black/10 pt-8" />
+          <aside className="lg:border-l lg:border-black/10 lg:pl-8">
+            <div className="border-t border-black/10 pt-8 lg:hidden" />
 
             <motion.div
-              className="flex h-full flex-col gap-12 lg:gap-14"
+              className="flex h-full flex-col gap-10 lg:gap-10"
               variants={col}
               initial="hidden"
               whileInView="show"
               viewport={vp}
             >
-              <div className="space-y-5 max-w-[38ch]">
+              <div className="max-w-[44ch] space-y-4">
                 <div className="kicker">{h.issue}</div>
                 <div className="kicker">{h.place}</div>
                 <div className="kicker">{h.est}</div>
               </div>
 
-              <div className="max-w-[38ch]">
+              <div className="max-w-[42ch]">
                 <div className="kicker">{h.principle}</div>
-                <div className="mt-4 text-[17px] leading-[1.7] font-medium space-y-1">
+                <div className="mt-4 space-y-1 text-[17px] leading-[1.7] font-medium">
                   <div>{h.m1}</div>
                   <div>{h.m2}</div>
                   <div>{h.m3}</div>
                 </div>
               </div>
 
-              <div className="max-w-[38ch] pt-0">
+              <div className="max-w-[42ch]">
                 <div className="kicker">{h.available}</div>
               </div>
             </motion.div>

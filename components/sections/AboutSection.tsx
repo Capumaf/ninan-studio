@@ -17,7 +17,7 @@ export default function AboutSection({ a }: Props) {
         </div>
 
         {/* Spread grid 50/50 — eje del lomo fijo */}
-        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
+        <div className="grid gap-y-10 lg:grid-cols-[0.52fr_0.48fr] lg:gap-x-16 xl:gap-x-20 items-start">
           {/* LEFT — narrativa (sticky) */}
           <div className="lg:sticky lg:top-24 xl:top-28 self-start">
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
@@ -35,7 +35,7 @@ export default function AboutSection({ a }: Props) {
           </div>
 
           {/* RIGHT — rail (border-l + pl constante) */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
+          <div className="lg:border-l lg:border-black/10 lg:pl-14 xl:pl-16">
             {/* Hairline en mobile cuando desaparece el rail */}
             <div className="lg:hidden border-t border-black/10 pt-10" />
 

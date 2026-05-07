@@ -1,6 +1,4 @@
 // content/i18n.ts
-// Ninan Studio — i18n EN + ES + DE
-// Personal brand: name first, studio as secondary label
 
 export const languages = ["en", "de", "es"] as const
 export type Lang = (typeof languages)[number]
@@ -12,23 +10,29 @@ export type Dictionary = {
     based: string; issue: string; place: string; est: string
     principle: string; m1: string; m2: string; m3: string; available: string
   }
+
   nav: {
     about: string; work: string; services: string; process: string
     contact: string; processCta: string; contactCta: string
     menu: string; close: string
   }
+
   about: {
     kicker: string; title: string; p1: string; p2: string
     bullets: readonly string[]
   }
+
   work: {
     kickerLeft: string; kickerRight: string; title: string; desc: string
     more: string; sideNote: string; viewLive: string; linkOnRequest: string
     items: readonly {
       id: string; name: string; meta: string; status: string
       description: string; href?: string
+      image?: string
+      previews?: readonly { src: string; alt: string }[]
     }[]
   }
+
   services: {
     kicker: string; title: string; intro: string
     howItWorks: { kicker: string; bullets: readonly string[]; cta: string }
@@ -38,15 +42,13 @@ export type Dictionary = {
     }[]
     close: string
   }
+
   process: {
     kicker: string
     title: string
     intro: string
     intro2: string
-    rail: readonly {
-      title: string
-      body: string
-    }[]
+    rail: readonly { title: string; body: string }[]
     toggleOpen: string
     toggleView: string
     footer: string
@@ -57,12 +59,14 @@ export type Dictionary = {
       bullets: readonly string[]
     }[]
   }
+
   footer: {
     brand: string; claim: string
     links: { items: readonly { label: string; href: string }[] }
     contact: { email: string; location: string }
     bottom: string
   }
+
   contact: {
     kicker: string; title: string; body: string
     ctaEmail: string; ctaWhatsapp: string
@@ -74,28 +78,30 @@ export type Dictionary = {
 export const i18n = {
   en: {
     hero: {
-      t1: "Frontend.",
-      t2: "Systems.",
-      t3: "Clarity.",
-      t4: "Execution.",
+      t1: "Frontend systems",
+      t2: "for startups.",
+      t3: "Built with clarity.",
+      t4: "React / Next.js / TypeScript",
 
-      p1: "I build production-ready web interfaces with Next.js, React and TypeScript — focused on clarity, performance and real-world use.",
-      p2: "From landing pages to scalable web applications, I design and develop structured frontend systems that translate business needs into reliable, maintainable interfaces.",
+      p1: "Modern frontend development focused on scalable interfaces, responsive systems, and production-ready execution for startups and digital products.",
+      p2: "NINAN is an independent frontend practice combining structured engineering, visual precision, and modern web technologies to create refined digital experiences.",
 
-      start: "Start a conversation",
-      view: "View work",
+      start: "Start a project",
+      view: "Selected work",
 
-      based: "Berlin, Germany · Open to EU roles · EN / DE / ES",
+      based: "Based between Europe and LATAM",
 
-      issue: "Independent practice",
-      place: "Berlin / EU",
-      est: "Focused on production-ready frontend systems, scalable interfaces and business-driven execution",
+      issue: "Independent frontend practice",
+      place: "Remote — Europe / LATAM",
+      est: "Focused on modern product interfaces",
 
-      principle: "Working principles",
-      m1: "Clarity over cleverness.",
-      m2: "Structure over noise.",
-      m3: "Execution over theory.",
-      available: "Available for freelance, contract and selected product roles",
+      principle: "Capabilities",
+
+      m1: "React / Next.js systems",
+      m2: "UI implementation & responsive frontend",
+      m3: "Production-ready interfaces",
+
+      available: "Available for selected collaborations",
     },
 
     nav: {
@@ -127,10 +133,10 @@ export const i18n = {
       kickerLeft: "SELECTED",
       kickerRight: "WORK",
       title: "Work",
-      desc: "A selection of projects focused on structure, usability and production-minded execution.",
+      desc: "Frontend systems, structured interfaces and shipped production websites.",
       more: "Additional code samples and project context are available on request.",
       sideNote: "Product-oriented direction + shipped production websites.",
-      viewLive: "View live",
+      viewLive: "View Project",
       linkOnRequest: "Repo on request.",
       items: [
         {
@@ -149,6 +155,13 @@ export const i18n = {
           description:
             "A production website built with Next.js and TypeScript, designed around clear page structure, fast loading and readable content flow. Delivered with a maintainable component setup and deployed on Vercel.",
           href: "https://www.pnp-remodeling.com/",
+          image: "/work/P&Premodeling-Desktop.webp",
+          previews: [
+            {
+              src: "/work/P&Premodeling-responsive.webp",
+              alt: "P&PRemodeling responsive preview",
+            },
+          ],
         },
         {
           id: "guillermo",
@@ -158,6 +171,13 @@ export const i18n = {
           description:
             "A calm, content-led website designed to support clarity and trust. The implementation prioritizes readable typography, clean hierarchy and a structure prepared for SEO and long-term maintainability.",
           href: "https://guillermo-rios.com",
+          image: "/work/Psychotherapy-Desktop.webp",
+          previews: [
+            {
+              src: "/work/Psychotherapy-Mobile.webp",
+              alt: "Psychotherapy mobile preview",
+            },
+          ],
         },
         {
           id: "wp",
@@ -175,6 +195,13 @@ export const i18n = {
           description:
             "Landing page for a legal firm built in WordPress with Elementor and custom HTML/CSS sections. The work focused on content hierarchy, clarity and practical production delivery within real business constraints.",
           href: "https://rfcabogados.com/",
+          image: "/work/RFC-Desktop.webp",
+          previews: [
+            {
+              src: "/work/RFC-Mobile.webp",
+              alt: "RFC mobile preview",
+            },
+          ],
         },
       ],
     },
@@ -315,28 +342,30 @@ export const i18n = {
 
   de: {
     hero: {
-      t1: "Frontend.",
-      t2: "Systeme.",
-      t3: "Klarheit.",
-      t4: "Umsetzung.",
+      t1: "Frontend systems",
+      t2: "für Startups.",
+      t3: "Klar gebaut.",
+      t4: "React / Next.js / TypeScript",
 
-      p1: "Ich entwickle produktionsreife Web-Interfaces mit Next.js, React und TypeScript — mit Fokus auf Klarheit, Performance und reale Nutzung.",
-      p2: "Von Landingpages bis zu skalierbaren Webanwendungen entwerfe und entwickle ich strukturierte Frontend-Systeme, die Business-Anforderungen in verlässliche, wartbare Interfaces übersetzen.",
+      p1: "Moderne Frontend-Entwicklung mit Fokus auf skalierbare Interfaces, responsive Systeme und produktionsreife Umsetzung für Startups und digitale Produkte.",
+      p2: "NINAN ist eine unabhängige Frontend-Praxis, die strukturierte Entwicklung, visuelle Präzision und moderne Webtechnologien verbindet.",
 
-      start: "Gespräch starten",
-      view: "Projekte ansehen",
+      start: "Projekt starten",
+      view: "Ausgewählte Arbeiten",
 
-      based: "Berlin, Deutschland · Verfügbar für DE / EU Rollen · EN / DE / ES",
+      based: "Zwischen Europa und LATAM",
 
-      issue: "Unabhängige Praxis",
-      place: "Berlin / EU",
-      est: "Fokus auf produktionsreife Frontend-Systeme, skalierbare Interfaces und Business-orientierte Umsetzung",
+      issue: "Unabhängige Frontend-Praxis",
+      place: "Remote — Europa / LATAM",
+      est: "Fokus auf moderne Produktinterfaces",
 
-      principle: "Arbeitsprinzipien",
-      m1: "Klarheit statt Cleverness.",
-      m2: "Struktur statt Lärm.",
-      m3: "Umsetzung statt Theorie.",
-      available: "Verfügbar für Freelance, Contract und ausgewählte Product-Rollen",
+      principle: "Fähigkeiten",
+
+      m1: "React / Next.js Systeme",
+      m2: "UI-Umsetzung & responsive Frontends",
+      m3: "Produktionsreife Interfaces",
+
+      available: "Verfügbar für ausgewählte Kollaborationen",
     },
 
     nav: {
@@ -355,7 +384,7 @@ export const i18n = {
       kicker: "ÜBER",
       title: "Frontend-Systeme mit Fokus auf Struktur, Nutzbarkeit und zuverlässige Umsetzung.",
       p1: "Ich bin Cesar Pumayalla — Frontend Developer und entwickle digitale Interfaces mit Next.js, React und TypeScript. Meine Arbeit konzentriert sich auf Struktur, Lesbarkeit und saubere Umsetzung über Production Websites und produktorientierte Builds hinweg.",
-      p2: "Ich betrachte Frontend als Teil eines größeren Systems: Content, Hierarchie, Interaktion und technische Entscheidungen müssen zusammen funktionieren. Mein Background in Marketing, Digital und Product hat meinen praktischen Blick darauf geprägt, wie Interfaces sowohl Nutzer als auch Business-Ziele unterstützen.",
+      p2: "Ich betrachte Frontend als Teil eines größeren Systems: Content, Hierarchie, Interaktion und technische Entscheidungen müssen zusammen funktionieren.",
       bullets: [
         "Core: Next.js (App Router), React, TypeScript, Tailwind",
         "Fokus: Struktur, Lesbarkeit, Responsive Behavior, Umsetzungsqualität",
@@ -368,10 +397,10 @@ export const i18n = {
       kickerLeft: "AUSGEWÄHLTE",
       kickerRight: "ARBEITEN",
       title: "Arbeiten",
-      desc: "Eine Auswahl an Projekten mit Fokus auf Struktur, Nutzbarkeit und produktionsnahe Umsetzung.",
+      desc: "Frontend-Systeme, strukturierte Interfaces und gelieferte Production Websites.",
       more: "Weitere Code-Beispiele und Projektkontext sind auf Anfrage verfügbar.",
       sideNote: "Produktorientierte Richtung + gelieferte Production Websites.",
-      viewLive: "Live ansehen",
+      viewLive: "Projekt ansehen",
       linkOnRequest: "Repo auf Anfrage.",
       items: [
         {
@@ -380,7 +409,7 @@ export const i18n = {
           meta: "Full-stack Portfolio-Projekt · JWT Auth · REST API · Postgres",
           status: "IN ARBEIT (MVP GELIEFERT)",
           description:
-            "Ein Full-stack-Projekt, das praktische Product-Engineering-Skills zeigt: Authentifizierung, CRUD-Workflows, Pagination und eine strukturierte Dashboard-Erfahrung. Im Fokus stehen typisierte Verträge, vorhersehbares Verhalten und produktionsnahe Architektur.",
+            "Ein Full-stack-Projekt, das praktische Product-Engineering-Skills zeigt: Authentifizierung, CRUD-Workflows, Pagination und eine strukturierte Dashboard-Erfahrung.",
         },
         {
           id: "pp",
@@ -388,8 +417,15 @@ export const i18n = {
           meta: "Next.js + TypeScript · Strukturierte Seiten · Real Deploy",
           status: "GELIEFERT",
           description:
-            "Eine Production Website mit Next.js und TypeScript, aufgebaut rund um klare Seitenstruktur, schnelle Ladezeiten und lesbaren Content-Flow. Geliefert mit wartbarem Komponenten-Setup und Deploy auf Vercel.",
+            "Eine Production Website mit Next.js und TypeScript, aufgebaut rund um klare Seitenstruktur, schnelle Ladezeiten und lesbaren Content-Flow.",
           href: "https://www.pnp-remodeling.com/",
+          image: "/P&P remodeling - Desktop.webp",
+          previews: [
+            {
+              src: "/P&P remodeling - responsive.webp",
+              alt: "P&P Remodeling responsive preview",
+            },
+          ],
         },
         {
           id: "guillermo",
@@ -397,8 +433,15 @@ export const i18n = {
           meta: "Production Delivery · Content-Struktur · Accessibility-Details",
           status: "GELIEFERT",
           description:
-            "Eine ruhige, content-getriebene Website, die Klarheit und Vertrauen unterstützen soll. Die Umsetzung priorisiert lesbare Typografie, saubere Hierarchie und eine Struktur, die für SEO und langfristige Wartbarkeit vorbereitet ist.",
+            "Eine ruhige, content-getriebene Website, die Klarheit und Vertrauen unterstützen soll.",
           href: "https://guillermo-rios.com",
+          image: "/Psychotherapy-Desktop.webp",
+          previews: [
+            {
+              src: "/Psychotherapy-Mobile.webp",
+              alt: "Psychotherapy mobile preview",
+            },
+          ],
         },
         {
           id: "wp",
@@ -406,7 +449,7 @@ export const i18n = {
           meta: "Client Delivery · SEO Setup · Pragmatic Fixes",
           status: "",
           description:
-            "Production Work in WordPress-Projekten, einschließlich Umsetzung, SEO-Setup, Security-Plugins, Performance-Verbesserungen und pragmatischen Fixes in PHP und CSS in realen Kundenumgebungen.",
+            "Production Work in WordPress-Projekten, einschließlich Umsetzung, SEO-Setup, Security-Plugins, Performance-Verbesserungen und pragmatischen Fixes.",
         },
         {
           id: "rfc-abogados",
@@ -414,8 +457,15 @@ export const i18n = {
           meta: "WordPress / Elementor · Custom HTML/CSS Blocks · SEO Basics",
           status: "GELIEFERT",
           description:
-            "Landing Page für eine Kanzlei, umgesetzt in WordPress mit Elementor und Custom HTML/CSS Sections. Der Fokus lag auf Content-Hierarchie, Klarheit und pragmatischer Production Delivery innerhalb realer Business-Constraints.",
+            "Landing Page für eine Kanzlei, umgesetzt in WordPress mit Elementor und Custom HTML/CSS Sections.",
           href: "https://rfcabogados.com/",
+          image: "/RFC-Desktop.webp",
+          previews: [
+            {
+              src: "/RFC-Mobile.webp",
+              alt: "RFC mobile preview",
+            },
+          ],
         },
       ],
     },
@@ -449,7 +499,7 @@ export const i18n = {
         {
           title: "Praktische Full-stack-Grundlagen (Spring Boot / SQL)",
           time: "PRAKTISCH",
-          desc: "Backend-Kenntnisse, die besseres Product Thinking, Zusammenarbeit über den Stack und kleinere Full-stack-Builds unterstützen.",
+          desc: "Backend-Kenntnisse, die besseres Product Thinking und kleinere Full-stack-Builds unterstützen.",
           bullets: [
             "REST Endpoints, Validation und vorhersehbares Error Handling",
             "SQL Basics: Relationen, Queries und Migrationen",
@@ -470,7 +520,7 @@ export const i18n = {
         },
       ],
       close:
-        "Mein Fokus liegt auf Frontend-Rollen mit Next.js, React und TypeScript, während ich meine Full-stack-Range weiter durch praktische Projektarbeit ausbaue.",
+        "Mein Fokus liegt auf Frontend-Rollen mit Next.js, React und TypeScript.",
     },
 
     process: {
@@ -496,19 +546,19 @@ export const i18n = {
         {
           step: "SCHRITT 01",
           title: "Scope & Struktur",
-          desc: "Problem klären, Informationsarchitektur definieren und vor dem Bauen klare Constraints setzen.",
+          desc: "Problem klären, Informationsarchitektur definieren und klare Constraints setzen.",
           bullets: ["Ziele und Content Map", "Route- und Section-Struktur", "Plan und Constraints"],
         },
         {
           step: "SCHRITT 02",
           title: "UI-System",
-          desc: "Ein kleines, konsistentes Set aus Komponenten und Layout-Regeln aufbauen, das skalieren kann, ohne unnötige Komplexität hinzuzufügen.",
+          desc: "Ein kleines, konsistentes Set aus Komponenten und Layout-Regeln aufbauen.",
           bullets: ["Typografie und Spacing", "Reusable Components", "Responsive Behavior"],
         },
         {
           step: "SCHRITT 03",
           title: "Implementierung",
-          desc: "Mit klaren Next.js- und TypeScript-Patterns umsetzen, QA-Passes durchführen und auf Performance sowie Edge States achten.",
+          desc: "Mit klaren Next.js- und TypeScript-Patterns umsetzen.",
           bullets: ["Saubere App Router Struktur", "A11y- und Performance-Pass", "Error- und Edge States"],
         },
         {
@@ -541,7 +591,7 @@ export const i18n = {
     contact: {
       kicker: "KONTAKT",
       title: "Lass uns über den passenden Fit sprechen",
-      body: "Für Freelance-Projekte, Rollen, Kollaborationen oder ausgewählte Projekte kannst du mir gern mit etwas Kontext schreiben. Besonders interessant sind für mich Möglichkeiten, bei denen Struktur, Product Thinking und Umsetzungsqualität zählen.",
+      body: "Für Freelance-Projekte, Rollen, Kollaborationen oder ausgewählte Projekte kannst du mir gern mit etwas Kontext schreiben.",
       ctaEmail: "E-Mail",
       ctaWhatsapp: "WhatsApp",
       form: {
@@ -556,28 +606,30 @@ export const i18n = {
 
   es: {
     hero: {
-      t1: "Frontend.",
-      t2: "Sistemas.",
-      t3: "Claridad.",
-      t4: "Ejecución.",
+      t1: "Frontend systems",
+      t2: "para startups.",
+      t3: "Construido con claridad.",
+      t4: "React / Next.js / TypeScript",
 
-      p1: "Construyo interfaces web listas para producción con Next.js, React y TypeScript — con foco en claridad, performance y uso real.",
-      p2: "Desde landing pages hasta aplicaciones web escalables, diseño y desarrollo sistemas frontend estructurados que traducen necesidades de negocio en interfaces confiables y mantenibles.",
+      p1: "Desarrollo frontend moderno enfocado en interfaces escalables, sistemas responsive y ejecución lista para producción para startups y productos digitales.",
+      p2: "NINAN es una práctica independiente de frontend que combina ingeniería estructurada, precisión visual y tecnologías web modernas.",
 
-      start: "Iniciar conversación",
-      view: "Ver proyectos",
+      start: "Iniciar proyecto",
+      view: "Trabajos seleccionados",
 
-      based: "Berlín, Alemania · Disponible para roles en DE / UE · EN / DE / ES",
+      based: "Entre Europa y LATAM",
 
-      issue: "Práctica independiente",
-      place: "Berlín / UE",
-      est: "Enfocado en sistemas frontend listos para producción, interfaces escalables y ejecución guiada por negocio",
+      issue: "Práctica frontend independiente",
+      place: "Remote — Europa / LATAM",
+      est: "Enfocado en interfaces modernas de producto",
 
-      principle: "Principios de trabajo",
-      m1: "Claridad sobre trucos.",
-      m2: "Estructura sobre ruido.",
-      m3: "Ejecución sobre teoría.",
-      available: "Disponible para freelance, contract y roles de producto seleccionados",
+      principle: "Capacidades",
+
+      m1: "Sistemas React / Next.js",
+      m2: "UI implementation & responsive frontend",
+      m3: "Interfaces listas para producción",
+
+      available: "Disponible para colaboraciones seleccionadas",
     },
 
     nav: {
@@ -595,8 +647,8 @@ export const i18n = {
     about: {
       kicker: "ACERCA DE",
       title: "Sistemas frontend enfocados en estructura, usabilidad y ejecución confiable.",
-      p1: "Soy Cesar Pumayalla — frontend developer y construyo interfaces digitales con Next.js, React y TypeScript. Mi trabajo se centra en estructura, legibilidad y calidad de implementación en websites en producción y proyectos orientados a producto.",
-      p2: "Entiendo el frontend como parte de un sistema más amplio: contenido, jerarquía, interacción y decisiones técnicas deben funcionar en conjunto. Mi background en marketing, digital y producto me ha dado una perspectiva práctica sobre cómo las interfaces pueden apoyar tanto a los usuarios como a los objetivos de negocio.",
+      p1: "Soy Cesar Pumayalla — frontend developer y construyo interfaces digitales con Next.js, React y TypeScript.",
+      p2: "Entiendo el frontend como parte de un sistema más amplio: contenido, jerarquía, interacción y decisiones técnicas deben funcionar en conjunto.",
       bullets: [
         "Core: Next.js (App Router), React, TypeScript, Tailwind",
         "Foco: estructura, legibilidad, comportamiento responsive, calidad de implementación",
@@ -609,10 +661,10 @@ export const i18n = {
       kickerLeft: "SELECCIÓN",
       kickerRight: "TRABAJOS",
       title: "Trabajos",
-      desc: "Una selección de proyectos con foco en estructura, usabilidad y ejecución orientada a producción.",
+      desc: "Sistemas frontend, interfaces estructuradas y websites entregados en producción.",
       more: "Más ejemplos de código y contexto del proyecto disponibles a petición.",
       sideNote: "Dirección orientada a producto + websites ya entregados en producción.",
-      viewLive: "Ver en vivo",
+      viewLive: "Ver proyecto",
       linkOnRequest: "Repo a petición.",
       items: [
         {
@@ -621,7 +673,7 @@ export const i18n = {
           meta: "Proyecto full-stack de portfolio · JWT auth · REST API · Postgres",
           status: "EN PROGRESO (MVP ENTREGADO)",
           description:
-            "Un proyecto full-stack construido para demostrar habilidades prácticas de product engineering: autenticación, flujos CRUD, paginación y una experiencia de dashboard estructurada. El foco está en contratos tipados, comportamiento predecible y arquitectura estilo producción.",
+            "Un proyecto full-stack construido para demostrar habilidades prácticas de product engineering: autenticación, flujos CRUD, paginación y una experiencia de dashboard estructurada.",
         },
         {
           id: "pp",
@@ -629,8 +681,15 @@ export const i18n = {
           meta: "Next.js + TypeScript · Páginas estructuradas · Deploy real",
           status: "ENTREGADO",
           description:
-            "Un website en producción construido con Next.js y TypeScript, diseñado alrededor de una estructura clara de páginas, carga rápida y flujo de contenido legible. Entregado con un sistema de componentes mantenible y deploy en Vercel.",
+            "Un website en producción construido con Next.js y TypeScript, diseñado alrededor de una estructura clara de páginas, carga rápida y flujo de contenido legible.",
           href: "https://www.pnp-remodeling.com/",
+          image: "/P&P remodeling - Desktop.webp",
+          previews: [
+            {
+              src: "/P&P remodeling - responsive.webp",
+              alt: "P&P Remodeling responsive preview",
+            },
+          ],
         },
         {
           id: "guillermo",
@@ -638,8 +697,15 @@ export const i18n = {
           meta: "Entrega en producción · Estructura de contenido · Detalles de accesibilidad",
           status: "ENTREGADO",
           description:
-            "Un sitio calmado y guiado por el contenido, diseñado para reforzar claridad y confianza. La implementación prioriza tipografía legible, jerarquía limpia y una estructura preparada para SEO y mantenimiento a largo plazo.",
+            "Un sitio calmado y guiado por el contenido, diseñado para reforzar claridad y confianza.",
           href: "https://guillermo-rios.com",
+          image: "/Psychotherapy-Desktop.webp",
+          previews: [
+            {
+              src: "/Psychotherapy-Mobile.webp",
+              alt: "Psychotherapy mobile preview",
+            },
+          ],
         },
         {
           id: "wp",
@@ -647,7 +713,7 @@ export const i18n = {
           meta: "Entrega a clientes · Setup SEO · Fixes pragmáticos",
           status: "",
           description:
-            "Trabajo en producción entregado a través de proyectos en WordPress, incluyendo implementación, setup SEO, plugins de seguridad, mejoras de performance y fixes pragmáticos en PHP y CSS dentro de entornos reales de cliente.",
+            "Trabajo en producción entregado a través de proyectos en WordPress, incluyendo implementación, setup SEO, plugins de seguridad, mejoras de performance y fixes pragmáticos.",
         },
         {
           id: "rfc-abogados",
@@ -655,8 +721,15 @@ export const i18n = {
           meta: "WordPress / Elementor · Bloques HTML/CSS custom · SEO básico",
           status: "ENTREGADO",
           description:
-            "Landing page para un estudio jurídico desarrollada en WordPress con Elementor y secciones custom en HTML/CSS. El trabajo se enfocó en jerarquía de contenido, claridad y entrega práctica dentro de restricciones reales de negocio.",
+            "Landing page para un estudio jurídico desarrollada en WordPress con Elementor y secciones custom en HTML/CSS.",
           href: "https://rfcabogados.com/",
+          image: "/RFC-Desktop.webp",
+          previews: [
+            {
+              src: "/RFC-Mobile.webp",
+              alt: "RFC mobile preview",
+            },
+          ],
         },
       ],
     },
@@ -690,7 +763,7 @@ export const i18n = {
         {
           title: "Bases prácticas de full-stack (Spring Boot / SQL)",
           time: "PRÁCTICO",
-          desc: "Conocimiento de backend que mejora el pensamiento de producto, la colaboración a través del stack y los builds full-stack pequeños.",
+          desc: "Conocimiento de backend que mejora el pensamiento de producto y los builds full-stack pequeños.",
           bullets: [
             "Endpoints REST, validación y manejo de errores predecible",
             "SQL básico: relaciones, queries y migraciones",
@@ -711,7 +784,7 @@ export const i18n = {
         },
       ],
       close:
-        "Estoy enfocado en roles frontend con Next.js, React y TypeScript, mientras sigo fortaleciendo mi rango full-stack a través de trabajo práctico en proyectos.",
+        "Estoy enfocado en roles frontend con Next.js, React y TypeScript.",
     },
 
     process: {
@@ -743,13 +816,13 @@ export const i18n = {
         {
           step: "PASO 02",
           title: "Sistema UI",
-          desc: "Construyo un set pequeño y consistente de componentes y reglas de layout que pueda escalar sin añadir ruido.",
+          desc: "Construyo un set pequeño y consistente de componentes y reglas de layout.",
           bullets: ["Tipografía y spacing", "Componentes reutilizables", "Comportamiento responsive"],
         },
         {
           step: "PASO 03",
           title: "Implementación",
-          desc: "Entrego con patrones claros de Next.js y TypeScript, QA y atención a performance y edge states.",
+          desc: "Entrego con patrones claros de Next.js y TypeScript.",
           bullets: ["Estructura limpia con App Router", "Revisión de a11y y performance", "Estados de error y edge"],
         },
         {
@@ -782,7 +855,7 @@ export const i18n = {
     contact: {
       kicker: "CONTACTO",
       title: "Hablemos del encaje correcto",
-      body: "Para trabajo freelance, roles, colaboraciones o proyectos seleccionados, puedes escribirme con algo de contexto. Me interesan especialmente oportunidades donde importen la estructura, el pensamiento de producto y la calidad de implementación.",
+      body: "Para trabajo freelance, roles, colaboraciones o proyectos seleccionados, puedes escribirme con algo de contexto.",
       ctaEmail: "Email",
       ctaWhatsapp: "WhatsApp",
       form: {

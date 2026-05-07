@@ -1,267 +1,192 @@
 "use client"
 
-import { useMemo, useState } from "react"
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
+import { useEffect, useState } from "react"
 import { useI18n } from "@/components/i18n/I18nProvider"
+import Container from "@/components/layout/Container"
+
+type PreviewState = {
+  src: string
+  alt: string
+}
 
 export default function Work() {
-  const { lang, t } = useI18n()
+  const { t } = useI18n()
   const w = t.work
 
-  const reduceMotion = useReducedMotion()
+  const [open, setOpen] = useState<string | null>(null)
+  const [preview, setPreview] = useState<PreviewState | null>(null)
 
-  // Open first item by default to avoid empty first impression
-  const [openId, setOpenId] = useState<string | null>(w.items[0]?.id ?? null)
+  useEffect(() => {
+    if (!preview) return
 
-  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setPreview(null)
+      }
+    }
 
-  const itemVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
-      show: reduceMotion
-        ? { opacity: 1, y: 0 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.7, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
+    window.addEventListener("keydown", onKeyDown)
+    document.body.style.overflow = "hidden"
 
-  const metaVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 },
-      show: reduceMotion
-        ? { opacity: 1, y: 0 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.55, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
-
-  const statusVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 4 },
-      show: reduceMotion
-        ? { opacity: 1, y: 0 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
+    return () => {
+      window.removeEventListener("keydown", onKeyDown)
+      document.body.style.overflow = ""
+    }
+  }, [preview])
 
   return (
-    <section id="work" className="section !before:hidden">
-      <div className="container">
-        {/* Masthead */}
-        <div className="mb-10 lg:mb-12">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-            {w.kickerRight}
-          </p>
-          <div className="mt-3 border-t border-black/10" />
-        </div>
+    <section id="work" className="section">
+      <Container>
+        <div className="grid items-start gap-14 lg:grid-cols-[minmax(260px,0.4fr)_minmax(0,0.6fr)] lg:gap-16 xl:gap-20">
+          <aside className="lg:sticky lg:top-28">
+            <div className="kicker">
+              {w.kickerLeft} / {w.kickerRight}
+            </div>
 
-        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
-          {/* LEFT — stronger editorial framing */}
-          <div className="lg:sticky lg:top-24 xl:top-28 self-start">
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
-              {w.title}
-            </h2>
+            <h2 className="h2 mt-8">{w.title}</h2>
 
-            <div className="mt-6 lg:mt-7 max-w-[52ch] space-y-6">
-              <p className="text-base leading-[1.75] text-black/70">
-                {w.desc}
-              </p>
+            <p className="mt-10 max-w-[28ch] text-[17px] leading-[1.8] text-black/60">
+              {w.desc}
+            </p>
 
-              <div className="border-t border-black/10 pt-6">
-                <p className="text-sm leading-[1.8] text-black/60">
-                  {w.sideNote}
-                </p>
-              </div>
-
-              <div className="grid gap-4 pt-2">
-                <div className="border-t border-black/10 pt-4">
-                  <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
-                    Selection
-                  </p>
-                  <p className="mt-2 text-sm leading-[1.75] text-black/60">
-                    A focused set of shipped work, production delivery and product-oriented builds.
-                  </p>
-                </div>
-
-                <div className="border-t border-black/10 pt-4">
-                  <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
-                    Direction
-                  </p>
-                  <p className="mt-2 text-sm leading-[1.75] text-black/60">
-                    Frontend systems, practical implementation and real project constraints.
-                  </p>
-                </div>
+            <div className="mt-12 max-w-[20ch]">
+              <div className="kicker leading-[2] text-black/45">
+                {w.sideNote}
               </div>
             </div>
-          </div>
+          </aside>
 
-          {/* RIGHT — rail */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
-            <div className="lg:hidden border-t border-black/10 pt-10" />
+          <div className="w-full border-t border-black/10">
+            {w.items.map((item, index) => {
+              const isOpen = open === item.id
+              const desktopImage = item.image
+              const mobilePreviews = item.previews ?? []
 
-            <div className="max-w-[56ch]">
-              <ul className="divide-y divide-black/10">
-                {w.items.map((item, idx) => {
-                  const isOpen = openId === item.id
-                  const hasStatus = !!(item.status && item.status.trim().length > 0)
-                  const indexLabel = String(idx + 1).padStart(2, "0")
-                  const isFeatured = idx === 0
+              return (
+                <article key={item.id} className="border-b border-black/10">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : item.id)}
+                    className="grid w-full grid-cols-[2.25rem_minmax(0,1fr)_1.5rem] gap-5 py-7 text-left sm:grid-cols-[2.75rem_minmax(0,1fr)_1.5rem] sm:gap-8 lg:py-8"
+                  >
+                    <span className="kicker pt-1 text-black/40">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
 
-                  return (
-                    <motion.li
-                      key={item.id}
-                      className="group"
-                      variants={itemVariants}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={{ once: true, margin: "-10%" }}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setOpenId(isOpen ? null : item.id)}
-                        className="w-full py-7 text-left focus:outline-none sm:py-8"
-                        aria-expanded={isOpen}
-                        aria-controls={`work-panel-${item.id}`}
-                      >
-                        <div className="grid grid-cols-[20px_minmax(0,1fr)] gap-5">
-                          <span
-                            aria-hidden="true"
-                            className="mt-[3px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
-                          >
-                            {indexLabel}
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                        <h3 className="text-[clamp(1.35rem,2vw,1.8rem)] font-[560] leading-[1.08] tracking-[-0.035em] text-black">
+                          {item.name}
+                        </h3>
+
+                        {item.status && (
+                          <span className="text-[11px] uppercase tracking-[0.18em] text-black/40">
+                            {item.status}
                           </span>
-
-                          <div className="min-w-0">
-                            <div className="flex items-start justify-between gap-6">
-                              <div className="min-w-0">
-                                {isFeatured && (
-                                  <p className="mb-3 text-[11px] font-medium tracking-[0.18em] uppercase text-black/35">
-                                    Featured project
-                                  </p>
-                                )}
-
-                                <h3 className="text-lg font-medium leading-[1.25] md:text-[1.35rem]">
-                                  {item.name}
-                                </h3>
-                              </div>
-
-                              {hasStatus && (
-                                <motion.span
-                                  className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
-                                  variants={statusVariants}
-                                  initial="hidden"
-                                  whileInView="show"
-                                  viewport={{ once: true, margin: "-10%" }}
-                                >
-                                  {item.status}
-                                </motion.span>
-                              )}
-                            </div>
-
-                            <motion.p
-                              className="mt-3 text-sm leading-[1.7] text-black/60"
-                              variants={metaVariants}
-                              initial="hidden"
-                              whileInView="show"
-                              viewport={{ once: true, margin: "-10%" }}
-                            >
-                              {item.meta}
-                            </motion.p>
-
-                            {/* richer collapsed state */}
-                            {!isOpen && (
-                              <p className="mt-4 max-w-[48ch] text-sm leading-[1.8] text-black/55 line-clamp-3">
-                                {item.description}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                      </button>
-
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            key={`panel-${item.id}`}
-                            id={`work-panel-${item.id}`}
-                            initial={
-                              reduceMotion ? { opacity: 1, height: "auto" } : { height: 0, opacity: 0 }
-                            }
-                            animate={
-                              reduceMotion ? { opacity: 1, height: "auto" } : { height: "auto", opacity: 1 }
-                            }
-                            exit={
-                              reduceMotion ? { opacity: 1, height: "auto" } : { height: 0, opacity: 0 }
-                            }
-                            transition={
-                              reduceMotion
-                                ? { duration: 0 }
-                                : {
-                                    duration: 0.58,
-                                    ease: easeEditorial,
-                                    opacity: { duration: 0.22, ease: easeEditorial },
-                                  }
-                            }
-                            className="overflow-hidden"
-                          >
-                            <div className="pb-8">
-                              <div className="border-t border-black/10 pt-6">
-                                <p className="text-base leading-[1.8] text-black/70">
-                                  {item.description}
-                                </p>
-
-                                <div className="mt-6 flex flex-wrap items-center gap-6">
-                                  {item.href ? (
-                                    <a
-                                      href={item.href}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80"
-                                    >
-                                      {w.viewLive}
-                                    </a>
-                                  ) : (
-                                    <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-                                      {w.linkOnRequest}
-                                    </span>
-                                  )}
-
-                                  <a
-                                    href={`/${lang}#contact`}
-                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/55 transition hover:text-black/80"
-                                  >
-                                    Contact for details
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
                         )}
-                      </AnimatePresence>
-                    </motion.li>
-                  )
-                })}
-              </ul>
+                      </div>
 
-              <div className="mt-10 border-t border-black/10 pt-6">
-                <p className="text-sm leading-[1.8] text-black/60">{w.more}</p>
-              </div>
-            </div>
+                      <p className="mt-5 max-w-[68ch] text-[12px] uppercase leading-[1.7] tracking-[0.18em] text-black/45">
+                        {item.meta}
+                      </p>
+                    </div>
+
+                    <span className="kicker pt-1 text-right text-black/45">
+                      {isOpen ? "—" : "+"}
+                    </span>
+                  </button>
+
+                  {isOpen && (
+                    <div className="pb-8 pl-[3.5rem] sm:pl-[4.75rem]">
+                      <div className="max-w-[68ch] border-t border-black/10 pt-6">
+                        <p className="text-[15px] leading-[1.85] text-black/70">
+                          {item.description}
+                        </p>
+
+                        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+                          {desktopImage && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setPreview({
+                                  src: desktopImage,
+                                  alt: `${item.name} desktop preview`,
+                                })
+                              }
+                              className="text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
+                            >
+                              Preview desktop
+                            </button>
+                          )}
+
+                          {mobilePreviews.map((previewItem, previewIndex) => (
+                            <button
+                              key={previewItem.src}
+                              type="button"
+                              onClick={() =>
+                                setPreview({
+                                  src: previewItem.src,
+                                  alt: previewItem.alt,
+                                })
+                              }
+                              className="text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
+                            >
+                              {previewIndex === 0
+                                ? "Preview mobile"
+                                : `Preview ${previewIndex + 1}`}
+                            </button>
+                          ))}
+
+                          {item.href ? (
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[11px] uppercase tracking-[0.18em] text-black/70 underline underline-offset-4 transition hover:text-black"
+                            >
+                              {w.viewLive}
+                            </a>
+                          ) : (
+                            <span className="text-[11px] uppercase tracking-[0.18em] text-black/35">
+                              {w.linkOnRequest}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </article>
+              )
+            })}
           </div>
         </div>
-      </div>
+      </Container>
+
+      {preview && (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-#f5f5f3]/90 px-6 py-16 backdrop-blur-sm"
+          onClick={() => setPreview(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setPreview(null)}
+            className="absolute right-8 top-8 z-10 text-[11px] uppercase tracking-[0.18em] text-black/55 transition hover:text-black sm:right-8 sm:top-8"
+          >
+            Close
+          </button>
+
+          <div
+            className="flex max-h-[82vh] w-full max-w-[92vw] items-center justify-center sm:max-w-[84vw] lg:max-w-[72vw]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <img
+              src={preview.src}
+              alt={preview.alt}
+              className="max-h-[82vh] max-w-full object-contain shadow-[0_24px_90px_rgba(0,0,0,0.16)]"
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

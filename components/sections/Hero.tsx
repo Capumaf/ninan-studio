@@ -36,22 +36,30 @@ export default function Hero() {
             <div>
               <div className="mb-7 h-px w-16 bg-black/50" />
 
-              <h1 className="h1 max-w-[18ch]">
-                <span className="block">{h.t1}</span>
-                <span className="block">{h.t2}</span>
 
-                <span className="block accent relative inline-block">
-                  {h.t3}
-                  <span
-                    aria-hidden
-                    className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
-                  />
-                </span>
+              <h1 className="h1 max-w-[16ch]">
+              <span className="block">{h.t1}</span>
+             
 
-                {h.t4 && <span className="block">{h.t4}</span>}
+              <span className="block accent relative inline-block">
+              {h.t2}
+              <span
+              aria-hidden
+              className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
+              />
+              </span>
+
+              <span className="block">{h.t3}</span>
+              
+
+              {h.t4 && (
+              <span className="mt-3 block text-[0.82em] leading-[0.9] tracking-[-0.055em] text-black/25 font-[560]">
+              {h.t4}
+              </span>
+                    )}
               </h1>
 
-              <div className="mt-7 max-w-[44ch] space-y-4">
+              <div className="mt-7 max-w-[36ch] space-y-4">
                 <p className="text-[1.05rem] leading-[1.75] text-black/75">
                   {h.p1}
                 </p>

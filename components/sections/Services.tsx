@@ -33,7 +33,7 @@ export default function Services() {
         <div className="grid lg:grid-cols-2 gap-x-8 items-start">
 
           {/* LEFT */}
-          <div className="self-start mb-12 lg:mb-0 ml-[20%]">
+          <div className="self-start mb-12 lg:mb-0 lg:ml-[20%]">
             <motion.h2
               className="mb-6 text-[clamp(2rem,4vw,4rem)] leading-[1.1] tracking-[-0.03em] font-light text-black/50 max-w-[40ch]"
               initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
@@ -68,7 +68,7 @@ export default function Services() {
 
             {/* Flujo de valor */}
             <motion.div
-              className="mt-25"
+              className="mt-25 hidden lg:block"
               initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}

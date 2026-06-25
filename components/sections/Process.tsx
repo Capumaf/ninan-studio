@@ -46,7 +46,7 @@ export default function Process() {
         </div>
 
         {/* 4 steps */}
-        <ol className="ml-[2%] grid grid-cols-1 md:grid-cols-2 gap-0">
+        <ol className="grid grid-cols-1 md:grid-cols-2 gap-0">
           {p.steps.map((step, i) => (
             <motion.li
               key={i}

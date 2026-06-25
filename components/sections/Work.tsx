@@ -39,7 +39,7 @@ export default function Work() {
         <p className="mt-6 text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
         {w.kickerLeft} / {w.kickerRight}
          </p>
-        <p className="mt-8 text-[15px] leading-[4] text-black/40 max-w-[70ch] ml-[15%]">
+         <p className="mt-8 text-[15px] leading-[4] text-black/40 max-w-[70ch] lg:ml-[15%]">
   {w.desc}
 </p>
 </div>

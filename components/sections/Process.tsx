@@ -35,7 +35,7 @@ export default function Process() {
             {p.title}
           </motion.h2>
           <motion.p
-            className="text-[15px] leading-[1.8] text-black/40 whitespace-nowrap"
+            className="text-[15px] leading-[1.8] text-black/40 lg:whitespace-nowrap"
             initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={vp}

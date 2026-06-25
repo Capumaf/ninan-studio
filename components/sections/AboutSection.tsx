@@ -2,6 +2,7 @@
 
 import type { Dictionary } from "@/content/i18n"
 import { motion, useReducedMotion } from "framer-motion"
+import { TextReveal } from "@/components/motion/TextReveal"
 
 type Props = {
   a: Dictionary["about"]
@@ -38,7 +39,7 @@ export default function AboutSection({ a }: Props) {
           {/* LEFT */}
           <motion.div {...fadeUp(0.1)} className="self-start">
             <h2 className="text-[26px] leading-[1.8] text-black/70 max-w-[44ch] mb-10">
-              {a.title}
+            <TextReveal text={a.title} delay={0.1} />
             </h2>
             <p className="text-[15px] leading-[1.6] tracking-[-0.01em] font-light text-black mt-4 text-right">
               {a.p1}

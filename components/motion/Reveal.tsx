@@ -22,7 +22,7 @@ export function Reveal({
   className,
   as = "div",
   once = true,
-  amount = 0.75,
+  amount = 0.3,
   delay = 0,
 }: RevealProps) {
   const reduce = useReducedMotion()
@@ -62,7 +62,7 @@ export function RevealGroup({
   className,
   as = "div",
   once = true,
-  amount = 0.75,
+  amount = 0.3,
   delayChildren = 0,
   stagger = 0.06,
 }: RevealGroupProps) {

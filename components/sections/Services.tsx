@@ -1,242 +1,153 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 import type { Dictionary } from "@/content/i18n"
 
 type ServiceBlock = Dictionary["services"]["blocks"][number]
 
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
 export default function Services() {
   const { lang, t } = useI18n()
   const s = t.services
-
-  const reduceMotion = useReducedMotion()
-
-  // Cleaner first impression (employment-friendly): start collapsed.
+  const reduce = useReducedMotion()
   const [openId, setOpenId] = useState<string | null>(null)
 
-  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
-  const vp = { once: true, margin: "-10%" } as const
-
-  const itemVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 },
-      show: reduceMotion
-        ? { opacity: 1, y: 0 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.68, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
-
-  const metaVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 },
-      show: reduceMotion
-        ? { opacity: 1, y: 0 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.55, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
+  const vp = { once: true, amount: 0.2 } as const
 
   return (
     <section id="services" className="section">
       <div className="container">
-        <div className="mb-10 lg:mb-12">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
+
+        {/* Kicker */}
+        <div className="mb-10 ml-[2%]">
+          <div className="border-t border-black/10" />
+          <p className="mt-3 text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
             {s.kicker}
           </p>
-          <div className="mt-3 border-t border-black/10" />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-y-10 lg:gap-x-14 xl:gap-x-16 items-start">
-          {/* LEFT */}
-          <div className="lg:sticky lg:top-24 xl:top-28 self-start">
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-light leading-[1.05] tracking-[-0.025em]">
+        {/* Grid: izquierda título + intro + close, derecha cards */}
+        <div className="grid lg:grid-cols-2 gap-x-8 items-start">
+
+          {/* LEFT — título + intro + close */}
+          <div className="self-start mb-12 lg:mb-0 ml-[20%]">
+            <motion.h2
+              className="mb-6 text-[32px] leading-[1.7] text-black/70 max-w-[40ch]"
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.6, ease }}
+            >
               {s.title}
-            </h2>
+            </motion.h2>
+            <motion.p
+              className="text-[15px] leading-[1.8] text-black/50 max-w-[45ch]"
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ delay: 0.1, duration: 0.6, ease }}
+            >
+              {s.intro}
+            </motion.p>
 
-            <div className="mt-6 lg:mt-7 max-w-[52ch]">
-              <p className="text-base leading-[1.75] text-black/70">{s.intro}</p>
-            </div>
-
-            <div className="mt-10 max-w-[52ch]">
+            {s.close && (
               <motion.p
-                className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40"
-                variants={metaVariants}
-                initial="hidden"
-                whileInView="show"
+                className="mt-10 text-[15px] leading-[1.8] text-black/50 max-w-[45ch]"
+                initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={vp}
+                transition={{ delay: 0.2, duration: 0.6, ease }}
               >
-                {s.howItWorks.kicker}
+                {s.close}
               </motion.p>
+            )}
+          </div>
 
-              <ul className="mt-6 space-y-4">
-                {s.howItWorks.bullets.map((b, i) => (
-                  <li key={`${i}-${b}`} className="grid grid-cols-[40px_minmax(0,1fr)] gap-5">
-                    <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                    <p className="text-sm leading-[1.7] text-black/70">{b}</p>
-                  </li>
-                ))}
-              </ul>
+          {/* RIGHT — 3 cards verticales */}
+          <div className="flex flex-col gap-3">
+            {s.blocks.map((b: ServiceBlock, idx) => {
+              const id = `b-${idx + 1}`
+              const isOpen = openId === id
 
-              <div className="mt-8">
-                <a
-                  href={`/${lang}#work`}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
+              return (
+                <motion.div
+                  key={id}
+                  className="border border-black/[0.08]"
+                  initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={vp}
+                  transition={reduce ? { duration: 0 } : { delay: idx * 0.1, duration: 0.6, ease }}
                 >
-                  {s.howItWorks.cta}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
-            <div className="lg:hidden border-t border-black/10 pt-10" />
-
-            <div className="max-w-[52ch]">
-              <ul className="divide-y divide-black/10">
-                {s.blocks.map((b: ServiceBlock, idx: number) => {
-                  // Stable id independent from translation/title
-                  const id = `b-${idx + 1}`
-                  const isOpen = openId === id
-                  const indexLabel = String(idx + 1).padStart(2, "0")
-                  const hasMeta = !!(b.time && b.time.trim().length > 0)
-
-                  return (
-                    <motion.li
-                      key={id}
-                      className="group"
-                      variants={itemVariants}
-                      initial="hidden"
-                      whileInView="show"
-                      viewport={vp}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setOpenId(isOpen ? null : id)}
-                        className="w-full py-8 text-left focus:outline-none"
-                        aria-expanded={isOpen}
-                        aria-controls={`services-panel-${id}`}
-                      >
-                        <div className="grid grid-cols-[20px_minmax(0,1fr)] gap-5">
-                          <span
-                            aria-hidden="true"
-                            className="mt-[3px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
-                          >
-                            {indexLabel}
-                          </span>
-
-                          <div className="min-w-0">
-                            <div className="flex items-baseline justify-between gap-6">
-                              <h3 className="text-lg font-medium leading-[1.25] md:text-xl">
-                                {b.title}
-                              </h3>
-
-                              {hasMeta && (
-                                <span className="whitespace-nowrap text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-                                  {b.time}
-                                </span>
-                              )}
-                            </div>
-
-                            {b.desc ? (
-                              <p className="mt-2 text-sm leading-[1.7] text-black/60">
-                                {b.desc}
-                              </p>
-                            ) : null}
-                          </div>
-                        </div>
-                      </button>
-
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            key={`panel-${id}`}
-                            id={`services-panel-${id}`}
-                            initial={
-                              reduceMotion
-                                ? { opacity: 1, height: "auto" }
-                                : { opacity: 0, height: 0 }
-                            }
-                            animate={
-                              reduceMotion
-                                ? { opacity: 1, height: "auto" }
-                                : { opacity: 1, height: "auto" }
-                            }
-                            exit={
-                              reduceMotion
-                                ? { opacity: 1, height: "auto" }
-                                : { opacity: 0, height: 0 }
-                            }
-                            transition={
-                              reduceMotion
-                                ? { duration: 0 }
-                                : {
-                                    duration: 0.56,
-                                    ease: easeEditorial,
-                                    opacity: { duration: 0.22, ease: easeEditorial },
-                                  }
-                            }
-                            className="overflow-hidden"
-                          >
-                            <div className="pb-8">
-                              {b.bullets?.length ? (
-                                <ul className="mt-1 space-y-4">
-                                  {b.bullets.map((x, xi) => (
-                                    <li
-                                      key={`${xi}-${x}`}
-                                      className="grid grid-cols-[40px_minmax(0,1fr)] gap-5"
-                                    >
-                                      <span aria-hidden className="mt-[10px] h-px w-10 bg-black/20" />
-                                      <p className="text-sm leading-[1.7] text-black/70">{x}</p>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-
-                              {b.cta ? (
-                                <div className="mt-8">
-                                  <a
-                                    href={`/${lang}#work`}
-                                    className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
-                                  >
-                                    {b.cta}
-                                  </a>
-                                </div>
-                              ) : null}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.li>
-                  )
-                })}
-
-                {s.close ? (
-                  <motion.li
-                    className="py-8"
-                    variants={itemVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={vp}
+                  <button
+                    type="button"
+                    onClick={() => setOpenId(isOpen ? null : id)}
+                    aria-expanded={isOpen}
+                    className="group flex w-full items-start justify-between gap-4 px-6 py-5 text-left transition-all duration-300 hover:bg-black/[0.015]"
                   >
-                    <p className="text-base leading-[1.75] text-black/70">{s.close}</p>
-                  </motion.li>
-                ) : null}
-              </ul>
-            </div>
+                    <div className="flex items-start gap-4">
+                      <span className="mt-1 shrink-0 text-[11px] font-medium tabular-nums tracking-[0.14em] text-accent">
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <h3 className="mb-1 text-[16px] font-medium tracking-[-0.02em] text-black transition-transform duration-300 group-hover:translate-x-1">
+                          {b.title}
+                        </h3>
+                        <p className="text-[13px] leading-[1.7] text-black/50">
+                          {b.desc}
+                        </p>
+                      </div>
+                    </div>
+                    <motion.span
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.25, ease }}
+                      className="mt-1 shrink-0 text-[20px] text-black/25"
+                    >
+                      +
+                    </motion.span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={reduce ? false : { opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={reduce ? undefined : { opacity: 0, height: 0 }}
+                        transition={{ duration: 0.38, ease }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-black/[0.08] px-6 pb-5">
+                          {b.bullets?.length ? (
+                            <ul className="mt-4 space-y-3">
+                              {b.bullets.map((x, xi) => (
+                                <li key={xi} className="flex items-start gap-4">
+                                  <span className="mt-[9px] h-px w-4 shrink-0 bg-black/20" />
+                                  <p className="text-[13px] leading-[1.7] text-black/60">{x}</p>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                          {b.cta && (
+                            <a
+                              href={`/${lang}#work`}
+                              className="mt-5 inline-block text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
+                            >
+                              {b.cta}
+                            </a>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
           </div>
+
         </div>
+
       </div>
     </section>
   )

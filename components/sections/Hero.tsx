@@ -20,10 +20,8 @@ export default function Hero() {
 
   const vp = { once: true, amount: 0.3 } as const
 
-  const primaryHref = `/${lang}#contact`
-
   return (
-    <section id="hero" className="pt-4 md:pt-6 lg:pt-8 pb-10 md:pb-12">
+    <section id="hero" className="pt-4 md:pt-6 lg:pt-8 pb-10 md:pb-26">
       <Container>
         <div className="grid items-start gap-y-10 lg:min-h-[54vh] lg:grid-cols-[minmax(0,1.22fr)_minmax(320px,0.78fr)] lg:gap-x-12">
           <motion.div
@@ -31,47 +29,35 @@ export default function Hero() {
             initial="hidden"
             whileInView="show"
             viewport={vp}
-            className="flex h-full flex-col gap-10 lg:gap-10"
+            className="flex h-full flex-col gap-10"
           >
             <div>
               <div className="mb-7 h-px w-16 bg-black/50" />
 
-
               <h1 className="h1 max-w-[16ch]">
-              <span className="block">{h.t1}</span>
-             
+                <span className="block">{h.t1}</span>
 
-              <span className="block accent relative inline-block">
-              {h.t2}
-              <span
-              aria-hidden
-              className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
-              />
-              </span>
+                <span className="block accent relative inline-block">
+                  {h.t2}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 right-0 bottom-[-0.08em] h-px bg-current opacity-20"
+                  />
+                </span>
 
-              <span className="block">{h.t3}</span>
-              
+                <span className="block">{h.t3}</span>
 
-              {h.t4 && (
-              <span className="mt-3 block text-[0.82em] leading-[0.9] tracking-[-0.055em] text-black/25 font-[560]">
-              {h.t4}
-              </span>
-                    )}
+               {h.t4 && (
+                <span className="mt-3 block text-[0.72em] leading-[0.9] tracking-[-0.04em] text-black/25 font-[560] whitespace-nowrap">
+                {h.t4}
+               </span>
+                  )}
               </h1>
-
-              <div className="mt-7 max-w-[36ch] space-y-4">
-                <p className="text-[1.05rem] leading-[1.75] text-black/75">
-                  {h.p1}
-                </p>
-                <p className="text-[1.05rem] leading-[1.75] text-black/60">
-                  {h.p2}
-                </p>
-              </div>
             </div>
 
-            <div className="mt-10">
+            <div>
               <div className="flex flex-wrap items-center gap-8">
-                <a href={primaryHref} className="btn">
+                <a href={`/${lang}#contact`} className="btn">
                   {h.start}
                 </a>
 
@@ -89,32 +75,25 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          <aside className="lg:border-l lg:border-black/10 lg:pl-8">
-            <div className="border-t border-black/10 pt-8 lg:hidden" />
-
+          <aside className="hidden lg:block lg:border-l lg:border-black/10 lg:pl-8 lg:pt-16">
             <motion.div
-              className="flex h-full flex-col gap-10 lg:gap-10"
+              className="flex h-full flex-col gap-10"
               variants={col}
               initial="hidden"
               whileInView="show"
               viewport={vp}
             >
-              <div className="max-w-[44ch] space-y-4">
-                <div className="kicker">{h.issue}</div>
-                <div className="kicker">{h.place}</div>
-                <div className="kicker">{h.est}</div>
-              </div>
+              <div>
+                <div className="kicker mb-4">{h.principle}</div>
 
-              <div className="max-w-[42ch]">
-                <div className="kicker">{h.principle}</div>
-                <div className="mt-4 space-y-1 text-[17px] leading-[1.7] font-medium">
+                <div className="space-y-3 text-[15px] leading-[1.7] font-medium">
                   <div>{h.m1}</div>
                   <div>{h.m2}</div>
                   <div>{h.m3}</div>
                 </div>
               </div>
 
-              <div className="max-w-[42ch]">
+              <div>
                 <div className="kicker">{h.available}</div>
               </div>
             </motion.div>

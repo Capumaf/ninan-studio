@@ -1,28 +1,25 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useI18n } from "@/components/i18n/I18nProvider"
 import Container from "@/components/layout/Container"
 
-type PreviewState = {
-  src: string
-  alt: string
-}
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export default function Work() {
   const { t } = useI18n()
   const w = t.work
+  const reduce = useReducedMotion()
 
   const [open, setOpen] = useState<string | null>(null)
-  const [preview, setPreview] = useState<PreviewState | null>(null)
+  const [preview, setPreview] = useState<{ src: string; alt: string } | null>(null)
 
   useEffect(() => {
     if (!preview) return
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setPreview(null)
-      }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreview(null)
     }
 
     window.addEventListener("keydown", onKeyDown)
@@ -37,127 +34,115 @@ export default function Work() {
   return (
     <section id="work" className="section">
       <Container>
-        {/* Masthead */}
-        <div className="mb-10 lg:mb-12">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
-            {w.kickerLeft} / {w.kickerRight}
-          </p>
+        <div className="mb-6 ml-[2%]">
+        <div className="border-t border-black/10" />
+        <p className="mt-6 text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
+        {w.kickerLeft} / {w.kickerRight}
+         </p>
+        <p className="mt-8 text-[15px] leading-[4] text-black/40 max-w-[70ch] ml-[15%]">
+  {w.desc}
+</p>
+</div>
 
-          <div className="mt-3 border-t border-black/10" />
-        </div>
+        <div className="mx-auto max-w-4xl">
+          {w.items.map((item, index) => {
+            const isOpen = open === item.id
 
-        {/* Editorial spread 40 / 60 */}
-        
-          {/* LEFT */}
-          <div className="w-full self-start lg:sticky lg:top-24 xl:top-28">
-            <h2 className="w-full text-[clamp(4rem,7.5vw,7.25rem)] font-light leading-[0.9] tracking-[-0.075em]">
-              {w.title}
-            </h2>
+            return (
+              <motion.article
+                key={item.id}
+                initial={reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={
+                  reduce
+                    ? { duration: 0 }
+                    : { delay: index * 0.06, duration: 0.65, ease }
+                }
+                className="border-b border-black/10"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : item.id)}
+                  className="group flex w-full items-start justify-between gap-10 py-8 text-left transition-colors duration-300 hover:bg-black/[0.015]"
+                >
+                  <div className="flex items-start gap-5 md:gap-7">
+                    <span className="mt-2 shrink-0 tabular-nums text-[11px] tracking-[0.16em] text-black/25">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
 
-            <div className="mt-10 w-full space-y-10 lg:mt-12">
-              <p className="max-w-[42ch] text-[20px] leading-[1.6] tracking-[-0.025em] text-black/68">
-                {w.desc}
-              </p>
+                    <div>
+                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                        <h3 className="text-[22px] font-medium tracking-[-0.04em] text-black transition-transform duration-300 group-hover:translate-x-1">
+                          {item.name}
+                        </h3>
 
-              <p className="max-w-[34ch] text-[12px] font-medium uppercase leading-[2] tracking-[0.2em] text-black/38">
-                {w.sideNote}
-              </p>
-            </div>
-          </div>
-
-          {/* RIGHT */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-10 xl:pl-12">
-            {/* Mobile hairline */}
-            <div className="lg:hidden border-t border-black/10 pt-10" />
-
-            <div className="w-full">
-              {w.items.map((item, index) => {
-                const isOpen = open === item.id
-                const desktopImage = item.image
-                const mobilePreviews = item.previews ?? []
-
-                return (
-                  <article
-                    key={item.id}
-                    className="border-b border-black/10"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpen(isOpen ? null : item.id)}
-                      className="grid w-full grid-cols-[20px_minmax(0,1fr)_18px] gap-5 py-6 text-left lg:py-7"
-                    >
-                      {/* INDEX */}
-                      <span
-                        aria-hidden="true"
-                        className="mt-[6px] tabular-nums text-[10px] font-medium tracking-[0.14em] text-black/25"
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-
-                      {/* CONTENT */}
-                      <div className="min-w-0">
-                        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-4 sm:gap-y-2">
-                          <h3 className="text-[clamp(1.15rem,2vw,1.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-black">
-                            {item.name}
-                          </h3>
-
-                          {item.status && (
-                            <span className="text-[10px] uppercase tracking-[0.16em] text-black/35">
-                              {item.status}
-                            </span>
-                          )}
-                        </div>
-
-                        <p className="mt-4 text-[11px] uppercase leading-[1.75] tracking-[0.16em] text-black/40">
-                          {item.meta}
-                        </p>
+                        {item.status && (
+                          <span className="text-[10px] uppercase tracking-[0.18em] text-black/30">
+                            {item.status}
+                          </span>
+                        )}
                       </div>
 
-                      {/* TOGGLE */}
-                      <span className="mt-[2px] text-right text-[15px] leading-none text-black/40">
-                        {isOpen ? "—" : "+"}
-                      </span>
-                    </button>
+                      <p className="mt-2 max-w-[72ch] text-[12px] uppercase leading-[1.75] tracking-[0.18em] text-black/35">
+                        {item.meta}
+                      </p>
+                    </div>
+                  </div>
 
-                    {/* EXPANDED */}
-                    {isOpen && (
-                      <div className="pb-7 pl-[45px] lg:pb-8">
-                        <div className="border-t border-black/10 pt-5">
-                          <p className="text-sm leading-[1.85] text-black/70">
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.25, ease }}
+                    className="mt-1 shrink-0 text-[24px] leading-none text-black/35"
+                  >
+                    +
+                  </motion.span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={reduce ? false : { height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                      transition={{ duration: 0.38, ease }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-10 pl-[42px] md:pl-[58px]">
+                        <div className="max-w-[68ch] border-t border-black/10 pt-6">
+                          <p className="text-sm leading-[1.9] text-black/60">
                             {item.description}
                           </p>
 
-                          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
-                            {desktopImage && (
+                          <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3">
+                            {item.image && (
                               <button
                                 type="button"
                                 onClick={() =>
                                   setPreview({
-                                    src: desktopImage,
-                                    alt: `${item.name} desktop preview`,
+                                    src: item.image!,
+                                    alt: `${item.name} desktop`,
                                   })
                                 }
-                                className="text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
+                                className="text-[11px] uppercase tracking-[0.18em] text-black/50 underline underline-offset-4 transition hover:text-black"
                               >
                                 Preview desktop
                               </button>
                             )}
 
-                            {mobilePreviews.map((previewItem, previewIndex) => (
+                            {(item.previews ?? []).map((p, pi) => (
                               <button
-                                key={previewItem.src}
+                                key={p.src}
                                 type="button"
                                 onClick={() =>
                                   setPreview({
-                                    src: previewItem.src,
-                                    alt: previewItem.alt,
+                                    src: p.src,
+                                    alt: p.alt,
                                   })
                                 }
-                                className="text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
+                                className="text-[11px] uppercase tracking-[0.18em] text-black/50 underline underline-offset-4 transition hover:text-black"
                               >
-                                {previewIndex === 0
-                                  ? "Preview mobile"
-                                  : `Preview ${previewIndex + 1}`}
+                                {pi === 0 ? "Preview mobile" : `Preview ${pi + 1}`}
                               </button>
                             ))}
 
@@ -166,53 +151,62 @@ export default function Work() {
                                 href={item.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[11px] uppercase tracking-[0.18em] text-black/70 underline underline-offset-4 transition hover:text-black"
+                                className="text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
                               >
                                 {w.viewLive}
                               </a>
                             ) : (
-                              <span className="text-[11px] uppercase tracking-[0.18em] text-black/35">
+                              <span className="text-[11px] uppercase tracking-[0.18em] text-black/30">
                                 {w.linkOnRequest}
                               </span>
                             )}
                           </div>
                         </div>
                       </div>
-                    )}
-                  </article>
-                )
-              })}
-            </div>
-          </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
+            )
+          })}
         </div>
       </Container>
 
-      {/* PREVIEW MODAL */}
-      {preview && (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[#f5f5f3]/90 px-5 py-14 backdrop-blur-sm sm:px-6 sm:py-16"
-          onClick={() => setPreview(null)}
-        >
-          <button
-            type="button"
+      <AnimatePresence>
+        {preview && (
+          <motion.div
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduce ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-[#f5f5f3]/90 px-5 py-14 backdrop-blur-sm"
             onClick={() => setPreview(null)}
-            className="absolute right-6 top-6 z-10 text-[11px] uppercase tracking-[0.18em] text-black/55 transition hover:text-black sm:right-8 sm:top-8"
           >
-            Close
-          </button>
+            <button
+              type="button"
+              onClick={() => setPreview(null)}
+              className="absolute right-6 top-6 text-[11px] uppercase tracking-[0.18em] text-black/55 transition hover:text-black"
+            >
+              Close
+            </button>
 
-          <div
-            className="flex max-h-[82vh] w-full max-w-[92vw] items-center justify-center sm:max-w-[84vw] lg:max-w-[72vw]"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <img
-              src={preview.src}
-              alt={preview.alt}
-              className="max-h-[82vh] max-w-full object-contain shadow-[0_24px_90px_rgba(0,0,0,0.16)]"
-            />
-          </div>
-        </div>
-      )}
+            <motion.div
+              initial={reduce ? false : { opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={reduce ? undefined : { opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.3, ease }}
+              className="flex max-h-[82vh] w-full max-w-[72vw] items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={preview.src}
+                alt={preview.alt}
+                className="max-h-[82vh] max-w-full object-contain shadow-[0_24px_90px_rgba(0,0,0,0.16)]"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

@@ -60,19 +60,19 @@
 @layer components {
   .section {
     scroll-margin-top: 120px;
-    padding-block: 2rem;
+    padding-block: 3rem;
     border-bottom: none;
   }
 
   @media (min-width: 768px) {
     .section {
-      padding-block: 2rem;
+      padding-block: 4rem;
     }
   }
 
   @media (min-width: 1024px) {
     .section {
-      padding-block: 2.75rem;
+      padding-block: 6rem;
     }
   }
 

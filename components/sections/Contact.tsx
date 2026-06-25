@@ -150,8 +150,8 @@ export default function Contact() {
           <div className="h-px flex-1 bg-black/10" />
         </div>
 
-        <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
-          <div className="lg:sticky lg:top-24">
+        <div className="grid items-start gap-16 lg:grid-cols-[52%_48%] lg:gap-x-0">
+          <div className="pr-8 lg:pr-10 lg:sticky lg:top-24">
             <motion.h2
               className="font-light leading-[1.05] tracking-[-0.025em] text-[clamp(2rem,4vw,3.25rem)]"
               variants={blockVariants}
@@ -267,7 +267,7 @@ export default function Contact() {
             </motion.form>
           </div>
 
-          <div className="lg:border-l lg:border-black/10 lg:pl-12">
+          <div className="lg:border-l lg:border-black/10 lg:pl-10 xl:pl-12">
             <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
 
             <motion.div

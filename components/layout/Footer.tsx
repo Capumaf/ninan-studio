@@ -14,77 +14,58 @@ export default function Footer() {
       aria-label="Site footer"
     >
       <div className="mx-auto w-full max-w-[1500px] px-6 lg:px-10 2xl:px-12 py-12">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+
+        {/* Top row */}
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 mb-10">
+
           {/* LEFT */}
           <div>
-            <div className="text-[11px] uppercase tracking-[0.28em] text-neutral-950">
+            <div className="text-[11px] uppercase tracking-[0.28em] text-neutral-950 mb-4">
               {f.brand}
             </div>
-
-            {f.claim ? (
-              <p className="mt-4 max-w-[58ch] text-sm leading-[1.75] text-black/70">
+            {f.claim && (
+              <p className="max-w-[52ch] text-sm leading-[1.75] text-black/60 mb-6">
                 {f.claim}
               </p>
-            ) : null}
-
-            <div className="mt-6 space-y-2 text-sm text-black/60">
-              <p>
-                <span className="text-black/40">Email:</span>{" "}
-                <a
-                  className="underline underline-offset-4 hover:text-black/85 transition"
-                  href={`mailto:${f.contact.email}`}
-                >
-                  {f.contact.email}
-                </a>
-              </p>
-              <p>
-                <span className="text-black/40">Location:</span> {f.contact.location}
-              </p>
-            </div>
+            )}
+           
           </div>
 
-          {/* RIGHT */}
-          <div className="lg:border-l lg:border-black/10 lg:pl-12 xl:pl-14">
-            <div className="grid gap-3">
-              {f.links.items.map((it) => {
-                const isExternal =
-                  it.href.startsWith("http") ||
-                  it.href.startsWith("mailto:") ||
-                  it.href.startsWith("https://")
-
-                const cls =
-                  "text-[11px] uppercase font-normal tracking-[0.18em] text-black/60 hover:text-black/90 transition-colors"
-
-                if (isExternal) {
-                  return (
-                    <a
-                      key={it.label}
-                      href={it.href}
-                      target={it.href.startsWith("http") ? "_blank" : undefined}
-                      rel={it.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className={cls}
-                    >
-                      {it.label}
-                    </a>
-                  )
-                }
-
-                // internal
-                return (
-                  <Link key={it.label} href={it.href} className={cls}>
-                    {it.label}
-                  </Link>
-                )
-              })}
+          {/* RIGHT — links + location */}
+          <div className="flex flex-col items-start gap-3">
+  <div className="flex flex-wrap gap-x-8 gap-y-3">
+    {f.links.items.map((it) => {
+      const isExternal = it.href.startsWith("http") || it.href.startsWith("mailto:")
+      const cls = "text-[11px] uppercase font-normal tracking-[0.18em] text-black/50 hover:text-black/90 transition-colors"
+      if (isExternal) {
+        return (
+          <a key={it.label} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel={it.href.startsWith("http") ? "noopener noreferrer" : undefined} className={cls}>
+            {it.label}
+          </a>
+        )
+      }
+      return <Link key={it.label} href={it.href} className={cls}>{it.label}</Link>
+    })}
             </div>
+            <p className="text-sm text-black/40 mt-4">{f.contact.location}</p>
 
-            <div className="mt-10 border-t border-black/10 pt-8">
-              <p className="text-[11px] uppercase tracking-[0.22em] text-black/50">
-                {f.bottom}
-              </p>
-            </div>
+             <a
+              className="text-sm text-black/50 underline underline-offset-4 hover:text-black/80 transition "
+              href={`mailto:${f.contact.email}`}
+            >
+              {f.contact.email}
+            </a>
           </div>
+
         </div>
+
+        {/* Bottom — copyright centrado */}
+        <div className="border-t border-black/10 pt-6 text-center">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-black/35">
+            {f.bottom}
+          </p>
+        </div>
+
       </div>
     </footer>
   )

@@ -5,26 +5,21 @@ export const de: Dictionary = {
     t1: "Digitale Systeme",
     t2: "für Startups.",
     t3: "Klar umgesetzt.",
-    t4: "Product / Frontend / AI Workflows",
+    t4: "Digital Product Builder",
 
     p1: "Ich baue moderne digitale Systeme über Frontend-Interfaces, Produkt-Workflows, Automatisierung und Startup Operations hinweg.",
     p2: "NINAN ist eine unabhängige digitale Praxis, die Frontend Development, Product Thinking, AI-assisted Workflows und Business Execution verbindet.",
 
     start: "Projekt starten",
     view: "Ausgewählte Arbeiten",
-
     based: "Zwischen Europa und LATAM",
-
     issue: "Unabhängige digitale Praxis",
     place: "Remote — Europa / LATAM",
     est: "Fokus auf Startup Execution",
-
     principle: "Fähigkeiten",
-
     m1: "Product Systems & Startup Workflows",
     m2: "Frontend Interfaces & UI Implementation",
     m3: "AI-assisted Operations & Automation",
-
     available: "Verfügbar für Rollen, Freelance und ausgewählte Kollaborationen",
   },
 
@@ -41,22 +36,22 @@ export const de: Dictionary = {
   },
 
   about: {
-  kicker: "ÜBER",
-  title: "NINAN ist eine unabhängige digitale Praxis von\u00A0Cesar\u00A0Pumayalla — Design, Marketing und Frontend-Entwicklung für Startups.",
-  p1: "Gestalten, bauen und liefern.",
-  bullets: [
-    "Technologie — Frontend-Systeme mit Next.js, React und TypeScript.",
-    "Produkt — User Flows, MVP-Denken und strukturierte Umsetzung.",
-    "Automatisierung — KI-gestützte Workflows und operative Effizienz.",
-    "Operations — Prozesse, Koordination und Systeme für Wachstum.",
-  ],
-},
+    kicker: "ÜBER",
+    title: "NINAN Studio ist eine unabhängige digitale Praxis von\u00A0Cesar\u00A0Pumayalla — ein Digital Product Builder mit einem Master in Innovation & Design Management, der strategisches Denken, visuelles Design und moderne Webentwicklung kombiniert, um Produkte, Systeme und Workflows zu bauen, die für Startups und wachsende Teams wirklich funktionieren.",
+    p1: "Gestalten, bauen und liefern.",
+    bullets: [
+      "Technologie — Frontend-Systeme mit Next.js, React und TypeScript.",
+      "Produkt — User Flows, MVP-Denken und strukturierte Umsetzung.",
+      "Automatisierung — KI-gestützte Workflows und operative Effizienz.",
+      "Operations — Prozesse, Koordination und Systeme für Wachstum.",
+    ],
+  },
 
   work: {
     kickerLeft: "AUSGEWÄHLTE",
     kickerRight: "ARBEITEN",
     title: "Arbeiten",
-    desc: "Digitale Systeme, Frontend Interfaces, AI Workflows und Production Websites.",
+    desc: "Digitale Produkte, Frontend Interfaces, AI Workflows und Production Websites.",
     more: "Weitere Kontexte, Demos und Projektdetails sind auf Anfrage verfügbar.",
     sideNote: "Startup-orientierte Umsetzung über Product, Frontend und Operations.",
     viewLive: "Projekt ansehen",
@@ -67,27 +62,33 @@ export const de: Dictionary = {
         name: "ROMIA — AI-assisted Real Estate Workflow System",
         meta: "AI Workflows · Lead Qualification · Sales Operations",
         status: "AKTIVE ENTWICKLUNG",
-        description:
-          "Ein produktorientiertes Workflow-System für Real Estate Sales Operations. ROMIA kombiniert Conversational AI, Lead-Qualification-Logik, Appointment Classification und Follow-up Workflows, um Sales Teams zu unterstützen.",
+        description: "Ein produktorientiertes Workflow-System für Real Estate Sales Operations. ROMIA kombiniert Conversational AI, Lead-Qualification-Logik, Appointment Classification und Follow-up Workflows, um Sales Teams zu unterstützen.",
+        href: "https://romia.io",
       },
       {
         id: "amazon-fba",
         name: "Amazon FBA Operations — Sourcing & Logistics System",
         meta: "Product Operations · Internal OS · Logistics Workflows",
         status: "AKTIVER BUSINESS CASE",
-        description:
-          "End-to-End Betrieb eines Private-Label Amazon FBA Produkts — dem DV180, Magnetic Dryer Vent Connector Kit: Supplier Research und Koordination, Sample Evaluation, Multi-Warehouse Shipment Management und ein internes System (Commerce OS), gebaut mit Next.js + Prisma + PostgreSQL.",
+        description: "End-to-End Betrieb eines Private-Label Amazon FBA Produkts — dem DV180, Magnetic Dryer Vent Connector Kit: Supplier Research und Koordination, Sample Evaluation, Multi-Warehouse Shipment Management und ein internes System (Commerce OS), gebaut mit Next.js + Prisma + PostgreSQL.",
         href: "https://ninancommerce.com",
         image: "/work/NinanCommerce-Desktop.webp",
         previews: [{ src: "/work/NinanCommerce-responsive.webp", alt: "Commerce responsive" }],
+      },
+      {
+        id: "ingrid",
+        name: "Ingrid Pumayalla — Künstlerportfolio",
+        meta: "Next.js 15 · GSAP · Canvas-Animationen · i18n EN/ES",
+        status: "PRODUKTION IN ARBEIT",
+        description: "Ein zweisprachiges Künstlerportfolio mit Next.js 15 und JavaScript, mit benutzerdefinierten GSAP Canvas-Animationen, Quipu-inspiriertem Motion Design, responsiven Bildgalerien und vollständigem EN/ES i18n.",
+        href: "https://ingridpumayalla.com",
       },
       {
         id: "pp",
         name: "P&P Remodeling — Production Website",
         meta: "Next.js + TypeScript · Strukturierte Seiten · Real Deploy",
         status: "GELIEFERT",
-        description:
-          "Eine Production Website mit Next.js und TypeScript, aufgebaut rund um klare Seitenstruktur, schnelle Ladezeiten und lesbaren Content-Flow.",
+        description: "Eine Production Website mit Next.js und TypeScript, aufgebaut rund um klare Seitenstruktur, schnelle Ladezeiten und lesbaren Content-Flow.",
         href: "https://www.pnp-remodeling.com/",
         image: "/work/P&Premodeling-Desktop.webp",
         previews: [{ src: "/work/P&Premodeling-responsive.webp", alt: "P&P Remodeling responsive preview" }],
@@ -97,22 +98,10 @@ export const de: Dictionary = {
         name: "Website für Psychotherapie-Praxis",
         meta: "Production Delivery · Content-Struktur · Accessibility-Details",
         status: "GELIEFERT",
-        description:
-          "Eine ruhige, content-getriebene Website, die Klarheit und Vertrauen unterstützen soll.",
+        description: "Eine ruhige, content-getriebene Website, die Klarheit und Vertrauen unterstützen soll.",
         href: "https://guillermo-rios.com",
         image: "/work/Psychotherapy-Desktop.webp",
         previews: [{ src: "/work/Psychotherapy-Mobile.webp", alt: "Psychotherapy mobile preview" }],
-      },
-      {
-        id: "rfc-abogados",
-        name: "RFC Abogados — Landing in Production",
-        meta: "WordPress / Elementor · Custom HTML/CSS Blocks · SEO Basics",
-        status: "GELIEFERT",
-        description:
-          "Landing Page für eine Kanzlei, umgesetzt in WordPress mit Elementor und Custom HTML/CSS Sections.",
-        href: "https://rfcabogados.com/",
-        image: "/work/RFC-Desktop.webp",
-        previews: [{ src: "/work/RFC-Mobile.webp", alt: "RFC mobile preview" }],
       },
     ],
   },

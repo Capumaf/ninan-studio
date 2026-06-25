@@ -11,6 +11,8 @@ function buildMailto(params: { to: string; subject: string; body: string }) {
   return `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
 export default function Contact() {
   const { t } = useI18n()
   const c = t.contact
@@ -22,40 +24,12 @@ export default function Contact() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
-
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
   const [feedback, setFeedback] = useState("")
 
-  const reduceMotion = useReducedMotion()
-  const easeEditorial: [number, number, number, number] = [0.16, 1, 0.3, 1]
+  const reduce = useReducedMotion()
 
-  const blockVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 },
-      show: reduceMotion
-        ? { opacity: 1 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.62, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
-
-  const metaVariants = useMemo(
-    () => ({
-      hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, y: 6 },
-      show: reduceMotion
-        ? { opacity: 1 }
-        : {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.52, ease: easeEditorial },
-          },
-    }),
-    [reduceMotion]
-  )
+  const vp = { once: true, amount: 0.2 } as const
 
   const resetFeedbackOnInput = () => {
     if (status === "sent" || status === "error") {
@@ -66,18 +40,11 @@ export default function Contact() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
     if (status === "sending") return
 
     const trimmedName = name.trim()
     const trimmedEmail = email.trim()
     const trimmedMessage = message.trim()
-
-    console.log("[contact] submit", {
-      name: trimmedName,
-      email: trimmedEmail,
-      message: trimmedMessage,
-    })
 
     if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       setStatus("error")
@@ -88,221 +55,178 @@ export default function Contact() {
     setStatus("sending")
     setFeedback("")
 
-    const subject = `Portfolio inquiry — ${trimmedName || "No name"}`
-    const body =
-      `Name: ${trimmedName}\n` +
-      `Email: ${trimmedEmail}\n\n` +
-      `Message:\n${trimmedMessage}`
+    const subject = `Portfolio inquiry — ${trimmedName}`
+    const body = `Name: ${trimmedName}\nEmail: ${trimmedEmail}\n\nMessage:\n${trimmedMessage}`
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: trimmedName,
-          email: trimmedEmail,
-          message: trimmedMessage,
-        }),
+        body: JSON.stringify({ name: trimmedName, email: trimmedEmail, message: trimmedMessage }),
       })
 
       const data = await res.json().catch(() => ({}))
-      console.log("[contact] api response", res.status, data)
 
       if (!res.ok || data?.success !== true) {
         setStatus("error")
-        setFeedback(
-          "Couldn’t send via the form. Please try again or email me directly at cesarpumayalla@ninan-studio.com."
-        )
-
-        const href = buildMailto({ to: EMAIL_TO, subject, body })
-        window.location.href = href
+        setFeedback("Couldn't send via the form. Please try again or email me directly.")
+        window.location.href = buildMailto({ to: EMAIL_TO, subject, body })
         return
       }
 
       setStatus("sent")
-      setFeedback(
-        "Thank you — your message has been sent. I’ll get back to you by email as soon as possible."
-      )
-
+      setFeedback("Thank you — your message has been sent. I'll get back to you as soon as possible.")
       setName("")
       setEmail("")
       setMessage("")
-    } catch (err) {
-      console.error("[contact] error", err)
-
+    } catch {
       setStatus("error")
-      setFeedback(
-        "Couldn’t send via the form. Please try again or email me directly at cesarpumayalla@ninan-studio.com."
-      )
-
-      const href = buildMailto({ to: EMAIL_TO, subject, body })
-      window.location.href = href
+      setFeedback("Couldn't send via the form. Please try again or email me directly.")
+      window.location.href = buildMailto({ to: EMAIL_TO, subject, body })
     }
   }
 
   return (
-    <section id="contact" className="section !before:hidden">
+    <section id="contact" className="section">
       <div className="container">
-        <div className="mb-12 flex items-center gap-6 lg:mb-16">
-          <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 shrink-0">
+
+        {/* Kicker */}
+        <div className="mb-10 ml-[2%]">
+          <div className="border-t border-black/10" />
+          <p className="mt-3 text-[11px] font-medium tracking-[0.18em] uppercase text-black/40">
             {c.kicker}
           </p>
-          <div className="h-px flex-1 bg-black/10" />
         </div>
 
-        <div className="grid items-start gap-16 lg:grid-cols-[52%_48%] lg:gap-x-0">
-          <div className="pr-8 lg:pr-10 lg:sticky lg:top-24">
+        {/* Grid */}
+        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-x-2 items-start ml-[2%]">
+
+          {/* LEFT — título + descripción + links */}
+          <div className="self-start mb-12 lg:mb-0 flex flex-col justify-between min-h-[300px]">
             <motion.h2
-              className="font-light leading-[1.05] tracking-[-0.025em] text-[clamp(2rem,4vw,3.25rem)]"
-              variants={blockVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-5%" }}
+              className="text-[clamp(2rem,4vw,2rem)] font-light leading-[1.1] tracking-[-0.03em] text-black mb-6"
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.6, ease }}
             >
               {c.title}
             </motion.h2>
 
-            <motion.form
-              onSubmit={onSubmit}
-              className="mt-10 max-w-[52ch] space-y-8"
-              variants={blockVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-5%" }}
+            <motion.p
+              className="text-[16px] leading-[1.8] text-black/50 max-w-[46ch] mt-2"
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ delay: 0.1, duration: 0.6, ease }}
             >
-              <div>
-                <motion.label
-                  htmlFor={nameId}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
-                  variants={metaVariants}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-5%" }}
-                >
-                  {c.form.name}
-                </motion.label>
+              {c.body}
+            </motion.p>
+            
 
-                <input
-                  id={nameId}
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value)
-                    resetFeedbackOnInput()
-                  }}
-                  disabled={status === "sending"}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
-                />
-              </div>
 
-              <div>
-                <motion.label
-                  htmlFor={emailId}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
-                  variants={metaVariants}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-5%" }}
-                >
-                  {c.form.email}
-                </motion.label>
-
-                <input
-                  id={emailId}
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    resetFeedbackOnInput()
-                  }}
-                  disabled={status === "sending"}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
-                />
-              </div>
-
-              <div>
-                <motion.label
-                  htmlFor={messageId}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
-                  variants={metaVariants}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-5%" }}
-                >
-                  {c.form.details}
-                </motion.label>
-
-                <textarea
-                  id={messageId}
-                  rows={5}
-                  required
-                  value={message}
-                  onChange={(e) => {
-                    setMessage(e.target.value)
-                    resetFeedbackOnInput()
-                  }}
-                  disabled={status === "sending"}
-                  className="w-full border-b border-black/20 bg-transparent pb-3 outline-none resize-none disabled:opacity-70"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="mt-2 text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition disabled:opacity-50"
-              >
-                {status === "sending" ? "Sending..." : c.form.submit}
-              </button>
-
-              {feedback ? (
-                <p
-                  aria-live="polite"
-                  className="text-sm leading-[1.7] text-black/60"
-                >
-                  {feedback}
-                </p>
-              ) : null}
-            </motion.form>
-          </div>
-
-          <div className="lg:border-l lg:border-black/10 lg:pl-10 xl:pl-12">
-            <div className="mb-8 h-px w-full bg-black/10 lg:hidden" />
-
-            <motion.div
-              className="max-w-[52ch]"
-              variants={blockVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-5%" }}
-            >
-              <div className="mb-10 h-px w-full bg-black/10" />
-
-              <p className="text-base leading-[1.75] text-black/70">{c.body}</p>
-
-              <div className="mt-8 flex flex-wrap gap-6">
+               <div className="border-t border-black/10 pt-8 max-w-[280px]">
+              <div className="flex flex-wrap gap-6 mb-4">
                 <a
                   href={`mailto:${EMAIL_TO}`}
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/60 hover:text-black transition"
                 >
                   {c.ctaEmail}
                 </a>
-
+                
                 <a
                   href="https://wa.me/491722722723"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition"
+                  className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/60 hover:text-black transition"
                 >
                   {c.ctaWhatsapp}
                 </a>
               </div>
-
-              <p className="mt-10 text-sm leading-[1.7] text-black/60">{c.footerNote}</p>
-            </motion.div>
+              <p className="text-[13px] leading-[1.7] text-black/35 mt-2">{c.footerNote}</p>
+            </div>
           </div>
+
+          {/* RIGHT — form */}
+          <motion.form
+            onSubmit={onSubmit}
+            className="space-y-6 max-w-[480px]"
+            initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={vp}
+            transition={{ delay: 0.15, duration: 0.6, ease }}
+          >
+            <div>
+              <label
+                htmlFor={nameId}
+                className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
+              >
+                {c.form.name}
+              </label>
+              <input
+                id={nameId}
+                type="text"
+                required
+                value={name}
+                onChange={(e) => { setName(e.target.value); resetFeedbackOnInput() }}
+                disabled={status === "sending"}
+                className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor={emailId}
+                className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
+              >
+                {c.form.email}
+              </label>
+              <input
+                id={emailId}
+                type="email"
+                required
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); resetFeedbackOnInput() }}
+                disabled={status === "sending"}
+                className="w-full border-b border-black/20 bg-transparent pb-3 outline-none disabled:opacity-70"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor={messageId}
+                className="text-[11px] font-medium tracking-[0.18em] uppercase text-black/40 block mb-3"
+              >
+                {c.form.details}
+              </label>
+              <textarea
+                id={messageId}
+                rows={5}
+                required
+                value={message}
+                onChange={(e) => { setMessage(e.target.value); resetFeedbackOnInput() }}
+                disabled={status === "sending"}
+                className="w-full border-b border-black/20 bg-transparent pb-3 outline-none resize-none disabled:opacity-70"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="text-[11px] font-medium tracking-[0.18em] uppercase underline underline-offset-4 text-black/80 hover:text-black transition disabled:opacity-50"
+            >
+              {status === "sending" ? "Sending..." : c.form.submit}
+            </button>
+
+            {feedback && (
+              <p aria-live="polite" className="text-sm leading-[1.7] text-black/60">
+                {feedback}
+              </p>
+            )}
+          </motion.form>
+
         </div>
+
       </div>
     </section>
   )

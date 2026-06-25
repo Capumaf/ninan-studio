@@ -29,13 +29,13 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Grid: izquierda título + intro + close, derecha cards */}
+        {/* Grid */}
         <div className="grid lg:grid-cols-2 gap-x-8 items-start">
 
-          {/* LEFT — título + intro + close */}
+          {/* LEFT */}
           <div className="self-start mb-12 lg:mb-0 ml-[20%]">
             <motion.h2
-              className="mb-6 text-[32px] leading-[1.7] text-black/70 max-w-[40ch]"
+              className="mb-6 text-[clamp(2rem,4vw,4rem)] leading-[1.1] tracking-[-0.03em] font-light text-black/50 max-w-[40ch]"
               initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
@@ -43,8 +43,9 @@ export default function Services() {
             >
               {s.title}
             </motion.h2>
+
             <motion.p
-              className="text-[15px] leading-[1.8] text-black/50 max-w-[45ch]"
+              className="text-[15px] leading-[1.8] text-black/50 max-w-[45=ch]"
               initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
@@ -64,6 +65,29 @@ export default function Services() {
                 {s.close}
               </motion.p>
             )}
+
+            {/* Flujo de valor */}
+            <motion.div
+              className="mt-25"
+              initial={reduce ? { opacity: 1 } : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: 0.3, duration: 0.6, ease }}
+            >
+              <div className="flex items-center gap-0">
+                {["Idea", "Product", "Frontend", "Automation", "Ship"].map((step, i, arr) => (
+                  <div key={i} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                      <span className="text-[11px] uppercase tracking-[0.12em] text-black/35 mb-2">{step}</span>
+                      <div className="w-2 h-2 rounded-full border border-black/20 bg-white" />
+                    </div>
+                    {i < arr.length - 1 && (
+                      <div className="w-12 h-px bg-black/10 mb-0 mt-5" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* RIGHT — 3 cards verticales */}
@@ -130,7 +154,9 @@ export default function Services() {
                             </ul>
                           ) : null}
                           {b.cta && (
+
                             <a
+                            
                               href={`/${lang}#work`}
                               className="mt-5 inline-block text-[11px] uppercase tracking-[0.18em] text-black/60 underline underline-offset-4 transition hover:text-black"
                             >
